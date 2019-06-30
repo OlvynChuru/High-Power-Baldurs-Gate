@@ -2614,6 +2614,7 @@ end
 function MEOFFSCR(effectData, creatureData)
 	local targetID = EEex_ReadDword(creatureData + 0x34)
 	local x, y = EEex_GetActorLocation(targetID)
+	if EEex_ReadDword(creatureData + 0x14) <= 0 then return end
 	local areaX, areaY = EEex_GetActorAreaSize(targetID)
 --	local creFlags = EEex_ReadDword(creatureData + 0x424)
 	if x <= 33 or y <= 25 or (areaX - x) <= 33 or (areaY - y) <= 12 then
