@@ -2075,7 +2075,7 @@ function MEPSTAC2(effectData, creatureData)
 		end
 	end)
 end
---[[
+
 function EEex_IsSprite(actorID)
 	if actorID == 0x0 or actorID == -1 then
 		return false
@@ -2083,7 +2083,7 @@ function EEex_IsSprite(actorID)
 		return (EEex_ReadDword(EEex_GetActorShare(actorID) + 0x4) == 0x31)
 	end
 end
---]]
+
 function MECIDSET(originatingEffectData, effectData, creatureData)
 	local parameter5 = EEex_ReadDword(effectData + 0x64)
 	if parameter5 == 0 then

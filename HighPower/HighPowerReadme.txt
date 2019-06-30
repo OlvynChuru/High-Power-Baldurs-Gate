@@ -26,7 +26,7 @@ Charisma	Discount
 24		23%
 25		25%
 
-(for comparison, in the unmodded game 25% is the largest discount you possible, which you get if you have at least 20 Charisma)
+(for comparison, in the unmodded game 25% is the largest discount possible, which you get if you have at least 20 Charisma)
 
 
 - Give all classes four weapon slots
