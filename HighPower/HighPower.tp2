@@ -33200,7 +33200,7 @@ COPY_EXISTING_REGEXP ~ar[0-9].*\.are~ ~override~ ~bd.*\.are~ ~override~ ~oh.*\.a
 		LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~ME_Bird~ fj_reg_script=~MEBIRDP2~ END
 	END
 */
-
+	IF_EXISTS
 	BUT_ONLY_IF_IT_CHANGES
 
 VERBOSE
