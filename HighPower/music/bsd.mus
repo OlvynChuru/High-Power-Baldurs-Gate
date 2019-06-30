@@ -1,0 +1,20 @@
+BSD
+16
+A1                  @TAG Z
+A2                  @TAG Z
+A3                  @TAG ZA3
+B1                  @TAG Z
+B2                  @TAG ZA3
+B3                  @TAG Z
+C1                  @TAG Z
+C2                  @TAG Z
+C3                  @TAG Z
+D1                  @TAG ZD
+D2                  @TAG Z
+D3                  @TAG ZA3
+E1                  @TAG Z
+E2                  @TAG ZA3
+F1                  @TAG ZF1
+F2A  BSD  A2        @TAG ZF2
+# A2 is loop
+

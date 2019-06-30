@@ -1,0 +1,777 @@
+COPY_EXISTING ~entar.bcs~ ~override~
+	DECOMPILE_BCS_TO_BAF
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~EscapeArea()~ ~Enemy()~
+	COMPILE_BAF_TO_BCS
+
+<<<<<<<< .../script.baf
+IF
+	OR(3)
+		See([ENEMY])
+		Heard([ANYONE],99)
+		AttackedBy([GOODCUTOFF],DEFAULT)
+	Allegiance(Myself,NEUTRAL)
+THEN
+	RESPONSE #100
+		SaveObjectLocation("GLOBAL","DefaultLocation",Myself)
+		Enemy()
+END
+>>>>>>>>
+EXTEND_TOP ~brilla.bcs~ ~.../script.baf~ EVAL
+
+COPY_EXISTING ~battho.cre~ ~override~
+	WRITE_SHORT killxp 6000
+	WRITE_SHORT currenthp 80
+	WRITE_SHORT maxhp 80
+	WRITE_SHORT naturalac 65532 //-4
+	WRITE_SHORT effectiveac 65532 //-4
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE fireresistance 100
+	WRITE_BYTE coldresistance 25
+	WRITE_BYTE elecresistance 50
+	WRITE_BYTE acidresistance 231 //-25%
+	WRITE_BYTE slashingresistance 30
+	WRITE_BYTE piercingresistance 30
+	WRITE_BYTE crushingresistance 0
+	WRITE_BYTE magicfireresistance 100
+	WRITE_BYTE magiccoldresistance 75
+	WRITE_BYTE thac0 11
+	WRITE_BYTE class classfighter
+	WRITE_BYTE levelfirstclass 10
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 2
+	REPLACE_CRE_ITEM ~PLAT04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+	REPLACE_CRE_ITEM ~MEBATTHO~ #0 #0 #0 ~NONE~ ~SHIELD~
+	REPLACE_CRE_ITEM ~MEDOOMGU~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+
+COPY_EXISTING ~brilla.cre~ ~override~
+	SAY NAME1 ~Brilla Silvershield~
+	SAY NAME2 ~Brilla Silvershield~
+	WRITE_SHORT killxp 6500
+	WRITE_SHORT currenthp 108
+	WRITE_SHORT maxhp 108
+	WRITE_LONG animation 24848 //Fighter Female Human
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 32
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 17
+	WRITE_BYTE intelligence 11
+	WRITE_BYTE wisdom 13
+	WRITE_BYTE charisma 18
+	WRITE_BYTE savevsbreath 3
+	WRITE_BYTE savevsdeath 3
+	WRITE_BYTE savevsspell 3
+	WRITE_BYTE savevswand 3
+	WRITE_BYTE savevspolymorph 3
+	WRITE_BYTE thac0 6
+	WRITE_BYTE attacksperround 8 //2.5
+	WRITE_BYTE class classflamingfist
+	WRITE_BYTE levelfirstclass 15
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	LPF ADD_CRE_SCRIPT STR_VAR script=~mepalad4~ END
+	ADD_MEMORIZED_SPELL ~sppr109~ #0 ~priest~ (1)
+	ADD_MEMORIZED_SPELL ~sppr111~ #0 ~priest~ (2)
+	ADD_MEMORIZED_SPELL ~sppr214~ #1 ~priest~ (2)
+	SET_BG2_PROFICIENCY PROFICIENCYWARHAMMER 2
+	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 2
+	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
+	REPLACE_CRE_ITEM ~PLAT04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+	REPLACE_CRE_ITEM ~HAMM08~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP //War Hammer +2
+	REPLACE_CRE_ITEM ~BOW17~ #0 #0 #0 ~NONE~ ~WEAPON2~ //Longbow +2
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
+	REPLACE_CRE_ITEM ~AROW11~ #80 #0 #0 ~NONE~ ~QUIVER1~ //Arrows +2
+	ADD_CRE_ITEM ~POTN35~ #1 #0 #0 ~NONE~ ~QITEM1~
+
+COPY_EXISTING ~doomdur.cre~ ~override~
+	WRITE_SHORT killxp 6000
+	WRITE_SHORT currenthp 93
+	WRITE_SHORT maxhp 93
+	WRITE_SHORT naturalac 65527 //-3
+	WRITE_SHORT effectiveac 65527 //-3
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 15
+	WRITE_BYTE constitution 19
+	WRITE_BYTE fireresistance 25
+	WRITE_BYTE coldresistance 75
+	WRITE_BYTE elecresistance 75
+	WRITE_BYTE acidresistance 206 //-50%
+	WRITE_BYTE slashingresistance 30
+	WRITE_BYTE piercingresistance 30
+	WRITE_BYTE crushingresistance 0
+	WRITE_BYTE missileresistance 60
+	WRITE_BYTE magicfireresistance 0
+	WRITE_BYTE magiccoldresistance 100
+	WRITE_BYTE thac0 11
+	WRITE_BYTE attacksperround 2
+	WRITE_BYTE class classfighter
+	WRITE_SHORT kit kitdwarvendefender
+	WRITE_BYTE levelfirstclass 10
+	LPF ADD_CRE_SCRIPT STR_VAR script=~meinnate~ END
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	ADD_MEMORIZED_SPELL ~spdwd02~ #0 ~innate~ (3)
+	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
+	REPLACE_CRE_ITEM ~MEAX1H81~ #60 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+	REPLACE_CRE_ITEM ~MEDOOMDU~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON2~
+	ADD_CRE_ITEM ~MEAX1H81~ #10 #0 #0 ~NONE~ ~INV6~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymagicdamageresistance target=1 timing=9 parameter1=50 END
+
+COPY_EXISTING ~doomgu.cre~ ~override~
+	WRITE_SHORT killxp 5000
+	WRITE_SHORT currenthp 65
+	WRITE_SHORT maxhp 65
+	WRITE_SHORT naturalac 65533 //-3
+	WRITE_SHORT effectiveac 65533 //-3
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 99
+	WRITE_BYTE dexterity 19
+	WRITE_BYTE constitution 17
+	WRITE_BYTE fireresistance 50
+	WRITE_BYTE coldresistance 50
+	WRITE_BYTE elecresistance 75
+	WRITE_BYTE acidresistance 206 //-50%
+	WRITE_BYTE slashingresistance 30
+	WRITE_BYTE piercingresistance 30
+	WRITE_BYTE crushingresistance 0
+	WRITE_BYTE missileresistance 90
+	WRITE_BYTE magicfireresistance 25
+	WRITE_BYTE magiccoldresistance 75
+	WRITE_BYTE thac0 12
+	WRITE_BYTE class classfighter
+	WRITE_BYTE levelfirstclass 9
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 2
+	REPLACE_CRE_ITEM ~HELM09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~MEDOOMGU~ #0 #0 #0 ~NONE~ ~WEAPON1~
+	REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~NONE~ ~WEAPON2~ EQUIP
+	ADD_CRE_ITEM ~mearow80~ #32767 #0 #0 ~UNDROPPABLE~ ~QUIVER1~ EQUIP
+	ADD_CRE_ITEM ~arow10~ #10 #0 #0 ~NONE~ ~INV2~
+
+COPY_EXISTING ~entar.cre~ ~override~
+	WRITE_SHORT killxp 6500
+	WRITE_SHORT currenthp 108
+	WRITE_SHORT maxhp 108
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 17
+	WRITE_BYTE constitution 18
+	WRITE_BYTE intelligence 12
+	WRITE_BYTE wisdom 11
+	WRITE_BYTE charisma 17
+	WRITE_BYTE thac0 6
+	WRITE_BYTE attacksperround 3
+	WRITE_BYTE class classflamingfist
+	WRITE_BYTE levelfirstclass 15
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
+	REPLACE_CRE_ITEM ~SHLD29~ #0 #0 #0 ~NONE~ ~SHIELD~
+	REPLACE_CRE_ITEM ~SW1H41~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	ADD_CRE_ITEM ~POTN14~ #1 #0 #0 ~NONE~ ~QITEM3~
+
+COPY_EXISTING ~helmho.cre~ ~override~
+	WRITE_SHORT killxp 3000
+	WRITE_SHORT currenthp 60
+	WRITE_SHORT maxhp 60
+	WRITE_SHORT naturalac 65533 //-3
+	WRITE_SHORT effectiveac 65533 //-3
+	WRITE_SHORT animation 25605 //doom guard
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 99
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE fireresistance 50
+	WRITE_BYTE coldresistance 50
+	WRITE_BYTE elecresistance 75
+	WRITE_BYTE acidresistance 206 //-50%
+	WRITE_BYTE slashingresistance 30
+	WRITE_BYTE piercingresistance 0
+	WRITE_BYTE crushingresistance 30
+	WRITE_BYTE magicfireresistance 25
+	WRITE_BYTE magiccoldresistance 75
+	WRITE_BYTE thac0 12
+	WRITE_BYTE class classfighter
+	WRITE_BYTE levelfirstclass 9
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
+	REMOVE_CRE_ITEM ~SHLD18~
+	REPLACE_CRE_ITEM ~helm08~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~MEDOOMGU~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+
+COPY_EXISTING ~iron2.cre~ ~override~
+	SAY NAME1 @18019
+	SAY NAME2 @18019
+	WRITE_SHORT killxp 1200
+	WRITE_SHORT currenthp 60
+	WRITE_SHORT maxhp 60
+	WRITE_BYTE allegiance eaenemy
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 83
+	WRITE_BYTE intelligence 19
+	WRITE_BYTE thac0 3
+	WRITE_BYTE levelfirstclass 6
+	WRITE_ASCII classscript ~none~ #8
+	ADD_CRE_ITEM ~MAGE03~ #1 #0 #0 ~NONE~ ~LRING~ //Automatic Mirror Image ring
+	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetcaster parameter2=ifhit STR_VAR resource=~mems101~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetcaster parameter2=ifhit STR_VAR resource=~spwi721~ END
+
+COPY_EXISTING ~iron3.cre~ ~override~
+	SAY NAME1 @18020
+	SAY NAME2 @18020
+	WRITE_SHORT killxp 2000
+	WRITE_SHORT currenthp 60
+	WRITE_SHORT maxhp 60
+	WRITE_BYTE race racehalfelf
+	WRITE_SHORT animation 24833 //fighter male elf
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE savevsbreath 3
+	WRITE_BYTE savevsdeath 4
+	WRITE_BYTE savevswand 5
+	WRITE_BYTE savevsspell 9
+	WRITE_BYTE savevspolymorph 3
+	WRITE_BYTE thac0 8
+	WRITE_BYTE levelfirstclass 13
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shoutdlg~ #8
+	WRITE_ASCII racescript ~meircall~ #8
+	WRITE_ASCII generalscript ~meiron3~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII dialogfile ~meiron3~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
+	REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~ //Splint Mail
+	REPLACE_CRE_ITEM ~SW2H01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ //Two-Handed Sword
+
+COPY_EXISTING ~iron4.cre~ ~override~
+	SAY NAME1 @18021
+	SAY NAME2 @18021
+	WRITE_SHORT killxp 2500
+	WRITE_SHORT currenthp 90
+	WRITE_SHORT maxhp 90
+	WRITE_BYTE strength 19
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 25
+	WRITE_BYTE coldresistance 100
+	WRITE_BYTE elecresistance 206 //-50%
+	WRITE_BYTE magiccoldresistance 100
+	WRITE_BYTE slashingresistance 50
+	WRITE_BYTE piercingresistance 50
+	WRITE_BYTE crushingresistance 50
+	WRITE_BYTE missileresistance 50
+	WRITE_BYTE savevsbreath 1
+	WRITE_BYTE savevsdeath 1
+	WRITE_BYTE savevswand 1
+	WRITE_BYTE savevsspell 1
+	WRITE_BYTE savevspolymorph 1
+	WRITE_BYTE thac0 11
+	WRITE_BYTE levelfirstclass 9
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shoutdlg~ #8
+	WRITE_ASCII racescript ~meircall~ #8
+	WRITE_ASCII generalscript ~meinnate~ #8
+	WRITE_ASCII defaultscript ~mearange~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 1
+	REPLACE_CRE_ITEM ~HELM09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~ //Helmet
+	REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~ //Splint Mail
+	REPLACE_CRE_ITEM ~MEBLUN62~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Huge Flail of Frost
+
+COPY_EXISTING ~iron5.cre~ ~override~
+	SAY NAME1 @18022
+	SAY NAME2 @18022
+	WRITE_SHORT killxp 5000
+	WRITE_SHORT currenthp 80
+	WRITE_SHORT maxhp 80
+	WRITE_BYTE strength 18
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE intelligence 18
+	WRITE_BYTE savevsbreath 7
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevswand 4
+	WRITE_BYTE savevsspell 3
+	WRITE_BYTE savevspolymorph 9
+	WRITE_BYTE thac0 9
+	WRITE_BYTE class classfightermage
+	WRITE_BYTE levelfirstclass 12
+	WRITE_BYTE levelsecondclass 12
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shoutdlg~ #8
+	WRITE_ASCII racescript ~meircall~ #8
+	WRITE_ASCII generalscript ~meiron5~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
+	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~ //Helmet
+	REPLACE_CRE_ITEM ~CHAN13~ #0 #0 #0 ~NONE~ ~ARMOR~ //Elven Chain Mail +1
+	REPLACE_CRE_ITEM ~SW1H05~ #0 #0 #0 ~NONE~ ~SHIELD~ //Long Sword +1
+	REPLACE_CRE_ITEM ~SW1H41~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Long Sword +2
+	ADD_MEMORIZED_SPELL ~spwi308~ #2 ~wizard~ (5) //Lightning Bolt
+	ADD_MEMORIZED_SPELL ~spwi505~ #4 ~wizard~ (1) //Shadow Door
+	ADD_MEMORIZED_SPELL ~spwi603~ #5 ~wizard~ (1) //Tenser's Transformation
+	ADD_MEMORIZED_SPELL ~spwi613~ #5 ~wizard~ (1) //Improved Haste
+	ADD_MEMORIZED_SPELL ~mems023~ #0 ~innate~ (1) //Blood Rage
+	ADD_MEMORIZED_SPELL ~meco160~ #0 ~innate~ (1) //Improved Alacrity
+
+COPY_EXISTING ~iron6.cre~ ~override~
+	SAY NAME1 @18023
+	SAY NAME2 @18023
+	WRITE_SHORT killxp 1000
+	WRITE_SHORT currenthp 2
+	WRITE_SHORT maxhp 2
+	WRITE_BYTE fireresistance 99
+	WRITE_BYTE coldresistance 99
+	WRITE_BYTE elecresistance 99
+	WRITE_BYTE acidresistance 99
+	WRITE_BYTE slashingresistance 99
+	WRITE_BYTE piercingresistance 99
+	WRITE_BYTE crushingresistance 99
+	WRITE_BYTE missileresistance 99
+	WRITE_BYTE magicfireresistance 99
+	WRITE_BYTE magiccoldresistance 99
+	WRITE_BYTE thac0 19
+	WRITE_BYTE levelfirstclass 2
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~initdlg~ #8
+	WRITE_ASCII racescript ~meiron6~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=1 parameter1=5 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifypoisonresistance target=1 timing=1 parameter1=99 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymagicdamageresistance target=1 timing=1 parameter1=99 END
+
+COPY_EXISTING ~iron7.cre~ ~override~
+	SAY NAME1 @18024
+	SAY NAME2 @18024
+	WRITE_SHORT killxp 2000
+	WRITE_SHORT currenthp 90
+	WRITE_SHORT maxhp 90
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE savevsbreath 8
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevswand 6
+	WRITE_BYTE savevsspell 8
+	WRITE_BYTE savevspolymorph 7
+	WRITE_BYTE thac0 12
+	WRITE_BYTE attacksperround 4
+	WRITE_BYTE levelfirstclass 9
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~initdlg~ #8
+	WRITE_ASCII racescript ~meiron7~ #8
+	WRITE_ASCII generalscript ~meinnate~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	ADD_MEMORIZED_SPELL ~meco041~ #0 ~innate~ (1) //War Cry
+	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
+	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
+	REPLACE_CRE_ITEM ~HELM12~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+	REPLACE_CRE_ITEM ~MEIRON7~ #0 #0 #0 ~UNDROPPABLE~ ~WEAPON1~ EQUIP
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibility target=1 timing=1 parameter2=1 END
+
+COPY_EXISTING ~iron8.cre~ ~override~
+	SAY NAME1 @18025
+	SAY NAME2 @18025
+	WRITE_SHORT killxp 1500
+	WRITE_SHORT currenthp 8
+	WRITE_SHORT maxhp 8
+	WRITE_SHORT naturalac 65530 //-6
+	WRITE_SHORT effectiveac 65530 //-6
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE fireresistance 156
+	WRITE_BYTE coldresistance 156
+	WRITE_BYTE elecresistance 156
+	WRITE_BYTE acidresistance 156
+	WRITE_BYTE magicfireresistance 156
+	WRITE_BYTE magiccoldresistance 156
+	WRITE_BYTE slashingresistance 75
+	WRITE_BYTE piercingresistance 75
+	WRITE_BYTE crushingresistance 75
+	WRITE_BYTE missileresistance 75
+	WRITE_BYTE savevsbreath 20
+	WRITE_BYTE savevsdeath 20
+	WRITE_BYTE savevswand 20
+	WRITE_BYTE savevsspell 20
+	WRITE_BYTE savevspolymorph 20
+	WRITE_BYTE thac0 236 //-20
+	WRITE_BYTE class classthief
+	WRITE_BYTE levelfirstclass 3
+	SET_BG2_PROFICIENCY PROFICIENCYQUARTERSTAFF 1
+	REPLACE_CRE_ITEM ~STAF07~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Staff Spear
+	ADD_CRE_ITEM ~BOOK07~ #1 #0 #0 ~NONE~ ~INV1~ //Tome of Leadership and Influence
+	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibility target=1 timing=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=1 parameter2=forcevisible END
+
+COPY_EXISTING ~iron9.cre~ ~override~
+	SAY NAME1 @18026
+	SAY NAME2 @18026
+	WRITE_SHORT killxp 2000
+	WRITE_SHORT currenthp 60
+	WRITE_SHORT maxhp 60
+	WRITE_SHORT naturalac 65527 //-9
+	WRITE_SHORT effectiveac 65527 //-9
+	WRITE_BYTE dexterity 17
+	WRITE_BYTE fireresistance 60
+	WRITE_BYTE coldresistance 60
+	WRITE_BYTE elecresistance 60
+	WRITE_BYTE acidresistance 60
+	WRITE_BYTE magicfireresistance 60
+	WRITE_BYTE magiccoldresistance 60
+	WRITE_BYTE slashingresistance 60
+	WRITE_BYTE piercingresistance 60
+	WRITE_BYTE crushingresistance 60
+	WRITE_BYTE missileresistance 60
+	WRITE_BYTE savevsbreath 12
+	WRITE_BYTE savevsdeath 12
+	WRITE_BYTE savevswand 12
+	WRITE_BYTE savevsspell 12
+	WRITE_BYTE savevspolymorph 12
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~initdlg~ #8
+	WRITE_ASCII racescript ~meiron9~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
+	ADD_CRE_ITEM ~BOOK03~ #1 #0 #0 ~NONE~ ~INV1~ //Manual of Bodily Health
+	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibility target=1 timing=1 parameter2=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibilitydetection target=1 timing=1 parameter2=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=1 parameter1=2 END
+
+COPY_EXISTING ~iron10.cre~ ~override~
+	SAY NAME1 @18027
+	SAY NAME2 @18027
+	WRITE_SHORT killxp 2400
+	WRITE_SHORT currenthp 99
+	WRITE_SHORT maxhp 99
+	WRITE_BYTE strength 18
+	WRITE_BYTE dexterity 21
+	WRITE_BYTE constitution 21
+	WRITE_BYTE fireresistance 100
+	WRITE_BYTE coldresistance 100
+	WRITE_BYTE magicfireresistance 100
+	WRITE_BYTE magiccoldresistance 100
+	WRITE_BYTE savevsbreath 9
+	WRITE_BYTE savevsdeath 6
+	WRITE_BYTE savevswand 7
+	WRITE_BYTE savevsspell 9
+	WRITE_BYTE savevspolymorph 8
+	WRITE_BYTE thac0 3
+	WRITE_BYTE levelfirstclass 12
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shoutdlg~ #8
+	WRITE_ASCII racescript ~meiron10~ #8
+	WRITE_ASCII generalscript ~meircall~ #8
+	WRITE_ASCII defaultscript ~mearange~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
+	REPLACE_CRE_ITEM ~HELM11~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+	REPLACE_CRE_ITEM ~BOW01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
+	REPLACE_CRE_ITEM ~AROW06~ #1 #0 #0 ~NONE~ ~QUIVER1~
+	REPLACE_CRE_ITEM ~MEAROW25~ #1 #0 #0 ~NONE~ ~QUIVER2~
+	REPLACE_CRE_ITEM ~AROW11~ #30 #0 #0 ~NONE~ ~QUIVER3~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=castspell target=1 timing=1 parameter1=1 parameter2=2 STR_VAR resource=~meminorg~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=rangedhiteffect target=1 timing=1 STR_VAR resource=~spcl909a~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=rangedhiteffect target=1 timing=1 STR_VAR resource=~spcl909b~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=rangedhiteffect target=1 timing=1 STR_VAR resource=~spcl909c~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=mirrorimage target=1 timing=1 parameter1=8 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyattacksperround target=1 timing=1 parameter1=5 parameter2=1 END
+
+COPY_EXISTING ~iron11.cre~ ~override~
+	SAY NAME1 @18028
+	SAY NAME2 @18028
+	WRITE_SHORT killxp 2000
+	WRITE_SHORT currenthp 94
+	WRITE_SHORT maxhp 94
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE wisdom 20
+	WRITE_BYTE savevsbreath 6
+	WRITE_BYTE savevsdeath 6
+	WRITE_BYTE savevsspell 6
+	WRITE_BYTE savevswand 6
+	WRITE_BYTE savevspolymorph 9
+	WRITE_BYTE class classfightercleric
+	WRITE_BYTE levelfirstclass 13
+	WRITE_BYTE levelsecondclass 13
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~~ #8
+	WRITE_ASCII racescript ~meiron11~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	REMOVE_MEMORIZED_SPELLS
+	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
+	ADD_MEMORIZED_SPELL ~sppr301~ #2 ~priest~ (4)
+	ADD_MEMORIZED_SPELL ~sppr401~ #3 ~priest~ (2)
+	ADD_MEMORIZED_SPELL ~sppr414~ #3 ~priest~ (2)
+	ADD_MEMORIZED_SPELL ~sppr512~ #4 ~priest~ (2)
+	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 5
+	ADD_CRE_ITEM ~blun03~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	ADD_CRE_ITEM ~scrl5f~ #4 #0 #0 ~IDENTIFIED~ ~INV6~
+	ADD_CRE_ITEM ~scrl61~ #4 #0 #0 ~IDENTIFIED~ ~INV7~
+	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV8~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibilitydetection target=1 timing=9 parameter2=1 END
+
+COPY_EXISTING ~iron12.cre~ ~override~
+	SAY NAME1 @18029
+	SAY NAME2 @18029
+	WRITE_SHORT killxp 2000
+	WRITE_SHORT currenthp 90
+	WRITE_SHORT maxhp 90
+	WRITE_SHORT naturalac 65516 //-20
+	WRITE_SHORT effectiveac 65516 //-20
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 25
+	WRITE_BYTE constitution 18
+	WRITE_BYTE savevsbreath 8
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevswand 6
+	WRITE_BYTE savevsspell 8
+	WRITE_BYTE savevspolymorph 7
+	WRITE_BYTE thac0 12
+	WRITE_BYTE levelfirstclass 9
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shout~ #8
+	WRITE_ASCII racescript ~initdlg~ #8
+	WRITE_ASCII generalscript ~meinnate~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	ADD_MEMORIZED_SPELL ~spcl321~ #0 ~innate~ (1) //Berserker Rage
+	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 5
+	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~MEPLAT10~ #0 #0 #0 ~NONE~ ~ARMOR~
+	REPLACE_CRE_ITEM ~SW1H02~ #0 #0 #0 ~NONE~ ~WEAPON1~
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+
+COPY_EXISTING ~iron13.cre~ ~override~
+	SAY NAME1 @18030
+	SAY NAME2 @18030
+	WRITE_SHORT killxp 1700
+	WRITE_SHORT currenthp 71
+	WRITE_SHORT maxhp 71
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 19
+	WRITE_BYTE intelligence 19
+	WRITE_BYTE savevsbreath 12
+	WRITE_BYTE savevsdeath 9
+	WRITE_BYTE savevswand 10
+	WRITE_BYTE savevsspell 12
+	WRITE_BYTE savevspolymorph 11
+	WRITE_BYTE thac0 8
+	WRITE_BYTE levelfirstclass 13
+	WRITE_BYTE levelsecondclass 10
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shout~ #8
+	WRITE_ASCII racescript ~shoutdlg~ #8
+	WRITE_ASCII generalscript ~meiron13~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	ADD_MEMORIZED_SPELL ~spwi602~ #5 ~wizard~ (1) //Globe of Invulnerability
+	ADD_MEMORIZED_SPELL ~mems099~ #8 ~wizard~ (1) //Damage Turning
+	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 5
+	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
+	REPLACE_CRE_ITEM ~HALB02~ #0 #0 #0 ~NONE~ ~WEAPON1~
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+
+COPY_EXISTING ~iron14.cre~ ~override~
+	SAY NAME1 @18031
+	SAY NAME2 @18031
+	WRITE_SHORT killxp 3000
+	WRITE_SHORT currenthp 102
+	WRITE_SHORT maxhp 102
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE savevsbreath 10
+	WRITE_BYTE savevsdeath 7
+	WRITE_BYTE savevswand 8
+	WRITE_BYTE savevsspell 10
+	WRITE_BYTE savevspolymorph 9
+	WRITE_BYTE thac0 8
+	WRITE_BYTE levelfirstclass 13
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~shout~ #8
+	WRITE_ASCII racescript ~initdlg~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~meamelee~ #8
+	SET_BG2_PROFICIENCY PROFICIENCYKATANA 5
+	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
+	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+	REPLACE_CRE_ITEM ~SHLD02P~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+	REPLACE_CRE_ITEM ~SW1H44~ #0 #0 #0 ~NONE~ ~WEAPON1~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=1 parameter1=255 parameter2=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=1 STR_VAR resource=~mestun3s~ END
+
+COPY_EXISTING ~skelwa.cre~ ~override~
+	SAY NAME1 @18071
+	SAY NAME2 @18071
+	WRITE_SHORT killxp 6000
+	WRITE_SHORT currenthp 81
+	WRITE_SHORT maxhp 81
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 51
+	WRITE_BYTE dexterity 16
+	WRITE_BYTE constitution 18
+	WRITE_BYTE intelligence 12
+	WRITE_BYTE wisdom 17
+	WRITE_BYTE charisma 16
+	WRITE_BYTE savevsbreath 5
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevsspell 5
+	WRITE_BYTE savevswand 5
+	WRITE_BYTE savevspolymorph 5
+	WRITE_BYTE slashingresistance 50
+	WRITE_BYTE piercingresistance 50
+	WRITE_BYTE missileresistance 60
+	WRITE_BYTE magicresistance 25
+	WRITE_BYTE thac0 12
+	WRITE_BYTE attacksperround 1
+	WRITE_BYTE class classfightercleric
+	WRITE_BYTE levelfirstclass 9
+	WRITE_BYTE levelsecondclass 9
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~~ #8
+	WRITE_ASCII racescript ~meskelwp~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	REMOVE_MEMORIZED_SPELLS
+	ADD_MEMORIZED_SPELL ~sppr101~ #0 ~priest~ (1) //Bless
+	ADD_MEMORIZED_SPELL ~sppr203~ #1 ~priest~ (1) //Chant
+	ADD_MEMORIZED_SPELL ~sppr301~ #2 ~priest~ (7) //Animate Dead
+	ADD_MEMORIZED_SPELL ~sppr415~ #3 ~priest~ (1) //Cloak of Fear
+	ADD_MEMORIZED_SPELL ~sppr505~ #4 ~priest~ (1) //True Seeing
+	ADD_MEMORIZED_SPELL ~sppr715~ #6 ~priest~ (1) //Unholy Word
+	ADD_MEMORIZED_SPELL ~sppr718~ #6 ~priest~ (1) //Symbol, Stun
+	ADD_MEMORIZED_SPELL ~sppr719~ #6 ~priest~ (1) //Symbol, Death
+	SET_BG2_PROFICIENCY PROFICIENCYMACE 2
+	SET_BG2_PROFICIENCY PROFICIENCYSLING 2
+	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
+	REPLACE_CRE_ITEM ~MEHELMBL~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~BLUN21~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Mace +2
+	REPLACE_CRE_ITEM ~SLNG02~ #0 #0 #0 ~NONE~ ~WEAPON2~ //Sling +1
+	REPLACE_CRE_ITEM ~BULL08~ #40 #0 #0 ~NONE~ ~QUIVER1~ //Ice Bullet +1
+	REPLACE_CRE_ITEM ~SHLD06~ #0 #0 #0 ~NONE~ ~SHIELD~ //Large Shield +1
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi404~ END //Protection from Ice Storm
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi502~ END //Protection from Cloudkill
+
+COPY_EXISTING ~skelwa02.cre~ ~override~
+	SAY NAME1 @18072
+	SAY NAME2 @18072
+	WRITE_SHORT killxp 6000
+	WRITE_SHORT currenthp 65
+	WRITE_SHORT maxhp 65
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 26
+	WRITE_BYTE dexterity 17
+	WRITE_BYTE constitution 15
+	WRITE_BYTE intelligence 21
+	WRITE_BYTE wisdom 12
+	WRITE_BYTE charisma 14
+	WRITE_BYTE savevsbreath 5
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevsspell 5
+	WRITE_BYTE savevswand 5
+	WRITE_BYTE savevspolymorph 5
+	WRITE_BYTE slashingresistance 50
+	WRITE_BYTE piercingresistance 50
+	WRITE_BYTE missileresistance 60
+	WRITE_BYTE magicresistance 25
+	WRITE_BYTE thac0 6
+	WRITE_BYTE attacksperround 1
+	WRITE_BYTE class classfightermage
+	WRITE_BYTE levelfirstclass 9
+	WRITE_BYTE levelsecondclass 10
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~~ #8
+	WRITE_ASCII racescript ~meskelwm~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~wtarsgt~ #8
+	REMOVE_MEMORIZED_SPELLS
+	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (1) //Detect Invisibility
+	ADD_MEMORIZED_SPELL ~spwi213~ #1 ~wizard~ (2) //Stinking Cloud
+	ADD_MEMORIZED_SPELL ~spwi219~ #1 ~wizard~ (1) //Vocalize
+	ADD_MEMORIZED_SPELL ~spwi404~ #3 ~wizard~ (2) //Ice Storm
+	ADD_MEMORIZED_SPELL ~spwi502~ #4 ~wizard~ (2) //Cloudkill
+	ADD_MEMORIZED_SPELL ~spwi503~ #4 ~wizard~ (1) //Cone of Cold
+	ADD_MEMORIZED_SPELL ~spwi613~ #5 ~wizard~ (1) //Improved Haste
+	ADD_MEMORIZED_SPELL ~spwi713~ #6 ~wizard~ (1) //Finger of Death
+	ADD_MEMORIZED_SPELL ~spwi812~ #7 ~wizard~ (1) //Abi-Dalzim's Horrid Wilting
+	ADD_MEMORIZED_SPELL ~meco103~ #2 ~wizard~ (1) //Wild Horror
+	ADD_MEMORIZED_SPELL ~mems098~ #4 ~wizard~ (1) //Large Skeleton Horde
+	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 2
+	SET_BG2_PROFICIENCY PROFICIENCYDART 2
+	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
+	REPLACE_CRE_ITEM ~MEHELMBL~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~SW1H41~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Long Sword +2
+	REPLACE_CRE_ITEM ~DART04~ #40 #0 #0 ~NONE~ ~WEAPON2~ //Darts of Wounding
+	REPLACE_CRE_ITEM ~SHLD02~ #0 #0 #0 ~NONE~ ~SHIELD~ //Small Shield +1
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi404~ END //Protection from Ice Storm
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi502~ END //Protection from Cloudkill
+
+COPY_EXISTING ~skelwa03.cre~ ~override~
+	SAY NAME1 @18073
+	SAY NAME2 @18073
+	WRITE_SHORT killxp 7500
+	WRITE_SHORT currenthp 99
+	WRITE_SHORT maxhp 99
+	WRITE_BYTE strength 18
+	WRITE_BYTE exceptionalstrength 100
+	WRITE_BYTE dexterity 18
+	WRITE_BYTE constitution 18
+	WRITE_BYTE intelligence 14
+	WRITE_BYTE wisdom 12
+	WRITE_BYTE charisma 12
+	WRITE_BYTE savevsbreath 5
+	WRITE_BYTE savevsdeath 5
+	WRITE_BYTE savevsspell 5
+	WRITE_BYTE savevswand 5
+	WRITE_BYTE savevspolymorph 5
+	WRITE_BYTE slashingresistance 50
+	WRITE_BYTE piercingresistance 50
+	WRITE_BYTE missileresistance 60
+	WRITE_BYTE magicresistance 25
+	WRITE_BYTE thac0 9
+	WRITE_BYTE attacksperround 1
+	WRITE_BYTE class classfighter
+	WRITE_BYTE levelfirstclass 12
+	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
+	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 3
+	REPLACE_CRE_ITEM ~MEHELMBL~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+	REPLACE_CRE_ITEM ~SW2H11~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP //Two-handed Sword +2
+	REPLACE_CRE_ITEM ~BOW02~ #0 #0 #0 ~NONE~ ~WEAPON2~ //Composite Longbow +1
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
+	REPLACE_CRE_ITEM ~MEAROW25~ #100 #0 #0 ~UNSTEALABLE&UNDROPPABLE~ ~QUIVER1~ //Blue Arrows of Detonation
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~QUIVER2~
+	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~QUIVER3~
+	ADD_CRE_ITEM ~MEAROW25~ #5 #0 #0 ~NONE~ ~INV4~ //Blue Arrows of Detonation
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi404~ END //Protection from Ice Storm
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=(0 - 1) STR_VAR resource=~spwi502~ END //Protection from Cloudkill
+
+COPY_EXISTING ~brilla.dlg~ ~override~
+	DECOMPILE_DLG_TO_D
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~CreateCreature(\"GUARD\",\[1402.221\],SW)~ ~CreateCreature("GUARD",[1402.221],SW)
+Enemy()~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~EscapeArea()~ ~~
+	COMPILE_D_TO_DLG
+
+COPY_EXISTING ~entar.dlg~ ~override~
+	DECOMPILE_DLG_TO_D
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~Shout(99)~ ~Shout(99)
+Enemy()~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~EscapeArea()~ ~~
+	COMPILE_D_TO_DLG

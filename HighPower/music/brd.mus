@@ -1,0 +1,19 @@
+BRD
+15
+A1                  @TAG ZA
+A2                  @TAG ZA
+B1                  @TAG ZB
+B2                  @TAG ZB
+C1                  @TAG ZB
+C2                  @TAG ZC
+D1                  @TAG ZC
+D2                  @TAG ZC
+E1                  @TAG ZE
+E2                  @TAG ZC
+F1                  @TAG ZE
+G                   @TAG ZG
+H1                  @TAG ZE
+H2                  @TAG ZG
+B2  BRD   A1        @TAG ZB
+# A1 is loop
+
