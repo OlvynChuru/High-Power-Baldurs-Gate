@@ -49,7 +49,30 @@ me_resistance_opcode = {
 function MESTATPR(effectData, creatureData)
 	local targetID = EEex_ReadDword(creatureData + 0x34)
 	local sourceID = EEex_ReadDword(effectData + 0x10C)
-
+--[[
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 53,
+["target"] = 2,
+["parameter1"] = EEex_GetActorAnimation(targetID),
+["parameter2"] = 2,
+["timing"] = 9,
+["source_target"] = targetID,
+["source_id"] = targetID
+})
+--]]
+--[[
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 272,
+["target"] = 2,
+["parameter1"] = 1,
+["parameter2"] = 2,
+["timing"] = 9,
+["duration"] = 0x20000000,
+["resource"] = "MESHATTE",
+["source_target"] = targetID,
+["source_id"] = targetID
+})
+--]]
 --	local areaData = EEex_ReadDword(creatureData + 0x14)
 --	C:Eval("MakeGlobal()",targetID)
 --	C:Eval("ChangeEnemyAlly(Myself,FAMILIAR)",targetID)
@@ -2020,7 +2043,7 @@ function MEPRTSLV(effectData, creatureData)
 end
 
 function EEex_GetActorFullResistance(actorID, resistanceStat)
-	if actorID == 0x0 or me_resistance_opcode[resistanceStat] == nil then return end
+	if not EEex_IsSprite(actorID) or me_resistance_opcode[resistanceStat] == nil then return 0 end
 	local base_resistance = 0
 	local timing_level = 0
 	if me_resistance_opcode[resistanceStat][2] ~= 0 then
@@ -2295,15 +2318,26 @@ end
 function MEACTSPL(effectData, creatureData)
 	local sourceID = EEex_ReadDword(creatureData + 0x34)
 	local action = EEex_ReadWord(effectData + 0x44, 0x0)
-	if action == EEex_ReadWord(creatureData + 0x2F8, 0x0) then
-		local targetID = EEex_ReadDword(creatureData + 0x318)
-		local spellRes = EEex_ReadLString(effectData + 0x18, 8)
-		local casterlvl = EEex_ReadDword(effectData + 0xC4)
-		if casterlvl < 1 then
-			casterlvl = EEex_GetActorStat(sourceID, 34)
+	if action ~= EEex_ReadWord(creatureData + 0x2F8, 0x0) then return end
+	local targetID = EEex_ReadDword(creatureData + 0x318)
+	local spellRes = EEex_ReadLString(effectData + 0x18, 8)
+	local casterlvl = EEex_ReadDword(effectData + 0xC4)
+	if casterlvl < 1 then
+		casterlvl = EEex_GetActorStat(sourceID, 34)
+	end
+	local sourceX = EEex_ReadDword(creatureData + 0x8)
+	local sourceY = EEex_ReadDword(creatureData + 0xC)
+	local range = bit32.band(EEex_ReadWord(effectData + 0x46, 0x0), 0x7FFF)
+	local invertRangeCheck = (bit32.band(EEex_ReadWord(effectData + 0x46, 0x0), 0x8000) == 0)
+	if targetID > 0 then
+		local targetX = EEex_ReadDword(EEex_GetActorShare(targetID) + 0x8)
+		local targetY = EEex_ReadDword(EEex_GetActorShare(targetID) + 0xC)
+		if invertRangeCheck then
+			if EEex_GetDistance(sourceX, sourceY, targetX, targetY) < range then return end
+		else
+			if EEex_GetDistance(sourceX, sourceY, targetX, targetY) >= range then return end
 		end
-		if targetID > 0 then
-			EEex_ApplyEffectToActor(targetID, {
+		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 146,
 ["target"] = 2,
 ["timing"] = 1,
@@ -2312,13 +2346,20 @@ function MEACTSPL(effectData, creatureData)
 ["resource"] = spellRes,
 ["source_target"] = targetID,
 ["source_id"] = sourceID,
-["source_x"] = EEex_ReadDword(creatureData + 0x8),
-["source_y"] = EEex_ReadDword(creatureData + 0xC),
-["target_x"] = EEex_ReadDword(EEex_GetActorShare(targetID) + 0x8),
-["target_y"] = EEex_ReadDword(EEex_GetActorShare(targetID) + 0xC)
+["source_x"] = sourceX,
+["source_y"] = sourceY,
+["target_x"] = targetX,
+["target_y"] = targetY
 })
+	else
+		local targetX = EEex_ReadDword(creatureData + 0x34C)
+		local targetY = EEex_ReadDword(creatureData + 0x350)
+		if invertRangeCheck then
+			if EEex_GetDistance(sourceX, sourceY, targetX, targetY) < range then return end
 		else
-			EEex_ApplyEffectToActor(sourceID, {
+			if EEex_GetDistance(sourceX, sourceY, targetX, targetY) >= range then return end
+		end
+		EEex_ApplyEffectToActor(sourceID, {
 ["opcode"] = 148,
 ["target"] = 2,
 ["timing"] = 1,
@@ -2327,14 +2368,16 @@ function MEACTSPL(effectData, creatureData)
 ["resource"] = spellRes,
 ["source_target"] = sourceID,
 ["source_id"] = sourceID,
-["source_x"] = EEex_ReadDword(creatureData + 0x8),
-["source_y"] = EEex_ReadDword(creatureData + 0xC),
-["target_x"] = EEex_ReadDword(creatureData + 0x34C),
-["target_y"] = EEex_ReadDword(creatureData + 0x350)
+["source_x"] = sourceX,
+["source_y"] = sourceY,
+["target_x"] = targetX,
+["target_y"] = targetY
 })
-		end
 	end
+
 end
+
+
 
 function MELINKST(effectData, creatureData)
 	local targetID = EEex_ReadDword(creatureData + 0x34)
@@ -2805,3 +2848,308 @@ function MEBIRDPU(effectData, creatureData)
 
 end
 --]]
+
+function MESHATTE(effectData, creatureData)
+	EEex_Call(EEex_Label("CGameSprite::Shatter"), {0x0}, creatureData, 0x0)
+end
+
+function MEHOP(effectData, creatureData)
+	EEex_Call(EEex_Label("CGameSprite::Shatter"), {0x4}, creatureData, 0x0)
+end
+
+
+function MEHGTST(effectData, creatureData)
+	local targetID = EEex_ReadDword(creatureData + 0x34)
+	local animation = EEex_GetActorAnimation(targetID)
+	local parameter1 = EEex_ReadDword(effectData + 0x18)
+	local parameter2 = EEex_ReadDword(effectData + 0x1C)
+	local special = EEex_ReadDword(effectData + 0x44)
+	if special == 0 then
+		local height = EEex_ReadWord(creatureData + 0x618, 0x0)
+		Infinity_DisplayString(height)
+		if parameter2 == 0 then
+			EEex_WriteWord(creatureData + 0x618, height + parameter1)
+		elseif parameter2 == 1 then
+			EEex_WriteWord(creatureData + 0x618, parameter1)
+		elseif parameter2 == 2 then
+			EEex_WriteWord(creatureData + 0x618, math.floor(height * (parameter1 / 100)))
+		end
+	elseif special == 1 then
+		local speed = EEex_ReadSignedWord(creatureData + 0x61A, 0x0)
+		Infinity_DisplayString(speed)
+		if parameter2 == 0 then
+			EEex_WriteWord(creatureData + 0x61A, speed + parameter1)
+		elseif parameter2 == 1 then
+			EEex_WriteWord(creatureData + 0x61A, parameter1)
+		elseif parameter2 == 2 then
+			EEex_WriteWord(creatureData + 0x61A, math.floor(speed * (parameter1 / 100)))
+		end
+	elseif special == 2 then
+		local accel = EEex_ReadSignedWord(creatureData + 0x61C, 0x0)
+		Infinity_DisplayString(accel)
+		if parameter2 == 0 then
+			EEex_WriteWord(creatureData + 0x61C, accel + parameter1)
+		elseif parameter2 == 1 then
+			EEex_WriteWord(creatureData + 0x61C, parameter1)
+		elseif parameter2 == 2 then
+			EEex_WriteWord(creatureData + 0x61C, math.floor(accel * (parameter1 / 100)))
+		end
+	end
+
+end
+
+function MEHGTMOD(effectData, creatureData)
+	local targetID = EEex_ReadDword(creatureData + 0x34)
+	local sourceID = EEex_ReadDword(effectData + 0x10C)
+	local game_loaded = false
+	if sourceID <= 0 then
+		Infinity_DisplayString("ugu")
+--		sourceID = targetID
+		game_loaded = true
+	end
+	local parameter1 = EEex_ReadDword(effectData + 0x18)
+	local parameter2 = EEex_ReadDword(effectData + 0x1C)
+	local parameter3 = EEex_ReadDword(effectData + 0x5C)
+	local parameter4 = EEex_ReadDword(effectData + 0x60)
+	local special = EEex_ReadDword(effectData + 0x44)
+	local parent_resource = EEex_ReadLString(effectData + 0x90, 8)
+	local spellRes = EEex_ReadLString(effectData + 0x18, 8)
+	local casterlvl = EEex_ReadDword(effectData + 0xC4)
+	local duration = EEex_ReadDword(effectData + 0x24)
+	local time_applied = EEex_ReadDword(effectData + 0x68)
+	Infinity_DisplayString(time_applied .. " -> " .. duration)
+
+	local animation = EEex_GetActorAnimation(targetID)
+	local height = EEex_ReadSignedWord(creatureData + 0x618, 0x0)
+	local speed = EEex_ReadSignedWord(creatureData + 0x61A, 0x0)
+	local accel = EEex_ReadSignedWord(creatureData + 0x61C, 0x0)
+--	local fullHeight = height + EEex_GetActorStat(targetID, 641)
+--	local fullSpeed = speed + EEex_GetActorStat(targetID, 642)
+--	local fullAccel = EEex_GetActorStat(targetID, 643)
+--	if fullHeight <= 0 and fullSpeed <= 0 and fullAccel <= 0 then 
+	if (height <= 0 and speed <= 0 and accel <= 0) then 
+		if parameter4 == 1 then
+			parameter4 = 0
+			EEex_WriteWord(creatureData + 0x618, EEex_ReadSignedWord(creatureData + 0x48A, 0x0))
+			EEex_WriteWord(creatureData + 0x61A, EEex_ReadSignedWord(creatureData + 0x48C, 0x0))
+			EEex_WriteWord(creatureData + 0x61C, EEex_ReadSignedWord(creatureData + 0x48E, 0x0))
+			EEex_WriteWord(creatureData + 0x48A, 0)
+			EEex_WriteWord(creatureData + 0x48C, 0)
+			EEex_WriteWord(creatureData + 0x48E, 0)
+--[[
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 402,
+["target"] = 2,
+["timing"] = 3,
+["duration"] = 1,
+["parameter1"] = parameter1,
+["parameter2"] = parameter2,
+["parameter3"] = 0,
+["parameter4"] = parameter4,
+["resource"] = "MEHGTMOD",
+["special"] = special,
+["casterlvl"] = casterlvl,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+--]]
+
+
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 146,
+["target"] = 2,
+["parameter1"] = casterlvl,
+["parameter2"] = 2,
+["timing"] = 4,
+["duration"] = 1,
+["resource"] = parent_resource,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+			return
+		else
+			EEex_WriteWord(creatureData + 0x618, 0)
+			EEex_WriteWord(creatureData + 0x61A, 0)
+			EEex_WriteWord(creatureData + 0x61C, 0)
+			if parameter1 == 1 then
+				EEex_ApplyEffectToActor(targetID, {
+	["opcode"] = 321,
+	["target"] = 2,
+	["timing"] = 9,
+	["resource"] = parent_resource,
+	["parent_resource"] = parent_resource,
+	["source_target"] = targetID,
+	["source_id"] = sourceID
+	})
+				EEex_ApplyEffectToActor(targetID, {
+	["opcode"] = 326,
+	["target"] = 2,
+	--["parameter1"] = 1,
+	--["parameter2"] = 2,
+	["timing"] = 4,
+	["resource"] = "MEUNSTUC",
+	["casterlvl"] = casterlvl,
+	["parent_resource"] = parent_resource,
+	["source_target"] = targetID,
+	["source_id"] = sourceID
+	})
+	--[[
+				EEex_ApplyEffectToActor(targetID, {
+	["opcode"] = 206,
+	["target"] = 2,
+	["timing"] = 0,
+	["resource"] = parent_resource,
+	["parent_resource"] = parent_resource,
+	["source_target"] = targetID,
+	["source_id"] = sourceID
+	})
+	--]]
+			elseif spellRes ~= "" then
+				EEex_ApplyEffectToActor(targetID, {
+	["opcode"] = 146,
+	["target"] = 2,
+	["parameter1"] = 1,
+	["parameter2"] = 2,
+	["timing"] = 9,
+	["resource"] = spellRes,
+	["parent_resource"] = parent_resource,
+	["source_target"] = targetID,
+	["source_id"] = sourceID
+	})
+			end
+		end
+		return 
+	end
+
+	if duration == time_applied and not game_loaded then
+		if parameter3 < 10 then
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 402,
+["target"] = 2,
+["timing"] = 3,
+["parameter1"] = parameter1,
+["parameter2"] = parameter2,
+["parameter3"] = parameter3 + 1,
+["parameter4"] = parameter4,
+["resource"] = "MEHGTMOD",
+["special"] = special,
+["casterlvl"] = casterlvl,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+			return
+		else
+--[[
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 146,
+["target"] = 2,
+["parameter1"] = casterlvl,
+["parameter2"] = 2,
+["timing"] = 4,
+["duration"] = 1,
+["resource"] = parent_resource,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+--]]
+			EEex_WriteWord(creatureData + 0x48A, height)
+			EEex_WriteWord(creatureData + 0x48C, speed)
+			EEex_WriteWord(creatureData + 0x48E, accel)
+			parameter4 = 1
+		end
+
+	end
+
+	Infinity_DisplayString("height: " .. height)
+	Infinity_DisplayString("speed: " .. speed)
+	Infinity_DisplayString("accel: " .. accel)
+	height = height + speed
+	speed = speed + accel
+--	Infinity_DisplayString("height2: " .. height)
+	EEex_WriteWord(creatureData + 0x618, height)
+	EEex_WriteWord(creatureData + 0x61A, speed)
+	if height <= 0 then
+		height = 0
+		EEex_WriteWord(creatureData + 0x618, 0)
+		if speed <= 0 then
+			speed = 0
+			EEex_WriteWord(creatureData + 0x61A, 0)
+		end
+--		return
+	elseif height > 999 then
+		height = 999
+--		EEex_WriteWord(creatureData + 0x618, 999)
+	end
+
+	Infinity_DisplayString(me_heighttoanimation[height])
+	if me_heighttoanimation[height] == nil then return end
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 53,
+["target"] = 2,
+["parameter1"] = me_heighttoanimation[height],
+["parameter2"] = 0,
+["timing"] = 0,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+
+	EEex_Call(EEex_Label("CGameSprite::Shatter"), {0x4}, creatureData, 0x0)
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 53,
+["target"] = 2,
+["parameter1"] = animation,
+["parameter2"] = 0,
+["timing"] = 0,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+--[[
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 165,
+["target"] = 2,
+["timing"] = 0,
+["duration"] = 1,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+--]]
+
+	if special == 1 then
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 146,
+["target"] = 2,
+["parameter1"] = casterlvl,
+["parameter2"] = 2,
+["timing"] = 9,
+["duration"] = 0,
+["resource"] = parent_resource,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+	elseif special == 2 then
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 402,
+["target"] = 2,
+["timing"] = 3,
+["parameter1"] = parameter1,
+["parameter2"] = parameter2,
+["parameter3"] = 0,
+["parameter4"] = parameter4,
+["resource"] = "MEHGTMOD",
+["special"] = special,
+["casterlvl"] = casterlvl,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+
+	end
+end

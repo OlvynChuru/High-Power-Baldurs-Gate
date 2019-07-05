@@ -3599,6 +3599,9 @@ STATISTICS:
 Abilities:
 - The wearer of these gloves can heal an adjacent creature by 5 Hit Points. This ability can be used unlimited times per day.
 
+Requires:
+ 21 Charisma
+
 Weight: 2~
 @4652=~Although Monks traditionally shun armor, these gauntlets of Grand Master Tzu-Zan are highly sought after by the practitioners of weaponless combat.
 
@@ -6560,24 +6563,27 @@ STATISTICS:
 
 Special:
 - Can attack in the form of Chain Lightning, Lightning Bolt, or a regular melee attack
+- Damage bonuses increase the electricity damage of the weapon
 
 Normal:
 THAC0: +2
-Damage: 1d6+3 (crushing), +1d6 electricity
+Damage: 1d6+3 (electricity), +1d6 crushing
 
 Chain Lightning:
 THAC0: INFINITE
-Damage: 3d6 (electricity), no Strength bonus
+Damage: 1d6+3 (electricity)
 
 Lightning Bolt:
 THAC0: INFINITE
-Damage: 4d6 (electricity), no Strength bonus
+Damage: 1d6+3 (electricity)
 
 Speed Factor: 6
 Proficiency Type: Mace
 Type: One-handed
 Requires:
  10 Strength
+ 15 Intelligence
+ 15 Wisdom
 
 Weight: 7~
 @10859=~Flail of Ages +5~
@@ -6659,7 +6665,7 @@ STATISTICS:
 Special:
 - Attacks in the form of a Cone of Cold
 - Doesn't roll to hit, so it automatically hits and can neither critically hit nor critically miss
-- No Strength bonus to damage
+- Damage bonuses increase the cold damage of the weapon
 - Attacks per round set to 1
 
 THAC0: INFINITE
@@ -6669,6 +6675,7 @@ Proficiency Type: Flail/Morning Star
 Type: Two-handed
 Requires:
  19 Strength
+ 16 Intelligence
 
 Weight: 36~
 @10925=~Helmed Horror's Morning Star +1~
@@ -6732,7 +6739,7 @@ Requires:
 
 Weight: 7~
 @10995=~Crushing Mace +3~
-@10996=~Although not heavier than a normal mace, the Crushing Mace seems to be much better at crushing people. When it is swung vertically, it jolts down onto the target's head with much greater force than that of the swing, dealing heavy damage. This effect does not happen when the mace is swung horizontally.
+@10996=~Although not heavier than a normal mace, the Crushing Mace seems to be much better at crushing. When it is swung vertically, it jolts down onto the target's head with much greater force than that of the swing, dealing heavy damage. This effect does not happen when the mace is swung horizontally.
 
 STATISTICS:
 
@@ -9289,6 +9296,8 @@ One chapter focuses on related monsters called ettercaps.
 @18321=~Greater Light Ankheg~
 @18322=~Greater Heavy Ankheg~
 @18323=~Greater Arcane Ankheg~
+@18324=~Floof the Frozen Fool~
+@18325=~Aurgleb the Greater Ogre~
 
 
 @19001=~Divine Favor
@@ -9814,6 +9823,25 @@ This ability has no casting time, can be used immediately after another ability,
 @19351=~Orc Blind~
 @19352=~High Strength of Gruumsh~
 @19353=~Strength set to 25~
+@19354=~Grapple~
+@19355=~Engulf~
+@19356=~Six Levels Drained~
+@19357=~Seven Levels Drained~
+@19358=~Eight Levels Drained~
+@19359=~Nine Levels Drained~
+@19360=~Ten Levels Drained~
+@19361=~One Level Gained~
+@19362=~Two Levels Gained~
+@19363=~Three Levels Gained~
+@19364=~Four Levels Gained~
+@19365=~Five Levels Gained~
+@19366=~Six Levels Gained~
+@19367=~Seven Levels Gained~
+@19368=~Eight Levels Gained~
+@19369=~Nine Levels Gained~
+@19370=~Ten Levels Gained~
+@19371=~Vampire Breach~
+@19372=~Loses immunity to level drain for 3 rounds~
 
 @20102=~Armor
 (Conjuration)

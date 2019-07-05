@@ -1,6 +1,6 @@
 BACKUP ~HighPower/backup~
 AUTHOR ~https://forums.beamdog.com/discussion/60325/mod-high-power-baldurs-gate-version-2-0~
-VERSION ~2.0.3~
+VERSION ~2.1.0~
 README ~HighPower/HighPowerReadme.txt~
 
 ALWAYS
@@ -1073,7 +1073,7 @@ BEGIN
       LOOKUP_IDS_SYMBOL_OF_INT name ~animate~ idx
       PATCH_IF (~%name%~ STR_EQ ~%idx%~) BEGIN
         LPF TO_HEX_NUMBER INT_VAR value = idx minDigits = 4 RET hexNumber END
-        PATCH_IF (NOT FILE_EXISTS_IN_GAME ~%hexNumber%.ini~ AND 
+        PATCH_IF (NOT FILE_EXISTS_IN_GAME ~%hexNumber%.ini~ AND
                   ~%slotList%~ STRING_CONTAINS_REGEXP ~"%hexNumber%"~ != 0) BEGIN
           SET slot = idx
           SET idx = slotMax
@@ -1466,9 +1466,13 @@ END
 DEFINE_ACTION_FUNCTION ADD_ANIMATION
 	INT_VAR
 		minSlot=0
+		start_animate=1
+		start_anisnd=0
 	STR_VAR
 		ini=~~
 	RET
+		end_animate
+		end_anisnd
 		slotDecimal
 		slotHex
 BEGIN
@@ -1483,19 +1487,21 @@ BEGIN
 	ACTION_TO_UPPER %animationname%
 
 	COPY_EXISTING ~animate.ids~ ~override~
-		FOR (i = 1; i < 0xFFFF; ++i) BEGIN
+		FOR (i = start_animate; i < 0xFFFF; ++i) BEGIN
 			READ_2DA_ENTRY i 0 2 current
 			PATCH_IF (current > slotDecimal) BEGIN
 				INSERT_2DA_ROW i 2 ~0x%slotHex% %animationname%~
+				end_animate=i
 				i=0xFFFF
 			END
 		END
 	
 	COPY_EXISTING ~anisnd.ids~ ~override~
-		FOR (i = 0; i < 0xFFFF; ++i) BEGIN
+		FOR (i = start_anisnd; i < 0xFFFF; ++i) BEGIN
 			READ_2DA_ENTRY i 0 3 current
 			PATCH_IF (current > slotDecimal) BEGIN
 				INSERT_2DA_ROW i 3 ~0x%slotHex% %animationprefix%    CGAMEANIMATIONTYPE_%animationname%~
+				end_anisnd=i
 				i=0xFFFF
 			END
 		END
@@ -2486,6 +2492,45 @@ COPY_EXISTING_REGEXP ~[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F].ini~ ~overrid
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~personal.*=[0-9]+~ ~personal_space=1~
 	IF ~male_halfling~
 */
+
+COPY_EXISTING_REGEXP ~b000.ini~ ~override~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~move_scale.*=[0-9]+~ ~move_scale=12~
+/*
+OUTER_SET starting_row_animate = 1
+OUTER_SET starting_row_anisnd = 0
+OUTER_SPRINT i_padding ~000~
+SILENT
+OUTER_FOR (i = 0; i < 1000; ++i) BEGIN
+	ACTION_IF i = 10 BEGIN
+		OUTER_SPRINT i_padding ~00~
+	END
+	ACTION_IF i = 100 BEGIN
+		OUTER_SPRINT i_padding ~0~
+	END
+/*
+	ACTION_IF i = 1000 BEGIN
+		OUTER_SPRINT i_padding ~~
+	END
+*/
+	PRINT ~mezp%i_padding%%i%.ini~
+	COPY_EXISTING ~mezp.ini~ ~override/mezp%i_padding%%i%.ini~
+		REPLACE_TEXTUALLY ~MEZP me_height_creature~ ~MEZP%i_padding%%i% me_height_creature_%i%~
+		REPLACE_TEXTUALLY ~height_offset=0~ ~height_offset=%i%~
+		REPLACE_TEXTUALLY ~resref=MEZP~ ~resref=MEZP%i_padding%%i%~
+
+	COPY_EXISTING ~mezp.bam~ ~override/mezp%i_padding%%i%.bam~
+//		WRITE_SHORT 0x1A i
+		WRITE_SHORT 0x1E i
+
+	LAF ADD_ANIMATION INT_VAR start_animate=starting_row_animate start_anisnd=starting_row_anisnd minSlot=(0xC000 + i) STR_VAR ini= EVAL ~mezp%i_padding%%i%~ RET starting_row_animate=end_animate starting_row_anisnd=end_anisnd slotheightcreaturedecimal=slotDecimal END
+
+	COPY_EXISTING ~M__MESTR.LUA~ ~override~
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_heighttoanimation = {\[\"\"\] = 0~ ~me_heighttoanimation = {[""] = 0, [%i%] = %slotheightcreaturedecimal%~
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_animationtoheight = {\[\"\"\] = 0~ ~me_animationtoheight = {[""] = 0, [%slotheightcreaturedecimal%] = %i%~
+END
+VERBOSE
+*/
+
 COPY_EXISTING ~splstate.ids~ ~override~
 	READ_2DA_ENTRY 124 0 2 previous
 	FOR (i = 5; i < 254; ++i) BEGIN
@@ -3145,7 +3190,7 @@ LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~88~ splprot_value=~0~ splprot_re
 
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~88~ splprot_value=~0~ splprot_relation=~1~ RET splprot_nostoneskinsremaining=splprot_slot END
 
-LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~633~ splprot_value=~0~ splprot_relation=~1~ RET splprot_eaglebow=splprot_slot END
+LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~633~ splprot_value=~0~ splprot_relation=~5~ RET splprot_eaglebow=splprot_slot END
 
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~634~ splprot_value=~0~ splprot_relation=~1~ RET splprot_unseenclub=splprot_slot END
 
@@ -3865,10 +3910,10 @@ COPY_EXISTING ~mewi252.spl~ ~override/%mewi252%.spl~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi252~ resource= EVAL ~%mewi252%~ END
 	SAY NAME1 @33252
 	SAY UNIDENTIFIED_DESC @34252
-
+/*
 COPY_EXISTING ~ar0900.are~ ~override~ ~ar2600.are~ ~override~ ~ar2626.are~ ~override~
 	LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~Prevent Ghostwalking~ fj_reg_script=~MENOTEL~ END
-
+*/
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI2~ RET mewi253=filename END
 COPY_EXISTING ~mewi253.spl~ ~override/%mewi253%.spl~
 	SAY NAME1 @33253
@@ -6188,6 +6233,7 @@ COPY_EXISTING ~brac18.itm~ ~override~
 	LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete=modifyac END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifyac target=1 timing=2 parameter1=5 parameter2=modifyacvsmissiles END
 	WRITE_LONG unusability 0x40040180 //Can be used by fighters, rangers, paladins, thieves, bards, and monks
+	WRITE_LONG price 1200
 	SAY IDENTIFIED_DESC @4636
 
 COPY_EXISTING ~brac19.itm~ ~override~
@@ -6204,6 +6250,8 @@ COPY_EXISTING ~brac20.itm~ ~override~
 	WRITE_SHORT firstheaderchargeflags 0
 	WRITE_LONG firstheaderflags 0
 	WRITE_LONG unusability 0x606FFFEB //Can only be used by lawful good paladins
+	WRITE_LONG price 2000
+	WRITE_BYTE mincharisma 21
 	SAY IDENTIFIED_DESC @4640
 
 COPY_EXISTING ~brac26.itm~ ~override~
@@ -13296,6 +13344,7 @@ COPY_EXISTING ~cow.cre~ ~override~
 	WRITE_ASCII generalscript ~none~ #8
 	WRITE_ASCII defaultscript ~none~ #8
 	ADD_MEMORIZED_SPELL ~mems100~ #0 ~innate~ (1)
+	LPF ADD_CRE_EFFECT INT_VAR opcode=applyspellonmovement target=1 timing=9 STR_VAR resource=~mehopmov~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromprojectile target=1 timing=9 parameter2=188 END //Falling cow
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 STR_VAR resource=~meco094~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 STR_VAR resource=~spwi917~ END
@@ -13305,6 +13354,7 @@ COPY_EXISTING ~cow.cre~ ~override~
 COPY_EXISTING ~cowh.cre~ ~override~ //The cow you save from the xvarts
 	WRITE_SHORT currenthp 150
 	WRITE_SHORT maxhp 150
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=9 parameter1=0 parameter2=1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromtimestop target=1 timing=9 parameter2=1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@24002) STR_VAR resource=~meidecre~ END
 
@@ -15112,14 +15162,14 @@ COPY_EXISTING ~eagle.cre~ ~override~
 	WRITE_BYTE race 170
 	WRITE_BYTE class 199
 	ADD_CRE_ITEM ~meflying~ #0 #0 #0 ~NONE~ ~LRING~
-	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=1 duration=0x20000000 parameter1=1 parameter2=2 STR_VAR resource=~meeagled~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=1 duration=0x20000000 parameter1=1 parameter2=2 STR_VAR resource=~meeagld~ END
 
 COPY_EXISTING_REGEXP ~bird.*\.cre~ ~override~ ~seagul\.cre~ ~override~ ~vultur\.cre~ ~override~
 	WRITE_LONG killxp 0
 	WRITE_BYTE race 170
 	WRITE_BYTE class 199
 	ADD_CRE_ITEM ~meflying~ #0 #0 #0 ~NONE~ ~LRING~
-	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=1 duration=0x20000000 parameter1=1 parameter2=2 STR_VAR resource=~meeaglee~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=1 duration=0x20000000 parameter1=1 parameter2=2 STR_VAR resource=~meeagle~ END
 
 COPY_EXISTING ~efreetsu.cre~ ~override~
 	WRITE_LONG killxp 2800
@@ -15631,9 +15681,10 @@ COPY_EXISTING ~firebe.cre~ ~override~
 COPY_EXISTING ~ffsleep.cre~ ~override~
 	SAY INITIAL_MEETING #4988
 
-COPY_EXISTING_REGEXP ~flam.*.cre~ ~override~ ~ff.*.cre~ ~override~ ~chimp5.cre~ ~override~ ~watchm.cre~ ~override~ ~fergus.cre~ ~override~ ~sorrel.cre~ ~override~ ~bill.cre~ ~override~ ~laola.cre~ ~override~ ~caedmo.cre~ ~override~ ~kent.cre~ ~override~ ~jonavi.cre~ ~override~
+COPY_EXISTING_REGEXP ~flam.*.cre~ ~override~ ~ff.*.cre~ ~override~ ~k9ff.*.cre~ ~override~ ~chimp5.cre~ ~override~ ~watchm.cre~ ~override~ ~fergus.cre~ ~override~ ~sorrel.cre~ ~override~ ~bill.cre~ ~override~ ~laola.cre~ ~override~ ~caedmo.cre~ ~override~ ~kent.cre~ ~override~ ~jonavi.cre~ ~override~
 	REPLACE_CRE_ITEM ~meshld60~ #0 #0 #0 ~NONE~ ~SHIELD~
 	REPLACE_CRE_ITEM ~meflamfi~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	IF_EXISTS
 
 COPY_EXISTING ~flam2.cre~ ~override~
 	SAY NAME1 @18311
@@ -15876,7 +15927,7 @@ COPY_EXISTING ~flam13.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=9 parameter1=300 parameter2=2 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=9 parameter1=10 END
 
-COPY_EXISTING ~flamal.cre~ ~override~ ~flamc7.cre~ ~override~ ~ffhunt.cre~ ~override~ ~ffhunt1.cre~ ~override~ ~ffhunt2.cre~ ~override~ ~ffhunt3.cre~ ~override~
+COPY_EXISTING_REGEXP ~flamal.cre~ ~override~ ~flamc7.cre~ ~override~ ~ffhunt.cre~ ~override~ ~ffhunt1.cre~ ~override~ ~ffhunt2.cre~ ~override~ ~ffhunt3.cre~ ~override~ ~k9ff.*.cre~ ~override~
 	WRITE_LONG killxp 2000
 	WRITE_SHORT currenthp 99
 	WRITE_SHORT maxhp 99
@@ -17671,7 +17722,7 @@ COPY_EXISTING ~hick.cre~ ~override~
 	SAY NAME1 @18018
 	SAY NAME2 @18018
 
-COPY_EXISTING_REGEXP ~hob.*.cre~ ~override~ ~bhobgob.cre~ ~override~ ~nthobgod.cre~ ~override~
+COPY_EXISTING_REGEXP ~hob.*.cre~ ~override~ ~bhobgob.cre~ ~override~ ~nthobgod.cre~ ~override~ ~k9hobgob.cre~ ~override~
 	WRITE_LONG killxp 90
 	WRITE_BYTE strength 18
 	WRITE_BYTE dexterity 18
@@ -19255,7 +19306,7 @@ COPY_EXISTING ~kobola_b.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyattacksperround target=1 timing=9 parameter1=5 parameter2=1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyvisualrange target=1 timing=9 parameter1=15 END
 
-COPY_EXISTING ~kobola_c.cre~ ~override~
+COPY_EXISTING ~kobola_c.cre~ ~override~ ~kobcap01.cre~ ~override~
 	SAY NAME1 @18037
 	SAY NAME2 @18037
 	WRITE_LONG killxp 90
@@ -19267,6 +19318,7 @@ COPY_EXISTING ~kobola_c.cre~ ~override~
 	REPLACE_CRE_ITEM ~bow01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~sw1h07~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON2~
 	REPLACE_CRE_ITEM ~arow01~ #80 #0 #0 ~IDENTIFIED~ ~QUIVER1~ EQUIP
+	IF_EXISTS
 
 COPY_EXISTING ~kobola_d.cre~ ~override~
 	SAY NAME1 @18038
@@ -20768,7 +20820,7 @@ COPY_EXISTING ~neekando.cre~ ~override~
 	REPLACE_CRE_ITEM ~mescrl9b~ #0 #0 #0 ~IDENTIFIED~ ~INV4~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymagicdamageresistance target=1 timing=9 parameter1=95 END
 
-COPY_EXISTING_REGEXP ~negob.*.cre~ ~override~ ~neguar.*.cre~ ~override~ ~rsgob.cre~ ~override~
+COPY_EXISTING_REGEXP ~negob.*.cre~ ~override~ ~neguar.*.cre~ ~override~ ~rsgob.cre~ ~override~ ~k9rsgob.cre~ ~override~
 	WRITE_LONG killxp 450
 	WRITE_SHORT currenthp 4
 	WRITE_SHORT maxhp 4
@@ -20793,6 +20845,7 @@ COPY_EXISTING_REGEXP ~negob.*.cre~ ~override~ ~neguar.*.cre~ ~override~ ~rsgob.c
 	WRITE_ASCII generalscript ~negoblin~ #8
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymagicdamageresistance target=1 timing=9 parameter1=99 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifypoisonresistance target=1 timing=9 parameter1=99 END
+	IF_EXISTS
 
 COPY_EXISTING ~neira.cre~ ~override~
 	WRITE_LONG killxp 1500
@@ -21661,7 +21714,7 @@ COPY_EXISTING ~oopah2.cre~ ~override~
 	WRITE_ASCII generalscript ~~ #8
 	WRITE_ASCII defaultscript ~meamelee~ #8
 
-COPY_EXISTING ~orc01.cre~ ~override~
+COPY_EXISTING ~orc01.cre~ ~override~ ~k9orc01.cre~ ~override~
 	WRITE_LONG killxp 900
 	WRITE_SHORT currenthp 60
 	WRITE_SHORT maxhp 60
@@ -25371,6 +25424,31 @@ COPY_EXISTING ~vai.cre~ ~override~
 COPY_EXISTING ~vai.cre~ ~override~ ~flamvai.cre~ ~override~
 	WRITE_BYTE allegiance eagoodbutblue
 
+COPY_EXISTING ~vamflm01.cre~ ~override~
+	WRITE_LONG killxp 6000
+	WRITE_SHORT currenthp 175
+	WRITE_SHORT maxhp 175
+	WRITE_SHORT naturalac 65533 //-3
+	WRITE_SHORT effectiveac 65533 //-3
+	WRITE_BYTE hideinshadows 150
+	WRITE_BYTE movesilently 150
+	WRITE_BYTE strength 21
+	WRITE_BYTE dexterity 21
+	WRITE_BYTE constitution 21
+	WRITE_BYTE intelligence 21
+	WRITE_BYTE wisdom 21
+	WRITE_BYTE charisma 21
+	WRITE_BYTE thac0 6
+	WRITE_BYTE class classfighterthief
+	WRITE_BYTE levelfirstclass 15
+	WRITE_BYTE levelsecondclass 15
+	WRITE_ASCII generalscript ~mevampfl~ #8
+	REPLACE_CRE_ITEM ~HELMNOAN~ #0 #0 #0 ~NONE~ ~HELMET~
+	REPLACE_CRE_ITEM ~MEVAMPFL~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=10 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=9 parameter1=400 parameter2=2 END
+	IF_EXISTS
+
 COPY_EXISTING ~varci.cre~ ~override~
 	REMOVE_CRE_ITEM ~shld07~
 	ADD_CRE_ITEM ~MESHLD62~ #0 #0 #0 ~NONE~ ~INV1~
@@ -26478,6 +26556,10 @@ COPY_EXISTING ~mefibren.cre~ ~override~
 	SAY NAME1 @18215
 	SAY NAME2 @18215
 
+COPY_EXISTING ~mefloof.cre~ ~override~
+	SAY NAME1 @18324
+	SAY NAME2 @18324
+
 COPY_EXISTING ~mefomori.cre~ ~override~
 	WRITE_SHORT animation slotgiantfomoriancolossusdecimal
 	SAY NAME1 @18216
@@ -26681,6 +26763,10 @@ COPY_EXISTING ~menoobdr.cre~ ~override~
 	WRITE_SHORT animation slotdragonbrassjuveniledecimal
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@24105) STR_VAR resource=~meidecre~ END
 
+COPY_EXISTING ~meogreau.cre~ ~override~
+	SAY NAME1 @18325
+	SAY NAME2 @18325
+
 COPY_EXISTING ~meollast.cre~ ~override~
 	SAY NAME1 @18260
 	SAY NAME2 @18260
@@ -26723,7 +26809,7 @@ COPY_EXISTING ~mespellh.cre~ ~override~
 	SAY NAME1 @18268
 	SAY NAME2 @18268
 
-COPY_EXISTING ~mespdvo.cre~ ~override~
+COPY_EXISTING ~mespdvo.cre~ ~override~ ~mespdvo.cre~ ~override/smspid02.cre~
 	SAY NAME1 @18269
 	SAY NAME2 @18269
 
@@ -26759,6 +26845,9 @@ COPY_EXISTING ~meruri.cre~ ~override~
 COPY_EXISTING ~mespelll.cre~ ~override~
 	SAY NAME1 @18276
 	SAY NAME2 @18276
+
+COPY_EXISTING ~mespdsm1.cre~ ~override/spidsm01.cre~
+	WRITE_BYTE gender genderfemale
 
 COPY_EXISTING ~meterull.cre~ ~override~
 	SAY NAME1 @18277
@@ -28209,6 +28298,64 @@ COPY_EXISTING ~ar2900.are~ ~override~
 		END
 	END
 	BUT_ONLY_IF_IT_CHANGES
+END
+
+ACTION_IF MOD_IS_INSTALLED ~setup-k9RoughWorld.tp2~ ~0~ BEGIN
+
+COPY_EXISTING ~meirong2.cre~ ~override/k9korde.cre~
+	WRITE_BYTE allegiance eaneutral
+	WRITE_ASCII scriptname ~k9KORDE~ #32
+
+COPY_EXISTING ~meirong3.cre~ ~override/k9korde2.cre~
+	WRITE_BYTE allegiance eaneutral
+	WRITE_ASCII scriptname ~k9KORDE2~ #32
+
+COPY_EXISTING ~k9korme9.cre~ ~override~
+	WRITE_LONG killxp 2000
+	WRITE_SHORT currenthp 84
+	WRITE_SHORT maxhp 84
+	WRITE_BYTE strength 19
+	WRITE_BYTE intelligence 14
+	WRITE_BYTE wisdom 18
+	WRITE_BYTE thac0 14
+	WRITE_BYTE levelfirstclass 12
+	WRITE_ASCII classscript ~mek9itpr~ #8
+	REMOVE_MEMORIZED_SPELLS
+	ADD_MEMORIZED_SPELL ~sppr214~ #1 ~priest~ (2)
+	ADD_MEMORIZED_SPELL ~mepr451~ #3 ~priest~ (3)
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~mepr451~ ~%mepr451%~
+	ADD_MEMORIZED_SPELL ~sppr502~ #4 ~priest~ (3)
+	ADD_MEMORIZED_SPELL ~sppr603~ #5 ~priest~ (1)
+	REPLACE_CRE_ITEM ~bow02~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=9 parameter1=10 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=9 parameter1=400 parameter2=2 END
+	IF_EXISTS
+
+COPY_EXISTING ~k9shamb.cre~ ~override~
+	WRITE_LONG killxp 9000
+	WRITE_SHORT currenthp 150
+	WRITE_SHORT maxhp 150
+	WRITE_BYTE strength 20
+	WRITE_BYTE constitution 21
+	WRITE_BYTE electricityresistance 125
+	WRITE_BYTE savevsbreath 7
+	WRITE_BYTE savevsdeath 1
+	WRITE_BYTE savevsspell 5
+	WRITE_BYTE savevswand 4
+	WRITE_BYTE savevspolymorph 6
+	WRITE_BYTE thac0 1
+	WRITE_BYTE gender 4
+	WRITE_BYTE levelfirstclass 20
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~~ #8
+	WRITE_ASCII racescript ~meshambl~ #8
+	WRITE_ASCII generalscript ~~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8
+	REPLACE_CRE_ITEM ~MESHAMBL~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyelectricityresistance target=1 timing=9 parameter1=175 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=overridecreaturedata target=1 timing=9 parameter1=1 parameter2=4 END
+	IF_EXISTS
+
 END
 
 //____________________________________________SPL
@@ -30888,10 +31035,14 @@ PRINT @181
 COPY_EXISTING ~medoomsa.spl~ ~override~
 	SAY NAME1 @19148
 
+COPY_EXISTING ~meeagld.spl~ ~override~ ~meeagle.spl~ ~override~
+	WRITE_SHORT 0x98 mearal60
+	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 match_opcode=applyeffectslist parameter2=splprot_eaglebow END
+/*
 COPY_EXISTING ~meeagled.spl~ ~override~ ~meeaglee.spl~ ~override~
 	WRITE_SHORT 0x98 mearal60
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=protectionfromspell2 target=2 timing=0 duration=1 parameter2=splprot_eaglebow STR_VAR resource= EVAL ~%SOURCE_RES%~ END
-
+*/
 COPY_EXISTING ~mefarseq.spl~ ~override~
 	SAY NAME1 @33752
 
@@ -31255,6 +31406,16 @@ COPY_EXISTING ~mems167.spl~ ~override~
 COPY_EXISTING ~mems168.spl~ ~override~
 	SAY NAME1 @19345
 
+COPY_EXISTING ~mems169.spl~ ~override~
+	SAY NAME1 @19354
+
+COPY_EXISTING ~mems170.spl~ ~override~
+	SAY NAME1 @19355
+
+COPY_EXISTING ~mems171.spl~ ~override~
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=displaystring match_parameter1=19372 parameter1=RESOLVE_STR_REF(@19372) END
+	SAY NAME1 @19371
+
 COPY_EXISTING ~mems202.spl~ ~override~
 	SAY NAME1 @19297
 
@@ -31314,6 +31475,10 @@ COPY_EXISTING ~mesalfia.spl~ ~override~ ~mesalfra.spl~ ~override~ //Salamander a
 
 COPY_EXISTING ~meschlum.spl~ ~override~
 	WRITE_SHORT 0x98 meschlum
+
+COPY_EXISTING ~mevampfl.spl~ ~override~
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=displaystring match_parameter1=19364 parameter1=RESOLVE_STR_REF(@19364) END
+
 /*
 COPY_EXISTING ~mevicond.spl~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=protectionfromspell2 match_parameter2=1250 parameter2=splprot_areaisnotoutdoor END
@@ -31482,6 +31647,21 @@ COPY_EXISTING_REGEXP ~.*\.itm~ ~override~
 
 COPY_EXISTING_REGEXP ~.*\.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=castspell target=1 timing=4 duration=0 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
+/*
+COPY_EXISTING ~baldur.gam~ ~override~
+	READ_LONG 0x30 nonpartycharactersoffset
+	READ_LONG 0x34 numnonpartycharacters
+	FOR (i = 0; i < numnonpartycharacters; ++i) BEGIN
+		SET characteroffset = nonpartycharactersoffset + i * 0x160
+		READ_ASCII (characteroffset + 0xC) charactername
+		INNER_ACTION BEGIN
+			COPY_EXISTING_REGEXP ~%charactername%.*.cre~ ~override~
+				LPF DELETE_EFFECT INT_VAR match_opcode=castspell STR_VAR match_resource=~MEPERMLS~ END
+				IF_EXISTS
+				BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+*/
 /*
 COPY_EXISTING_REGEXP ~.*\.spl~ ~override~
 	READ_SHORT 0x68 numheaders
@@ -32392,6 +32572,9 @@ COPY_EXISTING ~ar0516.are~ ~override~ //Demonknight's room
 	WRITE_LONG (songoffset + 0xc) 29
 
 PRINT @188
+
+COPY_EXISTING ~ar0600.are~ ~override~
+	LPF fj_are_structure INT_VAR fj_loc_x=3160 fj_loc_y=1514 STR_VAR fj_structure_type=~actor~ fj_name=~ME_Floof~ fj_cre_resref=~MEFLOOF~ END
 
 COPY_EXISTING ~ar0900.are~ ~override~ //Baldur's Gate Bridge
 	LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~MEAR0900~ fj_reg_script=~MEAR0900~ END
