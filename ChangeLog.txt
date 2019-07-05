@@ -1,3 +1,9 @@
+v2.1.0:
+- Birds no longer become unselectable when they go offscreen. This had been one of the big sources of crashes.
+- The mod now gives new powers to creatures in the Rough World mod.
+- Certain items that deal a non-physical damage type (e.g. Storm Star) now deal extra non-physical damage from Strength and other damage bonuses.
+- Birds no longer glow green, and you will be less likely to get random "you may not save at this time" messages in areas with birds.
+
 v2.0.3:
 - I fixed a problem from v2.0 that had crashed the installer if Siege of Dragonspear wasn't installed.
 
