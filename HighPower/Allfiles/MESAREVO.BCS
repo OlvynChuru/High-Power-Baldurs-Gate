@@ -2,14 +2,82 @@ SC
 CR
 CO
 TR
-16448 0 0 0 0 "EndGame" "GLOBAL" OB
+16399 0 0 0 0 "GLOBALEndGame" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
 RS
 RE
 100AC
-86OB
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+-1 0 0 0 0"GLOBALEndGame" "" AC
+AC
+36OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALSarevokRun" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+-1 0 0 0 0"GLOBALSarevokRun" "" AC
+AC
+36OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16402 1 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+37 0 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+123OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
@@ -23,52 +91,24 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-100 0 0 0 0"GLOBALEndGame" "" AC
+3 0 0 0 0"GLOBALDeathOfSarevok" "" AC
 AC
-7OB
+50OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 693 578 0 0"WINSKI" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 "WINSKI"OB
-OB
-0 0 0 0 0 0 0 21 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-2979 0 0 0 0"" "" AC
-AC
-63OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-2 0 0 0 0"" "" AC
-AC
-131OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+0 0 0 0 0 0 0 0 0 0 0 0 "sarevok"OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 0 0 0 0 0"" "" AC
-AC
-86OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"" "" AC
 RE
 RS
 CR
 CR
 CO
+TR
+16399 1 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
 TR
 16521 2 0 0 0 "" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
@@ -116,6 +156,74 @@ OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 0 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16448 0 0 0 0 "EndGame" "GLOBAL" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+86OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
+AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+100 0 0 0 0"GLOBALEndGame" "" AC
+AC
+7OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 693 578 0 0"WINSKI" "" AC
+AC
+113OB
+0 0 0 0 0 0 0 0 0 0 0 0 "winski"OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+2979 0 0 0 0"" "" AC
+AC
+63OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+2 0 0 0 0"" "" AC
+AC
+131OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
+AC
+86OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"" "" AC
 RE
 RS
 CR
@@ -174,11 +282,11 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16465 0 0 0 0 "Liia" "" OB
+16465 0 0 0 0 "liia" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16465 0 0 0 0 "Belt" "" OB
+16465 0 0 0 0 "belt" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -191,7 +299,7 @@ OB
 2 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"sarevo" "" AC
+0 0 0 0 0"SAREVO" "" AC
 RE
 RS
 CR
@@ -211,7 +319,7 @@ TR
 TR
 TR
 16397 0 1 0 0 "" "" OB
-0 0 0 0 0 0 0 0 0 0 0 0 "Winski"OB
+0 0 0 0 0 0 0 0 0 0 0 0 "winski"OB
 TR
 CO
 RS
@@ -228,7 +336,7 @@ AC
 177OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
-0 0 0 0 0 0 0 0 0 0 0 0 "Door0200"OB
+0 0 0 0 0 0 0 0 0 0 0 0 "door0200"OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 1 0 0 0 0"" "" AC
@@ -236,7 +344,7 @@ AC
 177OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
-0 0 0 0 0 0 0 0 0 0 0 0 "Door0109a"OB
+0 0 0 0 0 0 0 0 0 0 0 0 "door0109a"OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 1 0 0 0 0"" "" AC
@@ -244,7 +352,7 @@ AC
 177OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
-0 0 0 0 0 0 0 0 0 0 0 0 "Door0109b"OB
+0 0 0 0 0 0 0 0 0 0 0 0 "door0109b"OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 1 0 0 0 0"" "" AC
@@ -252,7 +360,7 @@ AC
 177OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
-0 0 0 0 0 0 0 0 0 0 0 0 "Door0111"OB
+0 0 0 0 0 0 0 0 0 0 0 0 "door0111"OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 1 0 0 0 0"" "" AC
@@ -271,12 +379,72 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"EndCut01" "" AC
+0 0 0 0 0"eNDCUT01" "" AC
 RE
 RS
 CR
 CR
 CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16500 0 0 0 0 "" "" OB
+2 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 2 0 0 0 "GLOBALSarevokBehavior" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 0 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"GLOBALDMWWSarevokFight" "" AC
+AC
+137OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 18 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"SAREVO" "" AC
+AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+9 0 0 0 0"LOCALSSarevokBanter" "" AC
+AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+3 0 0 0 0"LOCALSSarevokBackup" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 1 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
 TR
 16500 0 0 0 0 "" "" OB
 2 0 0 0 0 0 0 0 0 0 0 0 ""OB
@@ -300,6 +468,572 @@ OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 0 0 0 0 0"sarevo" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16427 0 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16500 0 1 0 0 "" "" OB
+2 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 2 0 0 0 "GLOBALSarevokBehavior" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 0 0 0 "GLOBALDMWWTazokSeesEnemy" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+22OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 1 0 0 "LOCALSbackup" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16448 0 0 0 0 "SarevokBackup" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSbackup" "" AC
+AC
+231OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 965 482 0 0"galdor" "" AC
+AC
+231OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 362 631 0 0"dw#diarm" "" AC
+RE
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSbackup" "" AC
+AC
+231OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 362 631 0 0"galdor" "" AC
+AC
+231OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 965 482 0 0"dw#diarm" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "galdor" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "dw#sarr1" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 1 1 0 0 "LOCALSangelo" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+169OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"dw#sarr1" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "diarmi" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "dw#sarr2" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 1 1 0 0 "LOCALSdiarmid" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+169OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"dw#sarr2" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "semaj" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "dw#sarr3" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 1 1 0 0 "LOCALSsemaj" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+169OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"dw#sarr3" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "tazok" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "dw#sarr4" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 1 1 0 0 "LOCALStazok" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+169OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"dw#sarr4" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16436 2 1 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 0 0 0 0 "LOCALSFirstDeath" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16521 4 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "galdor" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "diarmi" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "semaj" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "tazok" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSFirstDeath" "" AC
+AC
+137OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"SAREVO" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 3 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 0 0 0 0 "LOCALSFourthDeath" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "galdor" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "diarmi" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "semaj" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16465 0 0 0 0 "tazok" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSFourthDeath" "" AC
+AC
+137OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"SAREVO" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16448 0 0 0 0 "SarevokBanter" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 0 0 0 0 "LOCALSBanteredYet" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSBanteredYet" "" AC
+AC
+137OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 21 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"SAREVO" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16436 0 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "castspell" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "potn14" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+6 0 0 0 0"LOCALScastspell" "" AC
+AC
+34OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"potn14" "" AC
+AC
+269OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+132905 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "castspell" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "potn07" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+6 0 0 0 0"LOCALScastspell" "" AC
+AC
+34OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"potn07" "" AC
+AC
+269OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+132906 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "castspell" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16429 75 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16481 0 0 0 0 "potn52" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+6 0 0 0 0"LOCALScastspell" "" AC
+AC
+34OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"potn52" "" AC
+AC
+269OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+132998 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16399 0 0 0 0 "GLOBALME_No_SCS_Final" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 0 0 0 "GLOBALDMWWSarevokReset" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"GLOBALDMWWSarevokReset" "" AC
+AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"GLOBALDMWWSarevokBehavior" "" AC
+AC
+111OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"" "" AC
 RE
 RS
 CR
@@ -870,15 +1604,23 @@ TR
 0 0 0 0 0 0 0 21 0 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -914,15 +1656,23 @@ TR
 0 0 0 0 0 0 0 1 105 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -958,15 +1708,23 @@ TR
 0 0 0 0 0 0 0 1 106 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1002,15 +1760,23 @@ TR
 0 0 0 0 0 0 0 1 107 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1046,15 +1812,23 @@ TR
 0 0 0 0 0 0 0 1 108 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1090,15 +1864,23 @@ TR
 0 0 0 0 0 0 0 1 109 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1134,15 +1916,23 @@ TR
 0 0 0 0 0 0 0 1 110 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1178,15 +1968,23 @@ TR
 0 0 0 0 0 0 0 1 111 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1222,15 +2020,23 @@ TR
 0 0 0 0 0 0 0 1 112 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1266,15 +2072,23 @@ TR
 0 0 0 0 0 0 0 1 113 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1310,15 +2124,23 @@ TR
 0 0 0 0 0 0 0 1 114 0 0 0 ""OB
 TR
 TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
 16429 50 0 0 0 "" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16399 4 0 0 0 "GLOBALDMWWSarevokFight" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
 16481 0 1 0 0 "MESAREVD" "" OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16610 8 1 0 0 "" "" OB
+16655 55 1 0 0 "" "" OB
 0 0 0 0 0 0 0 1 18 0 0 0 ""OB
 TR
 TR
@@ -1344,30 +2166,6 @@ OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 0 0 0 0 0"MEMS097" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 12 0 0 0 ""OB
-TR
-TR
-16408 3 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 12 0 0 0 ""OB
-TR
-CO
-RS
-RE
-10AC
-134OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 12 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-15 0 0 0 0"" "" AC
 RE
 RS
 CR

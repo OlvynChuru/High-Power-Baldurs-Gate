@@ -1,6 +1,29 @@
+v2.2.0:
+- I fixed more of the problems that were causing the game to crash a lot.
+- The mod should now be compatible with Sword Coast Stratagems by @DavidW . First install High Power Baldur's Gate, then install SCS.
+- Creatures that previously had my own attack AI now have vanilla attack AI so that SCS will modify those creatures.
+- I made sure spellcasters given unique scripts by this mod will not have vanilla spellcasting AI, so that SCS will not modify them.
+- I gave phase spiders a special attack AI that accommodates their new teleport ability (High Power Baldur's Gate makes phase spiders teleport to their destination whenever they move).
+- Icharyd now has fewer Hit Points but higher physical resistances (previously the Improved Ulcaster component of SCS actually decreased Icharyd's max HP from what I had set it to). Icharyd's ring has been moved somewhere else in the game.
+- Davaeorn now puts on some defensive buffs before the fight; I thought he already did but it seems like he didn't.
+- Tazok once again has his Fist Breath ability, but the breath cone isn't as wide.
+- I revised the final battle so that if you also have the SCS Improved Final Battle component installed, Sarevok will have both the abilities from HPBG and all the changes to the fight from SCS.
+- Effects that increase the power of a character's healing spells now work correctly, as do effects that give a penalty to saves made against a character's spells.
+- The Gloves of Healing now increase the power of the wearer's healing spells.
+- The Avenger wyvern form's attack now properly deals poison damage.
+- Meteor Swarm no longer causes knockback, as this had been crashing the game.
+- The spell Null Healing will now prevent regeneration.
+- There is now a scroll of Extend Vision in the game.
+- Mordaine no longer crashes the game when she dies.
+- Pride now wields Durlag's Pride rather than a shortsword +1.
+- The Black Vultures have been removed from the game.
+- I've changed some NPC powers.
+- The mod now gives new powers to Ellyrian, a custom NPC by @CaloNord.
+- The mod now gives new powers to Helga, a custom NPC by @Skitia.
+
 v2.1.0:
 - Birds no longer become unselectable when they go offscreen. This had been one of the big sources of crashes.
-- The mod now gives new powers to creatures in the Rough World mod.
+- The mod now gives new powers to creatures in the Rough World mod by @elminster .
 - Certain items that deal a non-physical damage type (e.g. Storm Star) now deal extra non-physical damage from Strength and other damage bonuses.
 - Birds no longer glow green, and you will be less likely to get random "you may not save at this time" messages in areas with birds.
 

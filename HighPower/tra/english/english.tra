@@ -3592,15 +3592,15 @@ Equipped abilities:
 - These bonuses also apply if the character is using Shocking Grasp, Ghoul Touch, or a similar spell
 
 Weight: 2~
-@4640=~These gloves are usually given to novices of the Most Noble Order of the Radiant Heart who have yet to acquire the ability to cast spells. For anyone outside of the Order to wear these gloves is a rare honor.
+@4640=~These gloves are usually given to novices of the Most Noble Order of the Radiant Heart who have just acquired the ability to lay on hands. For anyone outside of the Order to wear these gloves is a rare honor.
 
 STATISTICS:
 
-Abilities:
-- The wearer of these gloves can heal an adjacent creature by 5 Hit Points. This ability can be used unlimited times per day.
+Equipped abilities:
+- Wearer's spells and abilities heal 50% more Hit Points
 
 Requires:
- 21 Charisma
+ 17 Charisma
 
 Weight: 2~
 @4652=~Although Monks traditionally shun armor, these gauntlets of Grand Master Tzu-Zan are highly sought after by the practitioners of weaponless combat.
@@ -5535,7 +5535,7 @@ Weight: 3~
 STATISTICS:
 
 Equipped abilities:
-- All piercing damage dealt by the character is increased by 30%
+- All piercing damage dealt by the character is increased by 20%
 
 THAC0: +2
 Damage: 1d6+2 (piercing)
@@ -9842,6 +9842,7 @@ This ability has no casting time, can be used immediately after another ability,
 @19370=~Ten Levels Gained~
 @19371=~Vampire Breach~
 @19372=~Loses immunity to level drain for 3 rounds~
+@19373=~Whirlwind Boon~
 
 @20102=~Armor
 (Conjuration)
@@ -10934,7 +10935,7 @@ Casting Time: 9
 Area of Effect: 15-ft. radius
 Saving Throw: 1/2
 
-Upon completing the incantation for this spell, the wizard curses the target, destining them to be hit by a total of 12 small meteors over the next 5 rounds. Each one deals 1d6 crushing damage and 1d6 fire damage. In addition, each one knocks the target back. A successful Save vs. Wands negates the crushing damage, but the fire damage and the knockback are still dealt. The 12 meteors seek out the cursed target and will follow the target if it moves.~
+Upon completing the incantation for this spell, the wizard curses the target, destining them to be hit by a total of 12 small meteors over the next 5 rounds. Each one deals 1d6 crushing damage and 1d6 fire damage. A successful Save vs. Wands negates the crushing damage, but the fire damage is still dealt. The 12 meteors seek out the cursed target and will follow the target if it moves.~
 @20921=~Improved Alacrity
 (Any School)
 
@@ -13361,6 +13362,28 @@ Imoen can use this ability at will.~
 This ability lets the character imbue their weapons with a particular kind of element or energy: fire, cold, electricity, acid, or magic. While the ability is active, the base damage type of the character's weapons is changed to the chosen damage type. For example, a sword could be altered to deal fire damage rather than slashing damage. Altered weapons will still gain damage bonuses from Strength or abilities (if any); the bonus damage will also be of the new damage type. This ability lasts until it is turned off by using it again and selecting the option to turn it off.
 
 This character can use this ability at will.~
+@22378=~Shapeshift: Ankheg
+
+Ellyrian has the ability to turn into an ankheg. As an ankheg, she can aerate the soil and increase crop yields, but unlike normal ankhegs, she would never eat a farmer's livestock.
+
+Strength: 18/00 unless higher
+Dexterity: 16 unless higher
+Constitution: 20 unless higher
+
+Base Armor Class: -4 (-7 vs. slashing, -5 vs. piercing and missile)
+Number of Attacks: 1
+Attack Damage: 1d4 missile, +10d4 acid damage over 4 rounds (Save vs. Breath for half), strikes as a +4 weapon
+
+Special Abilities:
+- Acid Resistance: +50%
+- When not attacking or casting a spell on another creature, Ellyrian can burrow underground.
+
+Ellyrian can use this ability at will.~
+@22381=~Whirlwind Boon
+
+Casting Time: 0
+
+This ability allows the character to bestow the effects of Greater Whirlwind Attack upon a creature of <PRO_HISHER> choice. For 1 round, the target's attacks per round are set to 10.~
 
 @24000=~The spell reveals no information about the target.~
 @24001=~Cows are very heavy but are great at jumping! Once per round, a cow can jump very high and land on a creature, dealing 4d6 crushing damage with a Save vs. Breath for half.~
@@ -13536,7 +13559,7 @@ Like all oozes, a Dense Pudding has amazing saving throws, it is immune to backs
 @28011=~Canderous can attack and cast spells at any creature he sees, regardless of the normal range of the weapon or spell. He can also cast spells at any creature seen by another party member or by his special Wizard Eye. However, enemies can attack and cast spells at him at long range as well.~
 @28012=~Deder has maximum proficiency in all fighting styles, and he is at least proficient in every weapon. He can use any item. His signiture ability Deder's Arsenal lets him instantly create a magical weapon of his choice to wield.~
 @28013=~Mordaine's casting time is decreased by 10. She can reflect spells, absorb spells, and knock back creatures at will, and she can grant immunity to fire, cold, electricity, acid, and/or magic damage. She can also foretell the name of any spell another creature is casting.~
-@28014=~Osprey's wizard and priest spells have double the normal duration. She has good Intelligence and Wisdom and can use Critical Boon to give any party member the effects of Critical Strike.~
+@28014=~Osprey can cast both cleric and druid spells. Her wizard and priest spells have double the normal duration.~
 @28015=~Indira regains a previously-cast spell of 2nd-level or lower whenever she hits a creature with an attack. If that attack was a critical hit (and the critical hit was not averted), she regains an additional spell of 4th-level or lower. She can cast Black Blade of Disaster as an innate ability.~
 @28016=~All fire, cold, electricity, acid, poison and magic damage dealt by Emily is increased by 75%. She has 50% resistance to fire, cold, electricity and acid. She can use Stunning Attack more times per day than just about any other character.~
 @28017=~Whenever Drake casts a spell, he also casts a copy of that spell on himself (regardless of whether the spell is beneficial or harmful). He can regain all of his spells and abilities by resting for 3 rounds.~
@@ -13552,6 +13575,8 @@ Like all oozes, a Dense Pudding has amazing saving throws, it is immune to backs
 @28027=~Whenever White is hit by an attack or spell, he gains the effect of Improved Haste for 1 round. If he goes berserk, he remains controllable but gains all the benefits of the berserk effect. He can give himself a single Stoneskin at will.~
 @28028=~Whenever one of Valerie's spells deals damage, it deals an extra die of damage if the target is evil. All creatures have an additional -2 penalty to saves against Valerie's spells.~
 @28029=~Isra gets an additional 5% critical hit chance for every 1 Charisma she has over 15. She deals an additional 2d6 magic fire damage with each weapon hit.~
+@28030=~Ellyrian can entangle any creature she hits with a melee or ranged attack. All healing or regeneration from her spells and abilities is increased by 100%. She can shapeshift into an ankheg at will.~
+@28031=~Helga has +10 luck. She regains a previously-cast spell of 2nd-level or lower whenever she hits a creature with an attack. If that attack was a critical hit (and the critical hit was not averted), she regains an additional spell of 4th-level or lower.~
 
 @29000=~I'm here.~ [FMAGE40]
 @29008=~Ha-ha-ha-ha-ha!~ [FMAGE48]
@@ -13938,6 +13963,7 @@ This spell drains the randomness out of the current area. For the duration, all 
 @33855=~Omnipresence~
 @33856=~Contingency Curse~
 @33857=~Extend Vision~
+@33858=~Sphere of Reversed Gravity~
 @33951=~Perfect Invisibility~
 @33952=~Mass Domination~
 @33953=~Attain Perfection~
@@ -14569,6 +14595,7 @@ Area of Effect: 1 creature
 Saving Throw: None
 
 The spell Extend Vision allows the recipient to see much farther than <PRO_HESHE> could see before. The recipient will be able to see creatures that are too far away to return the gaze. More importantly, the recipient can target those creatures with spells and ranged attacks from far away. Extend Vision also makes the recipient immune to blindness. It lasts for 8 hours or until dispelled.~
+@34858=~~
 @34951=~Perfect Invisibility
 (Illusion/Phantasm)
 

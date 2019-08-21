@@ -1,6 +1,6 @@
 BACKUP ~HighPower/backup~
 AUTHOR ~https://forums.beamdog.com/discussion/60325/mod-high-power-baldurs-gate-version-2-0~
-VERSION ~2.1.0~
+VERSION ~2.2.0~
 README ~HighPower/HighPowerReadme.txt~
 
 ALWAYS
@@ -1507,6 +1507,8 @@ BEGIN
 		END
 END
 
+
+
 DEFINE_ACTION_FUNCTION ~GET_UNIQUE_SPELL_NAME~
 	STR_VAR
 		prefix=~DEFA~
@@ -1876,6 +1878,10 @@ ADD_PROJECTILE ~override/mecircrp.pro~ //Circle of Repulsion
 ADD_PROJECTILE ~override/meintrv2.pro~ //Invisible traveling 2
 ADD_PROJECTILE ~override/mesalaur.pro~ //Salamander aura ignore center
 ADD_PROJECTILE ~override/mearrowp.pro~ //Piercing arrow
+ADD_PROJECTILE ~override/meglobal.pro~ //Instant, entire area
+ADD_PROJECTILE ~override/megloben.pro~ //Instant, entire area, not party
+ADD_PROJECTILE ~override/meglobpa.pro~ //Instant, entire area, party only
+
 
 COPY_EXISTING ~megaznew.pro~ ~override~
 	WRITE_SHORT 0x214 (megazneb - 1)
@@ -2369,6 +2375,8 @@ EXTEND_TOP ~baldur.bcs~ ~override/mescrltd.bcs~
 
 EXTEND_BOTTOM ~baldur.bcs~ ~override/menoarde.bcs~
 
+EXTEND_TOP ~gtst.bcs~ ~override/menoscsf.bcs~
+
 COPY_EXISTING ~itemexcl.2da~ ~override~
 	INSERT_2DA_ROW 1 2 ~MERING98 1~
 	INSERT_2DA_ROW 1 2 ~MEPLAT10 1~
@@ -2496,22 +2504,23 @@ COPY_EXISTING_REGEXP ~[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F].ini~ ~overrid
 COPY_EXISTING_REGEXP ~b000.ini~ ~override~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~move_scale.*=[0-9]+~ ~move_scale=12~
 /*
+OUTER_SET highest_height_number = 2000
 OUTER_SET starting_row_animate = 1
 OUTER_SET starting_row_anisnd = 0
 OUTER_SPRINT i_padding ~000~
 SILENT
-OUTER_FOR (i = 0; i < 1000; ++i) BEGIN
+OUTER_FOR (i = 0; i < highest_height_number; ++i) BEGIN
 	ACTION_IF i = 10 BEGIN
 		OUTER_SPRINT i_padding ~00~
 	END
 	ACTION_IF i = 100 BEGIN
 		OUTER_SPRINT i_padding ~0~
 	END
-/*
+
 	ACTION_IF i = 1000 BEGIN
 		OUTER_SPRINT i_padding ~~
 	END
-*/
+
 	PRINT ~mezp%i_padding%%i%.ini~
 	COPY_EXISTING ~mezp.ini~ ~override/mezp%i_padding%%i%.ini~
 		REPLACE_TEXTUALLY ~MEZP me_height_creature~ ~MEZP%i_padding%%i% me_height_creature_%i%~
@@ -2526,9 +2535,12 @@ OUTER_FOR (i = 0; i < 1000; ++i) BEGIN
 
 	COPY_EXISTING ~M__MESTR.LUA~ ~override~
 		REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_heighttoanimation = {\[\"\"\] = 0~ ~me_heighttoanimation = {[""] = 0, [%i%] = %slotheightcreaturedecimal%~
-		REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_animationtoheight = {\[\"\"\] = 0~ ~me_animationtoheight = {[""] = 0, [%slotheightcreaturedecimal%] = %i%~
+//		REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_animationtoheight = {\[\"\"\] = 0~ ~me_animationtoheight = {[""] = 0, [%slotheightcreaturedecimal%] = %i%~
 END
 VERBOSE
+
+COPY_EXISTING ~M__MESTR.LUA~ ~override~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_highestheightnumber = 0~ ~me_highestheightnumber = %highest_height_number%~
 */
 
 COPY_EXISTING ~splstate.ids~ ~override~
@@ -3754,6 +3766,7 @@ ADD_PROJECTILE ~override/meinvglb.pro~ //Sphere of Invisibility
 ADD_PROJECTILE ~override/mepatien.pro~ //Missile of Patience very slow projectile
 ADD_PROJECTILE ~override/meportl.pro~ //Linked portal
 ADD_PROJECTILE ~override/meintrv3.pro~ //Invisible traveling 3
+ADD_PROJECTILE ~override/megrvglb.pro~ //Reversed Gravity Sphere
 
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~18~ splprot_value=~-1~ splprot_relation=~4~ RET splprot_magicresistancegreaterthanorequalto=splprot_slot END
 
@@ -4481,7 +4494,14 @@ COPY_EXISTING ~mewi857.spl~ ~override/%mewi857%.spl~
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 STR_VAR match_resource=~mewi857~ resource= EVAL ~%mewi857%~ END
 	SAY NAME1 @33857
 	SAY UNIDENTIFIED_DESC @34857
-
+/*
+LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI8~ RET mewi858=filename END
+COPY_EXISTING ~mewi858.spl~ ~override/%mewi858%.spl~
+	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 STR_VAR match_resource=~mewi858~ resource= EVAL ~%mewi858%~ END
+	LPF ALTER_SPELL_HEADER INT_VAR projectile=megrvglb END
+	SAY NAME1 @33858
+	SAY UNIDENTIFIED_DESC @34858
+*/
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI9~ RET mewi951=filename END
 COPY_EXISTING ~mewi951.spl~ ~override/%mewi951%.spl~
 	SAY NAME1 @33951
@@ -5041,7 +5061,10 @@ COPY_EXISTING ~mewi857x.itm~ ~override~
 	SAY NAME2 @33857
 	SAY IDENTIFIED_DESC @34857
 
-
+COPY_EXISTING ~rinnie.dlg~ ~override~
+	DECOMPILE_AND_PATCH BEGIN
+		REPLACE_TEXTUALLY CASE_INSENSITIVE ~GiveItem(\"SCRL08\",LastTalkedToBy)~ ~GiveItemCreate("MEWI857X",LastTalkedToBy,1,0,0)~
+    END
 
 COPY_EXISTING ~mewi951x.itm~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi951~ resource= EVAL ~%mewi951%~ END
@@ -6184,6 +6207,7 @@ COPY_EXISTING ~bow16.itm~ ~override~
 	SAY IDENTIFIED_DESC @4432
 
 COPY_EXISTING ~bow17.itm~ ~override~
+	WRITE_ASCII 0x4 ~V1  ~ #4
 	WRITE_LONG enchantment 3
 	LPF ALTER_ITEM_HEADER INT_VAR new_header_type=headerranged match_icon=1 charges=0 drained=0 thac0_bonus=6 damage_bonus=5 dicenumber=1 dicesize=6 projectile=291 STR_VAR icon=~IBOW17~ END
 	SAY IDENTIFIED_DESC @4434
@@ -6242,7 +6266,7 @@ COPY_EXISTING ~brac19.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=useefffilewhileontype target=1 timing=2 parameter2=28 STR_VAR resource=~meei001~ END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=useefffilewhileontype target=1 timing=2 parameter2=28 STR_VAR resource=~meei002~ END
 	SAY IDENTIFIED_DESC @4638
-
+/*
 COPY_EXISTING ~brac20.itm~ ~override~
 	LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=curepoison END
 	LPF ALTER_ITEM_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=modifycurrenthp parameter1=5 END
@@ -6252,6 +6276,15 @@ COPY_EXISTING ~brac20.itm~ ~override~
 	WRITE_LONG unusability 0x606FFFEB //Can only be used by lawful good paladins
 	WRITE_LONG price 2000
 	WRITE_BYTE mincharisma 21
+	SAY IDENTIFIED_DESC @4640
+*/
+COPY_EXISTING ~brac20.itm~ ~override~
+	LPF DELETE_ITEM_HEADER INT_VAR header_type=(0 - 1) END
+	LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=(0 - 1) END
+	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=eeexsetextendedstat target=1 timing=2 parameter1=50 special=620 END
+	WRITE_LONG unusability 0
+	WRITE_LONG price 2000
+	WRITE_BYTE mincharisma 17
 	SAY IDENTIFIED_DESC @4640
 
 COPY_EXISTING ~brac26.itm~ ~override~
@@ -6636,6 +6669,7 @@ COPY_EXISTING ~mehamm08.itm~ ~override/hamm08.itm~
 
 COPY_EXISTING ~hamm13.itm~ ~override~
 	LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete=nondetection END
+	LPF DELETE_EFFECT INT_VAR check_headers=0 check_globals=1 match_opcode=displayportraiticon match_parameter2=31 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=protectionfromopcode target=2 timing=9 parameter2=wingbuffet END
 	LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=wingbuffet END
 	LPF ADD_ITEM_EFFECT INT_VAR type=1 opcode=wingbuffet target=2 timing=0 duration=6 resist_dispel=1 parameter1=100 parameter2=2 END
@@ -6693,6 +6727,8 @@ COPY_EXISTING ~helm20.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifybasethac0 target=1 timing=2 parameter1=2 END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifymaxhp target=1 timing=2 parameter1=120 parameter2=2 END
 	SAY IDENTIFIED_DESC @6040
+
+COPY_EXISTING ~mejellmu.itm~ ~override/jellmu1.itm~ ~mejellfs.itm~ ~override/jellmu2.itm~ ~mejellgy.itm~ ~override/oozegr1.itm~ ~mejelloc.itm~ ~override/jelloc1.itm~ ~meschlum.itm~ ~override/schlum1.itm~
 
 PRINT @123
 
@@ -7346,11 +7382,12 @@ COPY_EXISTING ~sblade.itm~ ~override~ //Dradeel's Moonblade
 
 PRINT @128
 
+/*
 COPY_EXISTING ~scrl07.itm~ ~override~
 	LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=(0 - 1) END
 	LPF ADD_ITEM_EFFECT INT_VAR opcode=castspell target=presettarget timing=permanentuntildeath parameter1=1 parameter2=castinstantlyatspecifiedlevel STR_VAR resource=~mescrl07~ END
 	SAY IDENTIFIED_DESC @7214
-
+*/
 COPY_EXISTING ~scrl09.itm~ ~override~
 	LPF DELETE_ITEM_EFFECT INT_VAR opcode_to_delete=(0 - 1) END
 	LPF ADD_ITEM_EFFECT INT_VAR opcode=castspell target=presettarget timing=permanentuntildeath parameter1=1 parameter2=castinstantlyatspecifiedlevel STR_VAR resource=~mescrl09~ END
@@ -8038,6 +8075,9 @@ COPY_EXISTING ~sw1h42.itm~ ~override~ ~comps42.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifycrushingresistance target=1 timing=2 parameter1=(0 - 50) END
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifymissileresistance target=1 timing=2 parameter1=(0 - 50) END
 	SAY IDENTIFIED_DESC @8284
+
+COPY_EXISTING ~sw1h43.itm~ ~override~
+	WRITE_LONG price 150
 
 COPY_EXISTING ~sw1h44.itm~ ~override~
 	LPF ADD_ITEM_EQEFFECT INT_VAR opcode=modifyminimumdamage target=1 timing=2 parameter1=50 END
@@ -9239,7 +9279,7 @@ COPY_EXISTING_REGEXP ~arkani.*.cre~ ~override~
 	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 0
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 0
 	SET_BG2_PROFICIENCY PROFICIENCYDAGGER 0
-	ADD_MEMORIZED_SPELL ~meco042~ #0 ~innate~ (6)
+	ADD_MEMORIZED_SPELL ~meco042~ #0 ~innate~ (2)
 	ADD_MEMORIZED_SPELL ~meco016~ #0 ~innate~ (4)
 	ADD_MEMORIZED_SPELL ~meco017~ #0 ~innate~ (4)
 	ADD_MEMORIZED_SPELL ~meco368~ #0 ~innate~ (2)
@@ -10183,11 +10223,38 @@ COPY_EXISTING ~osprey.cre~ ~override~
 	SET_BG2_PROFICIENCY PROFICIENCYSLING 2
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 1
 	SET_BG2_PROFICIENCY PROFICIENCYWARHAMMER 0
-	LPF GIVE_CORRECT_PRIEST_SPELLS END
+//	LPF GIVE_CORRECT_PRIEST_SPELLS END
 	REMOVE_KNOWN_SPELL ~spin118~
 	REMOVE_MEMORIZED_SPELL ~spin118~
-	ADD_KNOWN_SPELL ~sppr211~ #1 ~priest~
-	ADD_MEMORIZED_SPELL ~meco302~ #0 ~innate~ (3)
+	FOR (j = 0; j <= 4; ++j) BEGIN
+		FOR (k = 0; k <= 9; ++k) BEGIN
+			PATCH_IF FILE_EXISTS_IN_GAME ~sppr1%j%%k%.spl~ BEGIN
+				ADD_KNOWN_SPELL ~MEPHSPL~ #0 ~priest~
+				REPLACE_TEXTUALLY CASE_SENSITIVE ~MEPHSPL~ ~sppr1%j%%k%~
+			END
+			PATCH_IF FILE_EXISTS_IN_GAME ~sppr2%j%%k%.spl~ BEGIN
+				ADD_KNOWN_SPELL ~MEPHSPL~ #1 ~priest~
+				REPLACE_TEXTUALLY CASE_SENSITIVE ~MEPHSPL~ ~sppr2%j%%k%~
+			END
+			PATCH_IF FILE_EXISTS_IN_GAME ~sppr3%j%%k%.spl~ BEGIN
+				ADD_KNOWN_SPELL ~MEPHSPL~ #2 ~priest~
+				REPLACE_TEXTUALLY CASE_SENSITIVE ~MEPHSPL~ ~sppr3%j%%k%~
+			END
+			PATCH_IF FILE_EXISTS_IN_GAME ~sppr4%j%%k%.spl~ BEGIN
+				ADD_KNOWN_SPELL ~MEPHSPL~ #3 ~priest~
+				REPLACE_TEXTUALLY CASE_SENSITIVE ~MEPHSPL~ ~sppr4%j%%k%~
+			END
+			PATCH_IF FILE_EXISTS_IN_GAME ~sppr5%j%%k%.spl~ BEGIN
+				ADD_KNOWN_SPELL ~MEPHSPL~ #4 ~priest~
+				REPLACE_TEXTUALLY CASE_SENSITIVE ~MEPHSPL~ ~sppr5%j%%k%~
+			END
+		END
+	END
+	PATCH_IF GAME_INCLUDES ~sod~ BEGIN
+		REMOVE_KNOWN_SPELL ~sppr116~
+	END
+	ADD_MEMORIZED_SPELL ~meco130~ #0 ~innate~ (3)
+//	ADD_MEMORIZED_SPELL ~meco302~ #0 ~innate~ (3)
 	REMOVE_CRE_ITEM ~TTWAND~
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~SHLD03~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
@@ -10515,8 +10582,10 @@ COPY_EXISTING_REGEXP ~xan.*.cre~ ~override~ ~ttxan.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=displayportraiticon target=1 timing=9 parameter2=152 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=criticalhitbonus target=1 timing=9 parameter1=20 parameter2=0 special=1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=criticalhitbonus target=1 timing=9 parameter1=5 parameter2=0 special=2 END
-	LPF ADD_CRE_EFFECT INT_VAR opcode=imprisonment target=1 timing=9 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@24029) STR_VAR resource=~meidecre~ END
+
+COPY_EXISTING_REGEXP ~xan.*.cre~ ~override~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=imprisonment target=1 timing=9 END
 
 COPY_EXISTING_REGEXP ~xzar.*.cre~ ~override~
 	WRITE_BYTE coldresistance 99
@@ -11202,6 +11271,42 @@ COPY_EXISTING ~rh#isra.cre~ ~override~
 
 END
 
+ACTION_IF MOD_IS_INSTALLED ~Setup-Ellyrian.tp2~ ~0~ BEGIN
+
+COPY_EXISTING ~c1elly.cre~ ~override~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=401 target=1 timing=9 parameter1=100 parameter2=0 special=620 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~MECO379~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=rangedhiteffect target=1 timing=9 STR_VAR resource=~MECO379~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=setspellstate target=1 timing=9 parameter2=abilityrow special=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@28030) STR_VAR resource=~meidecre~ END
+	LPF GIVE_CORRECT_PRIEST_SPELLS END
+	ADD_MEMORIZED_SPELL ~meco031~ #0 ~innate~ (1)
+	ADD_MEMORIZED_SPELL ~meco039~ #0 ~innate~ (1)
+	ADD_MEMORIZED_SPELL ~meco378~ #0 ~innate~ (1)
+	IF_EXISTS
+/*
+COPY_EXISTING_REGEXP ~.*\.spl~ ~override~
+	LPF CLONE_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 match_opcode=modifycurrenthp match_parameter2=0 opcode=eeexinvokelua timing=0 duration=0 dicenumber=0 dicesize=0 STR_VAR resource=~MEEXHEAL~ insert=~below~ END
+	BUT_ONLY_IF_IT_CHANGES
+*/
+END
+
+ACTION_IF MOD_IS_INSTALLED ~Setup-Helga.tp2~ ~0~ BEGIN
+
+COPY_EXISTING ~x3helga.cre~ ~override~
+	LPF GIVE_CORRECT_PRIEST_SPELLS END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyluck target=1 timing=9 parameter1=10 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=displayportraiticon target=1 timing=9 parameter2=32 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~meco380~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=rangedhiteffect target=1 timing=9 STR_VAR resource=~meco380~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncriticalhit target=1 timing=9 STR_VAR resource=~meco380c~ END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=setspellstate target=1 timing=9 parameter2=abilityrow special=1 END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@28031) STR_VAR resource=~meidecre~ END
+	ADD_MEMORIZED_SPELL ~meco302~ #0 ~innate~ (2)
+	ADD_MEMORIZED_SPELL ~meco381~ #0 ~innate~ (2)
+	IF_EXISTS
+END
+
 
 PRINT @173
 
@@ -11226,7 +11331,7 @@ COPY_EXISTING ~aasim.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~meaasim~ #8
 	WRITE_ASCII generalscript ~leavech7~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~AASIM~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
@@ -11304,7 +11409,7 @@ COPY_EXISTING ~alatos.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mealatos~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSHORTSWORD 1
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 1
 	REPLACE_CRE_ITEM ~MESW1H58~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -11342,7 +11447,7 @@ COPY_EXISTING ~albert.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mealbert~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~IMMUNE2~ #0 #0 #0 ~NONE~ ~LRING~
 	ADD_CRE_ITEM ~RINGDEMN~ #0 #0 #0 ~NONE~ ~RRING~
 	REPLACE_CRE_ITEM ~MEALBERT~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -11367,7 +11472,7 @@ COPY_EXISTING ~aldeth.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mealdeth~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -11395,7 +11500,7 @@ COPY_EXISTING ~alexan.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mesw2h02~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -11454,7 +11559,7 @@ COPY_EXISTING ~alyth.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mealyth~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~book07~ #1 #0 #0 ~UNSTEALABLE~ ~INV7~
 
 COPY_EXISTING ~amaran.cre~ ~override~
@@ -11477,7 +11582,7 @@ COPY_EXISTING ~amaran.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meamaran~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr115~ #0 ~priest~ (15)
 	ADD_MEMORIZED_SPELL ~spdr201~ #1 ~priest~ (13)
@@ -11539,7 +11644,7 @@ COPY_EXISTING ~andris.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meandris~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~merobe90~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~scrl9d~ #0 #0 #0 ~NONE~ ~INV2~
 	ADD_CRE_ITEM ~scrl9p~ #0 #0 #0 ~NONE~ ~INV3~
@@ -11588,7 +11693,7 @@ COPY_EXISTING ~angelo.cre~ ~override~ ~galdor.cre~ ~override~ ~retard.cre~ ~over
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meangelo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 2
 	REPLACE_CRE_ITEM ~bow02~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
@@ -11858,7 +11963,7 @@ COPY_EXISTING ~arkion.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mearkion~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi213~ #1 ~wizard~ (2)
 	ADD_MEMORIZED_SPELL ~spwi305~ #2 ~wizard~ (1)
@@ -11881,7 +11986,7 @@ COPY_EXISTING ~arkush.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mearkush~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~CLCK12~ #0 #0 #0 ~NONE~ ~ARMOR~
 
 COPY_EXISTING ~arlin.cre~ ~override~
@@ -11900,7 +12005,7 @@ COPY_EXISTING ~arlin.cre~ ~override~
 	WRITE_ASCII classscript ~megreteg~ #8
 	WRITE_ASCII racescript ~mearlin~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi103~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi219~ #1 ~wizard~ (1)
@@ -11936,7 +12041,7 @@ COPY_EXISTING ~ashiru.cre~ ~override~ ~ntashiru.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meashiru~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~sw1h21~
 	REPLACE_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV8~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifypoisonresistance target=1 timing=9 parameter1=100 END
@@ -12105,7 +12210,7 @@ COPY_EXISTING ~bassil.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mebassil~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~HAMM01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~SCRL5F~ #2 #0 #0 ~IDENTIFIED~ ~INV6~
 	ADD_CRE_ITEM ~BOOK08~ #1 #0 #0 ~NONE~ ~INV9~
@@ -12156,7 +12261,7 @@ COPY_EXISTING ~battho.cre~ ~override~
 	WRITE_BYTE thac0 1
 	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII generalscript ~mebattho~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco038~ #0 ~innate~ (3)
 	SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 5
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
@@ -12202,7 +12307,7 @@ COPY_EXISTING ~basilg.cre~ ~override~ ~basilmut.cre~ ~override~ ~basilgsu.cre~ ~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mebasilg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 //	ADD_CRE_ITEM ~megazbsg~ #0 #0 #0 ~NONE~ ~CLOAK~
 	REPLACE_CRE_ITEM ~mebasilg~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
@@ -12236,7 +12341,7 @@ COPY_EXISTING ~basill.cre~ ~override~ ~basillsu.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mebasill~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~p2-16~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON3~
@@ -12272,7 +12377,7 @@ COPY_EXISTING ~basilnad.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mebasiln~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~mebasiln~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON3~
@@ -12407,7 +12512,7 @@ COPY_EXISTING ~belt.cre~ ~override~
 	WRITE_ASCII classscript ~mebelt~ #8
 	WRITE_ASCII racescript ~shout~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~meco040~ #0 ~innate~ (1)
 
@@ -12466,7 +12571,7 @@ COPY_EXISTING ~bentan.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mebentan~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mems122~ #2 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr313~ #2 ~priest~ (4)
@@ -12533,7 +12638,7 @@ COPY_EXISTING ~beyn.cre~ ~override~
 	WRITE_ASCII classscript ~mebeyn~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYDAGGER 2
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REMOVE_CRE_ITEM ~mageamul~
@@ -12594,7 +12699,7 @@ COPY_EXISTING ~binky.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mebinky~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~clown~
 	REPLACE_CRE_ITEM ~meclck61~ #0 #0 #0 ~NONE~ ~CLOAK~
 	REMOVE_MEMORIZED_SPELLS
@@ -12616,7 +12721,7 @@ COPY_EXISTING ~bishop.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~kingdead~ #8
 	WRITE_ASCII generalscript ~mebishop~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
 	ADD_CRE_ITEM ~BOOK08~ #1 #0 #0 ~NONE~ ~INV7~
 	ADD_MEMORIZED_SPELL ~sppr101~ #0 ~priest~ (1)
@@ -12733,7 +12838,7 @@ COPY_EXISTING ~brage.cre~ ~override~ ~brage2.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~brage~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyspeedfactor target=1 timing=9 parameter1=10 END
@@ -12754,7 +12859,7 @@ COPY_EXISTING ~brandi.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~blun21~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~book03~ #1 #0 #0 ~UNSTEALABLE~ ~INV4~
 	SET_BG2_PROFICIENCY PROFICIENCYMACE 5
@@ -12780,7 +12885,7 @@ COPY_EXISTING ~brenda.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~mebrenda~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi119~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi217~ #1 ~wizard~ (4)
@@ -12903,7 +13008,7 @@ COPY_EXISTING ~bub.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~seeenemy~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~mebubsni~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
@@ -13151,7 +13256,7 @@ COPY_EXISTING ~catura.cre~ ~override~
 	WRITE_ASCII classscript ~megreteg~ #8
 	WRITE_ASCII racescript ~mecatura~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco013~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	SET_BG2_PROFICIENCY PROFICIENCYSHORTSWORD 2
@@ -13203,7 +13308,7 @@ COPY_EXISTING ~centeo.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mecenteo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi215~ #1 ~wizard~ (3)
 	REPLACE_CRE_ITEM ~ANKACID~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~SCRL6R~ #1 #0 #0 ~NONE~ ~INV7~ //Tome of Clear Thought
@@ -13228,7 +13333,7 @@ COPY_EXISTING ~chelan.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mechelan~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~chicker.cre~ ~override~
 	SAY NAME1 @18005
@@ -13293,7 +13398,7 @@ COPY_EXISTING ~cordyr.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~mecordyr~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi699~ #5 ~priest~ (12)
 	SET_BG2_PROFICIENCY PROFICIENCYCLUB 1
 	REPLACE_CRE_ITEM ~helmnoan~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -13315,7 +13420,7 @@ COPY_EXISTING ~corsone.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mecorson~ #8
 	WRITE_ASCII generalscript ~seeenemy~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr105~ #0 ~innate~ (3)
 	ADD_MEMORIZED_SPELL ~sppr411~ #3 ~priest~ (3)
@@ -13471,7 +13576,7 @@ COPY_EXISTING ~cuchol.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~mecuchol~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~mageamul~
 	REPLACE_CRE_ITEM ~clck10~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~medagg70~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -13507,7 +13612,7 @@ COPY_EXISTING ~cult2.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~mecultwi~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (2)
@@ -13547,7 +13652,7 @@ COPY_EXISTING ~cult3.cre~ ~override~ ~cultt1.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~meculten~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~wand06~
 	REPLACE_CRE_ITEM ~helm10~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~chan04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
@@ -13579,7 +13684,7 @@ COPY_EXISTING ~cult1.cre~ ~override~ ~cultt2.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesw2h02~ #8
 	WRITE_ASCII generalscript ~mecultgu~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~helm13~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
 	REPLACE_CRE_ITEM ~sw2h02~ #0 #1 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -13607,7 +13712,7 @@ COPY_EXISTING ~cultt3.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mecultas~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems083~ #0 ~innate~ (1)
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~leat05~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -13638,7 +13743,7 @@ COPY_EXISTING ~cultt4.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mecultar~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~helm09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
 	REPLACE_CRE_ITEM ~bow04~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -13667,7 +13772,7 @@ COPY_EXISTING ~cyderm.cre~ ~override~
 	WRITE_BYTE thac0 5
 	WRITE_BYTE levelfirstclass 16
 	WRITE_ASCII classscript ~mecyrdem~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi916~ #8 ~wizard~ (1)
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -13703,7 +13808,7 @@ COPY_EXISTING ~cythan.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~mecythan~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 //	REPLACE_CRE_ITEM ~wa2robe~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
@@ -13767,7 +13872,7 @@ COPY_EXISTING ~daerragh.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~medaerra~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi219~ #1 ~wizard~ (1)
@@ -13812,8 +13917,8 @@ COPY_EXISTING ~daitel.cre~ ~override~
 
 COPY_EXISTING ~davaeo.cre~ ~override~
 	WRITE_LONG killxp 15000
-	WRITE_SHORT currenthp 80
-	WRITE_SHORT maxhp 80
+	WRITE_SHORT currenthp 120
+	WRITE_SHORT maxhp 120
 	WRITE_BYTE dexterity 16
 	WRITE_BYTE constitution 16
 	WRITE_BYTE intelligence 25
@@ -13825,7 +13930,7 @@ COPY_EXISTING ~davaeo.cre~ ~override~
 	WRITE_BYTE savevswand 0
 	WRITE_BYTE savevsspell 0
 	WRITE_BYTE savevspolymorph 0
-	WRITE_BYTE levelfirstclass 10
+	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII classscript ~medavaeo~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi313~ #2 ~wizard~ (2)
@@ -13860,7 +13965,7 @@ COPY_EXISTING ~deadban.cre~ ~override~ //Senjack/Dorotea bandit
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mesjband~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spin974~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~meco045~ #0 ~innate~ (1)
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymissilethac0 target=1 timing=9 parameter1=20 END
@@ -13942,7 +14047,7 @@ COPY_EXISTING ~degrod.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~medegrod~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi219~ #1 ~wizard~ (2)
@@ -13978,7 +14083,7 @@ COPY_EXISTING ~delgod.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~medelgod~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi614~ #5 ~wizard~ (3)
 	ADD_MEMORIZED_SPELL ~mems023~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 2
@@ -14064,7 +14169,7 @@ COPY_EXISTING ~deltan.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~medeltan~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REMOVE_CRE_ITEM ~minhp1~
@@ -14153,7 +14258,7 @@ COPY_EXISTING ~desret.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meinnate~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco047~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
@@ -14188,7 +14293,7 @@ COPY_EXISTING ~dezkie.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~medezkie~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~mageamul~
 	REPLACE_CRE_ITEM ~clck09~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~mestaf70~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -14230,7 +14335,7 @@ COPY_EXISTING ~diana.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~mediana~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi217~ #1 ~wizard~ (4)
@@ -14270,7 +14375,7 @@ COPY_EXISTING_REGEXP ~digger.*.cre~ ~override~
 	WRITE_ASCII classscript ~digshout~ #8
 	WRITE_ASCII racescript ~medigger~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEMS
 	REPLACE_CRE_ITEM ~umber02~ #0 #0 #0 ~NONE~ ~WEAPON1~
 
@@ -14296,7 +14401,7 @@ COPY_EXISTING ~dirk.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~meinnate~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 1
 	ADD_CRE_ITEM ~MAGE01~ #0 #0 #0 ~NONE~ ~RRING~
@@ -14324,7 +14429,7 @@ COPY_EXISTING ~diyab.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mediyab~ #8
 	WRITE_ASCII generalscript ~leavech7~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~DIYAB~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr512~ #4 ~priest~ (1)
@@ -14382,7 +14487,7 @@ COPY_EXISTING ~dogblink.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medogbli~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING_REGEXP ~dogwa.*.cre~ ~override~
 	WRITE_LONG killxp 400
@@ -14393,7 +14498,7 @@ COPY_EXISTING_REGEXP ~dogwa.*.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medogwa~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~dogwi.cre~ ~override~
 	WRITE_LONG killxp 300
@@ -14404,7 +14509,7 @@ COPY_EXISTING ~dogwi.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medogwi~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~dogwisu.cre~ ~override~
 	WRITE_BYTE strength 18
@@ -14414,7 +14519,7 @@ COPY_EXISTING ~dogwisu.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medogwi~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~doomdur.cre~ ~override~
 	WRITE_LONG killxp 5000
@@ -14445,7 +14550,7 @@ COPY_EXISTING ~doomdur.cre~ ~override~
 	WRITE_BYTE levelfirstclass 15
 	WRITE_BYTE levelsecondclass 9
 	WRITE_BYTE levelthirdclass 9
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
 	ADD_CRE_ITEM ~MEAX1H80~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 //	ADD_CRE_ITEM ~ring95~ #0 #0 #0 ~NONE~ ~LRING~
@@ -14497,7 +14602,7 @@ COPY_EXISTING ~doomgu.cre~ ~override~
 	WRITE_BYTE levelfirstclass 15
 	WRITE_BYTE levelsecondclass 3
 	WRITE_BYTE levelthirdclass 3
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	REMOVE_CRE_ITEMS
 //	ADD_CRE_ITEM ~HELM09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -14555,7 +14660,7 @@ COPY_EXISTING ~doomsa.cre~ ~override~ ~ntdemon.cre~ ~override~
 	WRITE_ASCII overridescript ~initdlg~ #8
 	WRITE_ASCII classscript ~redbake~ #8
 	WRITE_ASCII racescript ~medoomsa~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~meco086~ #0 ~innate~
 	ADD_MEMORIZED_SPELL ~meco087~ #0 ~innate~
@@ -14586,7 +14691,7 @@ COPY_EXISTING ~dopdop.cre~ ~override~ ~d2dop.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medopdop~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mems080~ #0 ~innate~
@@ -14617,7 +14722,7 @@ COPY_EXISTING ~dopdur.cre~ ~override~ ~d2dur.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medopdur~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~~ #8
 //	ADD_CRE_ITEM ~book04~ #1 #0 #0 ~UNSTEALABLE~ ~INV8~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=charm1 END
@@ -14640,7 +14745,7 @@ COPY_EXISTING ~dopfue.cre~ ~override~ ~d2fue.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medopfue~ #8
-	WRITE_ASCII generalscript ~mearnfar~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~
@@ -14667,9 +14772,9 @@ COPY_EXISTING ~dopkie.cre~ ~override~ ~d2kie.cre~ ~override~
 	WRITE_BYTE missileresistance 50
 	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII overridescript ~~ #8
-	WRITE_ASCII classscript ~~ #8
-	WRITE_ASCII racescript ~medopkie~ #8
-	WRITE_ASCII generalscript ~mearnfar~ #8
+	WRITE_ASCII classscript ~medopkie~ #8
+	WRITE_ASCII racescript ~~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr111~ #0 ~priest~
@@ -14693,9 +14798,9 @@ COPY_EXISTING ~dopisl.cre~ ~override~ ~d2isl.cre~ ~override~
 	WRITE_BYTE intelligence 25
 	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII overridescript ~~ #8
-	WRITE_ASCII classscript ~~ #8
-	WRITE_ASCII racescript ~medopisl~ #8
-	WRITE_ASCII generalscript ~mearnfar~ #8
+	WRITE_ASCII classscript ~medopisl~ #8
+	WRITE_ASCII racescript ~~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi313~ #2 ~wizard~ (5)
@@ -14738,7 +14843,7 @@ COPY_EXISTING ~doppgr.cre~ ~override~
 	WRITE_ASCII classscript ~medoppgr~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi206~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi212~ #1 ~wizard~ (3)
@@ -14777,7 +14882,7 @@ COPY_EXISTING ~dopple.cre~ ~override~ ~doppl7.cre~ ~override~ ~dopzorl.cre~ ~ove
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medopple~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mewi251~ #1 ~wizard~ (1)
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~mewi251~ ~%mewi251%~
@@ -14829,7 +14934,7 @@ COPY_EXISTING ~doppss.cre~ ~override~ //Seven Suns doppleganger
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medopss~ #8
 	WRITE_ASCII generalscript ~dopple~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mepull01~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi212~ #1 ~wizard~ (1)
@@ -14890,7 +14995,7 @@ COPY_EXISTING ~dopzorl.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII racescript ~meraksha~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi304~ #2 ~wizard~ (3)
 	ADD_MEMORIZED_SPELL ~spwi308~ #2 ~wizard~ (3)
@@ -14921,7 +15026,7 @@ COPY_EXISTING ~dorotea.cre~ ~override~
 	WRITE_ASCII classscript ~medorote~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr101~ #0 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
@@ -14967,7 +15072,7 @@ COPY_EXISTING ~drasus.cre~ ~override~
 	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	ADD_MEMORIZED_SPELL ~mems019~ #5 ~priest~
-	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter1=silence END
+	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=silence END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifymovementrate2 target=1 timing=9 parameter1=255 parameter2=1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=criticalhitbonus target=1 timing=9 parameter1=20 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=haste2 target=1 timing=9 parameter2=improvedhaste END
@@ -15040,7 +15145,7 @@ COPY_EXISTING ~drizzt.cre~ ~override~ ~x#drizzt.cre~ ~override~
 	WRITE_BYTE magicresistance 50
 	WRITE_BYTE levelfirstclass 30
 	WRITE_ASCII classscript ~medrizzt~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr506~ #4 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr711~ #6 ~priest~ (1)
@@ -15073,7 +15178,7 @@ COPY_EXISTING ~droth.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~medroth~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi408~ #3 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi411~ #3 ~wizard~ (1)
@@ -15104,7 +15209,7 @@ COPY_EXISTING ~druid3.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~medruid3~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 1
 	SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 1
 	REMOVE_MEMORIZED_SPELLS
@@ -15146,7 +15251,7 @@ COPY_EXISTING ~dryadha.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~mehama~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV2~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=mirrorimage target=1 timing=9 parameter1=8 resist_dispel=3 school=5 sectype=3 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=stoneskin target=1 timing=9 parameter1=8 resist_dispel=3 school=8 sectype=7 STR_VAR effsource=~sppr506~ END
@@ -15222,7 +15327,7 @@ COPY_EXISTING_REGEXP ~elmin[1235].cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meelmin~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=50 END
 
 COPY_EXISTING ~elmin3.cre~ ~override~
@@ -15244,7 +15349,7 @@ COPY_EXISTING ~elmins4.cre~ ~override~
 	WRITE_ASCII classscript ~elmins4~ #8
 	WRITE_ASCII racescript ~mearagch~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=50 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@24098) STR_VAR resource=~meidecre~ END
 
@@ -15297,7 +15402,7 @@ COPY_EXISTING ~entill.cre~ ~override~
 	WRITE_ASCII classscript ~leavech7~ #8
 	WRITE_ASCII racescript ~initmain~ #8
 	WRITE_ASCII generalscript ~meentill~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi412~ #3 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi506~ #4 ~wizard~ (2)
@@ -15325,7 +15430,7 @@ COPY_EXISTING ~etterc.cre~ ~override~
 	WRITE_BYTE savevsspell 5
 	WRITE_BYTE savevspolymorph 5
 	WRITE_ASCII classscript ~meetterc~ #8
-	WRITE_ASCII racescript ~meamelee~ #8
+	WRITE_ASCII racescript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~etterc2~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	REMOVE_CRE_ITEM ~etterc1~
 	ADD_MEMORIZED_SPELL ~spwi306~ #2 ~wizard~ (1)
@@ -15349,7 +15454,7 @@ COPY_EXISTING_REGEXP ~etterc1.cre~ ~override~
 	WRITE_BYTE savevsspell 5
 	WRITE_BYTE savevspolymorph 5
 	WRITE_ASCII classscript ~meetter1~ #8
-	WRITE_ASCII racescript ~meamelee~ #8
+	WRITE_ASCII racescript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~etterc2~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	REMOVE_CRE_ITEM ~etterc1~
 	ADD_MEMORIZED_SPELL ~sppr720~ #6 ~priest~ (3)
@@ -15667,7 +15772,8 @@ COPY_EXISTING ~firebe.cre~ ~override~ ~fireb1.cre~ ~override~
 	WRITE_BYTE savevswand 5
 	WRITE_BYTE savevspolymorph 5
 	WRITE_BYTE levelfirstclass 15
-	WRITE_ASCII generalscript ~mefirebe~ #8
+	WRITE_ASCII racescript ~mefirebe~ #8
+	WRITE_ASCII generalscript ~~ #8
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi303~ #2 ~wizard~ (5)
 	ADD_MEMORIZED_SPELL ~spwi604~ #5 ~wizard~ (3)
@@ -15965,7 +16071,7 @@ COPY_EXISTING ~flamang.cre~ ~override~
 	WRITE_BYTE savevspolymorph 3
 	WRITE_BYTE levelfirstclass 18
 	WRITE_BYTE levelsecondclass 18
-	WRITE_ASCII classscript ~meflmang~ #8
+	WRITE_ASCII racescript ~meflmang~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYMACE 5
 	SET_BG2_PROFICIENCY PROFICIENCYWARHAMMER 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -16107,6 +16213,7 @@ COPY_EXISTING ~flampun.cre~ ~override~
 	WRITE_BYTE levelfirstclass 15
 	WRITE_BYTE levelsecondclass 1
 	WRITE_ASCII racescript ~meflam~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	ADD_MEMORIZED_SPELL ~spcl232~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~meco365~ #0 ~innate~ (3)
@@ -16254,7 +16361,7 @@ COPY_EXISTING ~galile.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~megalile~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~BOOK08~ #1 #0 #0 ~UNSTEALABLE~ ~INV7~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=1 parameter1=spellineffective STR_VAR resource=~spwi911~ END
 
@@ -16277,7 +16384,7 @@ COPY_EXISTING ~gandol.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~seeenemy~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSLING 5
 	REPLACE_CRE_ITEM ~LEAT02~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~MESLNG08~ #0 #0 #0 ~UNSTEALABLE~ ~WEAPON1~ EQUIP
@@ -16330,7 +16437,7 @@ COPY_EXISTING ~garan.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~megaran~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck12~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~belt10~ #0 #0 #0 ~NONE~ ~BELT~
 	REPLACE_CRE_ITEM ~dagg01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
@@ -16376,7 +16483,7 @@ COPY_EXISTING ~gardus.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~leavech7~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~GARDUSH~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYWARHAMMER 5
 	REPLACE_CRE_ITEM ~PLAT24~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -16403,7 +16510,7 @@ COPY_EXISTING ~gazib.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~megazib~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi299~ #1 ~wizard~ (3)
 	ADD_MEMORIZED_SPELL ~spwi716~ #6 ~wizard~ (1)
@@ -16433,7 +16540,7 @@ COPY_EXISTING ~gdopp7.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~megdop70~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~gdopp71.cre~ ~override~
 	SAY NAME1 @18010
@@ -16457,7 +16564,7 @@ COPY_EXISTING ~gdopp71.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~megdop71~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mems096~ #5 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi818~ #7 ~wizard~ (1)
@@ -16485,7 +16592,7 @@ COPY_EXISTING ~gdopp72.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~megdop72~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi217~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spin866~ #2 ~wizard~ (1)
@@ -16511,7 +16618,7 @@ COPY_EXISTING ~gdopp73.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~megdop73~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~gdopp74.cre~ ~override~
 	SAY NAME1 @18013
@@ -16535,7 +16642,7 @@ COPY_EXISTING ~gdopp74.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~megdop74~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi514~ #4 ~wizard~ (1)
 
@@ -16578,7 +16685,7 @@ COPY_EXISTING ~gellan.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~megellan~ #8
 	WRITE_ASCII generalscript ~seeenemy~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr507~ #4 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr510~ #4 ~priest~ (1)
@@ -16664,7 +16771,7 @@ COPY_EXISTING ~gervis.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~megervis~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck14~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	REMOVE_MEMORIZED_SPELLS
@@ -16697,7 +16804,7 @@ COPY_EXISTING ~ghast.cre~ ~override~ ~ghastd.cre~ ~override~
 	WRITE_ASCII classscript ~meghast~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~meghast1~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 
 COPY_EXISTING ~ghasts.cre~ ~override~
@@ -16757,7 +16864,7 @@ COPY_EXISTING ~ghoullor.cre~ ~override~ //Greater Ghoul
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meghoulg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~meinrtel~ #0 #0 #0 ~NONE~ ~RRING~
 	REPLACE_CRE_ITEM ~meghoulg~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyvisionrange target=1 timing=9 parameter1=5 parameter2=1 END
@@ -16835,7 +16942,7 @@ COPY_EXISTING ~gnarl.cre~ ~override~
 	WRITE_ASCII overridescript ~none~ #8
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~megnarl~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~
 	ADD_CRE_ITEM ~BRAC19~ #0 #0 #0 ~NONE~ ~GLOVES~
 	ADD_CRE_ITEM ~BELT15~ #0 #0 #0 ~NONE~ ~BELT~
@@ -16875,14 +16982,14 @@ COPY_EXISTING_REGEXP ~flind.*.cre~ ~override~ ~flintal1.cre~ ~override~
 
 COPY_EXISTING_REGEXP ~flind.cre~ ~override~ ~flind_[ABC].cre~ ~override~ ~flintal1.cre~ ~override~
 	WRITE_ASCII overridescript ~meflind~ #8
-	WRITE_ASCII racescript ~meamelee~ #8
+	WRITE_ASCII racescript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	IF_EXISTS
 
 COPY_EXISTING ~flindb.cre~ ~override~
 	WRITE_ASCII overridescript ~shout~ #8
 	WRITE_ASCII classscript ~meflind~ #8
 	WRITE_ASCII racescript ~gnollfb~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~britik.cre~ ~override~
 	WRITE_LONG killxp 1200
@@ -17161,7 +17268,7 @@ COPY_EXISTING ~gorf.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~megorf~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~GIAFIR2~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -17248,7 +17355,7 @@ COPY_EXISTING ~grael.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~megrael~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~brac26~ #0 #0 #0 ~NONE~ ~GLOVES~
 	REPLACE_CRE_ITEM ~megrael~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV5~
@@ -17276,7 +17383,7 @@ COPY_EXISTING ~gregor.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~megregor~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
 	REPLACE_CRE_ITEM ~CHAN12~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
@@ -17308,7 +17415,7 @@ COPY_EXISTING ~gretek.cre~ ~override~
 	WRITE_ASCII classscript ~megreteg~ #8
 	WRITE_ASCII racescript ~megretek~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco047~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
@@ -17358,7 +17465,7 @@ COPY_EXISTING ~gurke.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~megurke~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~ (9)
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetcaster parameter2=ifhit STR_VAR resource=~spwi405~ END
 
@@ -17413,7 +17520,7 @@ COPY_EXISTING ~hairto.cre~ ~override~
 	WRITE_ASCII overridescript ~none~ #8
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mehairto~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi304~ #2 ~wizard~ (3)
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=9 parameter1=(0 - 3) END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyspeedfactor target=1 timing=9 parameter1=10 END
@@ -17490,7 +17597,7 @@ COPY_EXISTING ~halbaz.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mehalbaz~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~merobe92~ #1 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~UNSTEALABLE~ ~INV4~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~UNSTEALABLE~ ~INV5~
@@ -17649,7 +17756,7 @@ COPY_EXISTING ~helmho.cre~ ~override~
 	WRITE_BYTE savevspolymorph 0
 	WRITE_BYTE levelfirstclass 15
 	WRITE_ASCII generalscript ~mehelmho~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi616~ #5 ~wizard~ (1) //Disintegrate
 	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -17698,7 +17805,7 @@ COPY_EXISTING ~helsha.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~mehelsha~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck13~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book03~ #1 #0 #0 ~NONE~ ~INV7~
 	REMOVE_MEMORIZED_SPELLS
@@ -17798,8 +17905,8 @@ COPY_EXISTING ~hurgan.cre~ ~override~
 
 COPY_EXISTING ~ichary.cre~ ~override~
 	WRITE_LONG killxp 5000
-	WRITE_SHORT currenthp 130
-	WRITE_SHORT maxhp 130
+	WRITE_SHORT currenthp 70
+	WRITE_SHORT maxhp 70
 	WRITE_SHORT animation 30467 //BG2 shadow sprite
 	WRITE_BYTE race 134 //Wraith
 	WRITE_BYTE class 172 //Wraith
@@ -17811,16 +17918,20 @@ COPY_EXISTING ~ichary.cre~ ~override~
 	WRITE_SHORT naturalac 65533 //-3
 	WRITE_SHORT effectiveac 65533 //-3
 	WRITE_BYTE levelfirstclass 12
-	WRITE_BYTE fireresistance 50
-	WRITE_BYTE magicfireresistance 50
-	WRITE_BYTE elecresistance 50
-	WRITE_BYTE acidresistance 75
+	WRITE_BYTE fireresistance 0
+	WRITE_BYTE magicfireresistance 231 //-25%
+	WRITE_BYTE elecresistance 0
+	WRITE_BYTE acidresistance 0
+	WRITE_BYTE magicresistance 20
+	WRITE_BYTE slashingresistance 50
+	WRITE_BYTE piercingresistance 50
+	WRITE_BYTE crushingresistance 50
+	WRITE_BYTE missileresistance 50
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meichary~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEMS
 	ADD_CRE_ITEM ~HELMNOAN~ #0 #0 #0 ~NONE~ ~HELMET~ //Helmet
-	ADD_CRE_ITEM ~MERING71~ #0 #0 #0 ~NONE~ ~RRING~ //Ring of Torture
 	ADD_CRE_ITEM ~RING99~ #0 #0 #0 ~NONE~ ~AMULET~
 	ADD_CRE_ITEM ~IMMUNE1~ #0 #0 #0 ~NONE~ ~BELT~ //Immunity to normal weapons
 	ADD_CRE_ITEM ~MESW1H68~ #0 #0 #0 ~NONE~ ~WEAPON1~ //Spectral Brand +2
@@ -17989,7 +18100,7 @@ COPY_EXISTING ~iron3.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meircall~ #8
 	WRITE_ASCII generalscript ~meiron3~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII dialogfile ~meiron3~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
@@ -18028,7 +18139,7 @@ COPY_EXISTING ~iron4.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meircall~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYFLAILMORNINGSTAR 1
 	REPLACE_CRE_ITEM ~HELM09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~ //Helmet
 	REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~ //Splint Mail
@@ -18059,7 +18170,7 @@ COPY_EXISTING ~iron5.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meircall~ #8
 	WRITE_ASCII generalscript ~meiron5~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~ //Helmet
@@ -18096,7 +18207,7 @@ COPY_EXISTING ~iron6.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meiron6~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~BOOK06~ #1 #0 #0 ~NONE~ ~INV7~ //Tome of Clear Thought
 	ADD_CRE_ITEM ~BOOK06~ #1 #0 #0 ~NONE~ ~INV8~ //Tome of Clear Thought
@@ -18128,7 +18239,7 @@ COPY_EXISTING ~iron7.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meiron7~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco041~ #0 ~innate~ (1) //War Cry
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
@@ -18201,7 +18312,7 @@ COPY_EXISTING ~iron9.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meiron9~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~BOOK03~ #1 #0 #0 ~NONE~ ~INV1~ //Manual of Bodily Health
 	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibility target=1 timing=1 parameter2=1 resist_dispel=3 school=5 sectype=3 END
@@ -18233,7 +18344,7 @@ COPY_EXISTING ~iron10.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meiron10~ #8
 	WRITE_ASCII generalscript ~meircall~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	REPLACE_CRE_ITEM ~HELM11~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~CHAN01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
@@ -18273,7 +18384,7 @@ COPY_EXISTING ~iron11.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meiron11~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr301~ #2 ~priest~ (4)
@@ -18311,7 +18422,7 @@ COPY_EXISTING ~iron12.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spcl321~ #0 ~innate~ (1) //Berserker Rage
 	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 5
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -18343,7 +18454,7 @@ COPY_EXISTING ~iron13.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~meiron13~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi602~ #5 ~wizard~ (1) //Globe of Invulnerability
 	ADD_MEMORIZED_SPELL ~mems099~ #8 ~wizard~ (1) //Damage Turning
 	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 5
@@ -18374,7 +18485,7 @@ COPY_EXISTING ~iron14.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYKATANA 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -18421,7 +18532,7 @@ COPY_EXISTING ~irongu.cre~ ~override~ //Cloakwood mines basic guard
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~meircall~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 4
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=9 parameter1=RESOLVE_STR_REF(@24070) STR_VAR resource=~meidecre~ END
@@ -18444,7 +18555,7 @@ COPY_EXISTING ~irongu01.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~irongu~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -18471,7 +18582,7 @@ COPY_EXISTING ~irongu02.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~meinnate~ #8
-	WRITE_ASCII generalscript ~meamelee~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII defaultscript ~irongu~ #8
 	ADD_MEMORIZED_SPELL ~spcl521~ #0 ~innate~ (1) //Offensive Spin
 	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 5
@@ -18564,7 +18675,7 @@ COPY_EXISTING ~ithmee.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~meithmee~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck12~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV7~
 	REMOVE_MEMORIZED_SPELLS
@@ -18625,7 +18736,7 @@ COPY_EXISTING ~jacil.cre~ ~override~ //Merchant's League guard and blink dog tra
 	WRITE_BYTE missileresistance 156 //-100
 	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII classscript ~mejacil~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSPEAR 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REMOVE_CRE_ITEM ~BOW03~ ~AROW02~ ~SPER05~
@@ -18866,7 +18977,7 @@ COPY_EXISTING ~jenkal.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spcl916~ #0 ~innate~ (1) //Assassination
 	SET_BG2_PROFICIENCY PROFICIENCYSHORTSWORD 2
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -18897,7 +19008,7 @@ COPY_EXISTING ~kahrk.cre~ ~override~
 	WRITE_BYTE levelfirstclass 20
 	WRITE_ASCII overridescript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~mekahrk~ #8
-	WRITE_ASCII generalscript ~mearange~ #8
+	WRITE_ASCII generalscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYKATANA 5
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi304~ #2 ~wizard~ (2)
@@ -18943,7 +19054,7 @@ COPY_EXISTING ~karlat.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~mekarlat~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mepr451~ #3 ~priest~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~mepr451~ ~%mepr451%~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=9 parameter1=3 END
@@ -19023,7 +19134,7 @@ COPY_EXISTING ~kestor.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mekestor~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYDART 5
 	REMOVE_CRE_ITEM ~DART01~ ~DART03~
 	ADD_CRE_ITEM ~MEDART98~ #900 #0 #0 ~UNDROPPABLE~ ~WEAPON1~
@@ -19065,7 +19176,7 @@ COPY_EXISTING ~king.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meking~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8
 	REMOVE_CRE_ITEM ~sw2h07~
 	ADD_CRE_ITEM ~book07~ #1 #0 #0 ~NONE~ ~INV7~
 	ADD_CRE_ITEM ~book07~ #1 #0 #0 ~NONE~ ~INV8~
@@ -19140,7 +19251,7 @@ COPY_EXISTING ~kirinh.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mekirinh~ #8
 	WRITE_ASCII generalscript ~initdlg~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~STAF07~
 	REPLACE_CRE_ITEM ~B3-18M3~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~RING34~ #0 #0 #0 ~NONE~ ~BELT~
@@ -19172,7 +19283,7 @@ COPY_EXISTING ~knight.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~kingdead~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	REMOVE_CRE_ITEM ~mage06~ ~sw1h04~
@@ -19193,7 +19304,7 @@ COPY_EXISTING ~knightsk.cre~ ~override~
 	WRITE_BYTE thac0 236 //-20
 	WRITE_BYTE attacksperround 5
 	WRITE_BYTE levelfirstclass 16
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSPEAR 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	ADD_CRE_ITEM ~MAGE01~ #0 #0 #0 ~NONE~ ~LRING~
@@ -19223,7 +19334,7 @@ COPY_EXISTING ~knott.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYCROSSBOW 5
 	REPLACE_CRE_ITEM ~helm12~ #0 #0 #0 ~NONE~ ~HELMET~
@@ -19828,7 +19939,7 @@ COPY_EXISTING ~kryll.cre~ ~override~
 	WRITE_ASCII classscript ~mekryll~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi211~ #1 ~wizard~ (3)
@@ -19875,7 +19986,7 @@ COPY_EXISTING ~krysti.cre~ ~override~
 	WRITE_ASCII classscript ~mekrysti~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi502~ #4 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi508~ #4 ~wizard~ (1)
@@ -19932,7 +20043,7 @@ COPY_EXISTING ~lakada.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
 	REPLACE_CRE_ITEM ~ENEBLADE~ #200 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
@@ -19963,7 +20074,7 @@ COPY_EXISTING ~lamalh.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~melamalh~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr304~ #2 ~priest~ (5)
 	ADD_MEMORIZED_SPELL ~sppr706~ #3 ~priest~ (1)
@@ -19992,7 +20103,7 @@ COPY_EXISTING ~larria.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~melarria~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi503~ #4 ~wizard~ (4)
 	ADD_MEMORIZED_SPELL ~spwi508~ #4 ~wizard~ (2)
@@ -20030,7 +20141,7 @@ COPY_EXISTING ~larze.cre~ ~override~
 	ADD_CRE_ITEM ~BOOK04~ #1 #0 #0 ~NONE~ ~INV4~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=criticalhitbonus target=1 timing=9 parameter1=20 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=setmeleeeffect target=1 timing=9 STR_VAR resource=~mepush03~ END
-	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter2=8 STR_VAR resource=~mems168~ END
+//	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter2=8 STR_VAR resource=~mems168~ END
 
 COPY_EXISTING ~lasala.cre~ ~override~
 	WRITE_LONG killxp 3000
@@ -20048,7 +20159,7 @@ COPY_EXISTING ~lasala.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~melasala~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi217~ #1 ~wizard~ (4)
@@ -20064,6 +20175,7 @@ COPY_EXISTING ~laskal.cre~ ~override~
 	WRITE_LONG killxp 3000
 	WRITE_SHORT currenthp 86
 	WRITE_SHORT maxhp 86
+	WRITE_BYTE class classdruid
 	WRITE_SHORT kit kitavenger
 	WRITE_BYTE levelfirstclass 13
 	WRITE_BYTE dexterity 24
@@ -20103,7 +20215,7 @@ COPY_EXISTING ~laurel.cre~ ~override~
 	WRITE_ASCII classscript ~melaurel~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII dialogfile ~melaurel~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 2
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -20116,7 +20228,7 @@ COPY_EXISTING ~laurel.cre~ ~override~
 
 COPY_EXISTING_REGEXP ~leaggu.*.cre~ ~override~
 	WRITE_LONG killxp 500
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYCROSSBOW 1
 	REPLACE_CRE_ITEM ~XBOW01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
@@ -20195,7 +20307,7 @@ COPY_EXISTING ~liia.cre~ ~override~
 	WRITE_ASCII classscript ~meliia~ #8
 	WRITE_ASCII racescript ~shout~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (6)
 	ADD_MEMORIZED_SPELL ~spwi303~ #2 ~wizard~ (3)
@@ -20216,7 +20328,7 @@ COPY_EXISTING ~lindin.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~melindin~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	REPLACE_CRE_ITEM ~MESW1H30~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -20294,7 +20406,7 @@ COPY_EXISTING ~malkax.cre~ ~override~
 	WRITE_ASCII classscript ~memalkax~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV6~
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~meco040~ #0 ~wizard~ (1)
@@ -20353,7 +20465,7 @@ COPY_EXISTING ~marcel.cre~ ~override~
 	WRITE_ASCII classscript ~memarcel~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~mageamul~
 	REPLACE_CRE_ITEM ~clck14~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~scrl8p~ #0 #0 #0 ~NONE~ ~INV1~
@@ -20439,7 +20551,7 @@ COPY_EXISTING ~meakin.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~memeakin~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco128~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 2
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
@@ -20512,7 +20624,7 @@ COPY_EXISTING ~molkar.cre~ ~override~
 	WRITE_ASCII classscript ~molkar~ #8
 	WRITE_ASCII racescript ~meinnate~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spcl152~ #0 ~innate~ (2)
 	ADD_MEMORIZED_SPELL ~meco041~ #0 ~innate~ (2)
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 2
@@ -20561,7 +20673,7 @@ COPY_EXISTING ~morvin.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meinnate~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdwd02~ #0 ~innate~ (2)
 	SET_BG2_PROFICIENCY PROFICIENCYWARHAMMER 4
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
@@ -20596,7 +20708,7 @@ COPY_EXISTING ~mulahe.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~memulahe~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~helm19~ #0 #0 #0 ~NONE~ ~HELMET~
 	ADD_CRE_ITEM ~chan04~ #1 #0 #0 ~NONE~ ~ARMOR~
 	REMOVE_MEMORIZED_SPELLS
@@ -20625,7 +20737,7 @@ COPY_EXISTING ~mutami.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~memutami~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi103~ #0 ~wizard~ (5)
 	ADD_MEMORIZED_SPELL ~spwi203~ #1 ~wizard~ (1)
@@ -20702,7 +20814,7 @@ COPY_EXISTING ~nader.cre~ ~override~
 	WRITE_ASCII classscript ~megreteg~ #8
 	WRITE_ASCII racescript ~menader~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco211~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~mems121~ #0 ~innate~ (1)
 	SET_BG2_PROFICIENCY PROFICIENCYCROSSBOW 1
@@ -20717,7 +20829,7 @@ COPY_EXISTING ~narcil.cre~ ~override~
 	WRITE_BYTE constitution 20
 	WRITE_BYTE acidresistance 100
 	WRITE_BYTE levelfirstclass 10
-	WRITE_ASCII classscript ~menarcil~ #8
+	WRITE_ASCII racescript ~menarcil~ #8
 	REPLACE_CRE_ITEM ~MEROBE60~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~BOOK06~ #1 #0 #0 ~NONE~ ~INV8~
 	REMOVE_MEMORIZED_SPELLS
@@ -20893,7 +21005,7 @@ COPY_EXISTING ~nemphr.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~menemphr~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi913~ #8 ~wizard~ (2)
 	REPLACE_CRE_ITEM ~CLCK13~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -20914,7 +21026,7 @@ COPY_EXISTING ~neogre.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogrebe~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spcl321~ #0 ~innate~ (3)
 
 COPY_EXISTING ~nerogdok.cre~ ~override~
@@ -20982,7 +21094,7 @@ COPY_EXISTING ~nestor.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 2
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REPLACE_CRE_ITEM ~PLAT04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
@@ -21052,7 +21164,7 @@ COPY_EXISTING ~nethgua1.cre~ ~override~ ~nethgua2.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~seeenemy~ #8
 	WRITE_ASCII generalscript ~menethgu~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi118~ #0 ~wizard~ (1)
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
 
@@ -21114,7 +21226,7 @@ COPY_EXISTING ~niemai.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~meniemai~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi408~ #3 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi414~ #3 ~wizard~ (1)
@@ -21140,7 +21252,7 @@ COPY_EXISTING ~nimbul.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~menimbul~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi111~ #0 ~wizard~ (4)
 	ADD_MEMORIZED_SPELL ~spwi205~ #1 ~wizard~ (1)
@@ -21217,7 +21329,7 @@ COPY_EXISTING ~norale.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	REPLACE_CRE_ITEM ~BOW01~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
@@ -21271,7 +21383,7 @@ COPY_EXISTING_REGEXP ~ogre.cre~ ~override~ ~ogre0.*.cre~ ~override~ ~ogre_.*.cre
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogre~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	IF_EXISTS
 
 COPY_EXISTING ~ogreberz.cre~ ~override~
@@ -21285,7 +21397,7 @@ COPY_EXISTING ~ogreberz.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogrebe~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spcl321~ #0 ~innate~ (2)
 
 COPY_EXISTING ~ogreco.cre~ ~override~
@@ -21307,9 +21419,48 @@ COPY_EXISTING ~ogreco.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogreco~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~BOOT08~ #0 #0 #0 ~NONE~ ~BOOTS~
-	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter2=8 STR_VAR resource=~mems168~ END
+//	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter2=8 STR_VAR resource=~mems168~ END
+
+COPY_EXISTING ~x3hogre.cre~ ~override~ ~x3hogre2.cre~ ~override~
+	WRITE_LONG killxp 1000
+	WRITE_SHORT currenthp 85
+	WRITE_SHORT maxhp 85
+	WRITE_SHORT naturalac 10
+	WRITE_SHORT effectiveac 10
+	WRITE_BYTE thac0 13
+	WRITE_ASCII racescript ~meogre~ #8
+	IF_EXISTS
+
+COPY_EXISTING ~x3hogrec.cre~ ~override~
+	WRITE_LONG killxp 1600
+	WRITE_SHORT currenthp 100
+	WRITE_SHORT maxhp 100
+	WRITE_SHORT naturalac 20
+	WRITE_SHORT effectiveac 20
+	WRITE_BYTE thac0 10
+	WRITE_ASCII classscript ~meogrebe~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8
+	ADD_MEMORIZED_SPELL ~spcl321~ #0 ~innate~ (2)
+	IF_EXISTS
+
+COPY_EXISTING ~x3hogrel.cre~ ~override~
+	WRITE_LONG killxp 6400
+	WRITE_SHORT currenthp 220
+	WRITE_SHORT maxhp 220
+	WRITE_BYTE strength 25
+	WRITE_BYTE savevsbreath 4
+	WRITE_BYTE savevsdeath 0
+	WRITE_BYTE savevsspell 4
+	WRITE_BYTE savevswand 3
+	WRITE_BYTE savevspolymorph 2
+	WRITE_BYTE thac0 0
+	WRITE_BYTE attacksperround 3
+	WRITE_BYTE levelfirstclass 20
+	WRITE_ASCII racescript ~meogreco~ #8
+//	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter2=8 STR_VAR resource=~mems168~ END
+	IF_EXISTS
 
 COPY_EXISTING_REGEXP ~ogregr.cre~ ~override~ ~ogregr[1234].cre~ ~override~ ~ogregr_[ABCD].cre~ ~override~ ~ogremiri.cre~ ~override~
 	WRITE_LONG killxp 600
@@ -21352,7 +21503,7 @@ COPY_EXISTING ~ogrema.cre~ ~override~ //Most common ogre mage
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogma01~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_CRE_ITEM ~SW1H20~
 	ADD_CRE_ITEM ~SW1H43~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
 	ADD_CRE_ITEM ~SCRL5N~ #1 #0 #0 ~IDENTIFIED~ ~INV4~
@@ -21476,7 +21627,7 @@ COPY_EXISTING ~ogrema_a.cre~ ~override~ //Ogre Mage who attacks you in a house i
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogma_a~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~ogrema_a~ #8
 	REMOVE_CRE_ITEM ~SW1H20~
 	ADD_CRE_ITEM ~SW1H43~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
@@ -21511,7 +21662,7 @@ COPY_EXISTING ~ogrema_b.cre~ ~override~ //Ogre Mage who attacks you in a house i
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogma_b~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~ogrema_b~ #8
 	REMOVE_CRE_ITEM ~SW1H20~
 	ADD_CRE_ITEM ~SW1H43~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
@@ -21547,7 +21698,7 @@ COPY_EXISTING ~ogrema_c.cre~ ~override~ //Ogre Mage who attacks you in a house i
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogma_c~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~ogrema_c~ #8
 	REMOVE_CRE_ITEM ~SW1H20~
 	ADD_CRE_ITEM ~SW1H43~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
@@ -21582,7 +21733,7 @@ COPY_EXISTING ~ogrema_d.cre~ ~override~ //Ogre Mage who attacks you in a house i
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meogma_d~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	WRITE_ASCII scriptname ~ogrema_d~ #8
 	REPLACE_CRE_ITEM ~SW1H02~ #0 #1 #0 ~NONE~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~SCRL6H~ #1 #0 #0 ~IDENTIFIED~ ~INV5~
@@ -21617,7 +21768,7 @@ COPY_EXISTING ~ogremba.cre~ ~override~ ~ogrmba.cre~ ~override~ //Baldur's Gate S
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meogmaba~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~SW1H34~ #0 #1 #0 ~NONE~ ~WEAPON1~ EQUIP
 	ADD_CRE_ITEM ~MESCRL7F~ #1 #0 #0 ~IDENTIFIED~ ~INV5~
 	ADD_CRE_ITEM ~MESCRL7P~ #1 #0 #0 ~IDENTIFIED~ ~INV6~
@@ -21644,7 +21795,7 @@ COPY_EXISTING ~ogresu.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogresu~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~ogreunsh.cre~ ~override~
 	ADD_CRE_ITEM ~MEBELT50~ #0 #0 #0 ~IDENTIFIED~ ~INV5~
@@ -21699,7 +21850,7 @@ COPY_EXISTING ~oopah.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meogre~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~oopah2.cre~ ~override~
 	WRITE_LONG killxp 2400
@@ -21712,7 +21863,7 @@ COPY_EXISTING ~oopah2.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meoopah2~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~orc01.cre~ ~override~ ~k9orc01.cre~ ~override~
 	WRITE_LONG killxp 900
@@ -21906,7 +22057,7 @@ COPY_EXISTING ~osmadi.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meosmadi~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSPEAR 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REMOVE_MEMORIZED_SPELLS
@@ -21930,7 +22081,7 @@ COPY_EXISTING ~oulam.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~meoulam~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi119~ #0 ~wizard~ (50)
 	ADD_MEMORIZED_SPELL ~meco103~ #2 ~wizard~ (2)
@@ -21957,7 +22108,7 @@ COPY_EXISTING ~pallon.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mepallon~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~BOOK06~ #1 #0 #0 ~UNSTEALABLE~ ~INV7~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromspell target=1 timing=1 parameter1=spellineffective STR_VAR resource=~mems093~ END
 
@@ -21982,7 +22133,7 @@ COPY_EXISTING ~pargus.cre~ ~override~
 	WRITE_ASCII classscript ~megreteg~ #8
 	WRITE_ASCII racescript ~mepargus~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi212~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi408~ #3 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi611~ #5 ~wizard~ (1)
@@ -22007,7 +22158,7 @@ COPY_EXISTING ~pawn.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~kingdead~ #8
 	WRITE_ASCII generalscript ~mepawn~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifycastingtime target=1 timing=9 parameter1=(0 - 3) END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=disablespellcasting END
 
@@ -22102,7 +22253,7 @@ COPY_EXISTING ~pheirk.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mepheirk~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~PLAT01~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~MEPHEIRK~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
@@ -22144,7 +22295,7 @@ COPY_EXISTING ~pheogurd.cre~ ~override~ ~phoenix.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~MESW1HPH~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 
 COPY_EXISTING ~pheoarch.cre~ ~override~
@@ -22171,7 +22322,7 @@ COPY_EXISTING ~phlydi.cre~ ~override~ ~phlydi2.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mephlydi~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi112~ #0 ~wizard~ (4)
 	ADD_MEMORIZED_SPELL ~spwi211~ #1 ~wizard~ (3)
@@ -22197,6 +22348,7 @@ COPY_EXISTING ~poe.cre~ ~override~
 	WRITE_BYTE class classdoppleganger
 	WRITE_BYTE levelfirstclass 10
 	WRITE_ASCII overridescript ~mepoe~ #8
+	WRITE_ASCII classscript ~~ #8
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=charm1 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=charm2 END
 
@@ -22224,7 +22376,7 @@ COPY_EXISTING ~portal.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~meportal~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=invisibilitydetection target=1 timing=1 parameter2=1 END
 
 COPY_EXISTING ~prat.cre~ ~override~
@@ -22246,7 +22398,8 @@ COPY_EXISTING ~prat.cre~ ~override~
 	WRITE_BYTE attacksperround 5
 	WRITE_BYTE levelfirstclass 20
 	WRITE_BYTE levelsecondclass 20
-	WRITE_ASCII overridescript ~meprat~ #8
+	WRITE_ASCII overridescript ~~ #8
+	WRITE_ASCII classscript ~meprat~ #8
 	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~mems023~ #0 ~innate~ (1)
@@ -22316,7 +22469,7 @@ COPY_EXISTING ~pridem.cre~ ~override~
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~SHIELD~
-	REPLACE_CRE_ITEM ~sw1h08~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
+	REPLACE_CRE_ITEM ~sw2h08~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~book03~ #1 #0 #0 ~NONE~ ~INV8~
 
 COPY_EXISTING ~priilm.cre~ ~override~ ~priilmu.cre~ ~override~
@@ -22408,7 +22561,7 @@ COPY_EXISTING ~queen.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~kingdead~ #8
 	WRITE_ASCII generalscript ~mequeen~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV7~
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi304~ #2 ~wizard~ (4)
@@ -22460,7 +22613,7 @@ COPY_EXISTING ~ragefa.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meragefa~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck16~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV4~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV5~
@@ -22532,7 +22685,7 @@ COPY_EXISTING ~raiken.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meraiken~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYHALBERD 5
 	REPLACE_CRE_ITEM ~helm09~ #0 #0 #0 ~NONE~ ~HELMET~
 	REPLACE_CRE_ITEM ~chan04~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -22567,7 +22720,7 @@ COPY_EXISTING ~ramazi.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~meramazi~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~brac15~ #0 #0 #0 ~NONE~ ~GLOVES~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV4~
 	REMOVE_MEMORIZED_SPELLS
@@ -22630,7 +22783,7 @@ COPY_EXISTING ~ratchi.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~meratchi~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr505~ #4 ~priest~ (1)
@@ -22667,7 +22820,7 @@ COPY_EXISTING ~resar.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meresar~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~merobe80~ #0 #0 #0 ~NONE~ ~ARMOR~
 //	ADD_CRE_ITEM ~mescrl7o~ #2 #0 #0 ~IDENTIFIED&UNSTEALABLE~ ~INV3~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~UNSTEALABLE~ ~INV4~
@@ -22697,7 +22850,7 @@ COPY_EXISTING ~revent.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg2~ #8
 	WRITE_ASCII racescript ~merevdag~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~s2-16m2~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetlasthitby parameter2=ifhit STR_VAR resource=~mepull02~ END
@@ -22805,7 +22958,7 @@ COPY_EXISTING_REGEXP ~rsdapp.*.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mersdapp~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=mirrorimage target=1 timing=9 parameter1=8 resist_dispel=3 school=5 sectype=3 END
@@ -22832,7 +22985,7 @@ COPY_EXISTING ~rsdcl01.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mersdcl~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr101~ #0 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (6)
@@ -22877,7 +23030,7 @@ COPY_EXISTING ~rsdinita.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~rsdinit~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	REPLACE_CRE_ITEM ~HELM13~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~CHAN04~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
@@ -23025,7 +23178,7 @@ COPY_EXISTING_REGEXP ~rsdmnk0[1239].cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mersdmnk~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdm101~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spdm106~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spcl820~ #0 ~innate~ (1)
@@ -23051,7 +23204,7 @@ COPY_EXISTING ~rsdmnk04.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mersdmnk~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdm106~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spcl820~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~medm144~ #0 ~innate~ (1)
@@ -23077,7 +23230,7 @@ COPY_EXISTING_REGEXP ~rsdmnk0[5678].cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mersdmnk~ #8
 	WRITE_ASCII generalscript ~rsdmnk~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdm101~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spdm106~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spcl820~ #0 ~innate~ (1)
@@ -23106,7 +23259,7 @@ COPY_EXISTING_REGEXP ~rsdmnk[ABCD].cre~ ~override~ ~rsdmnk.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mersdmnk~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdm101~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spdm106~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spcl820~ #0 ~innate~ (1)
@@ -23136,7 +23289,7 @@ COPY_EXISTING ~rsdtroll.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~merstrol~ #8
 	WRITE_ASCII generalscript ~rstrol01~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi613~ #5 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi716~ #6 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi907~ #8 ~wizard~ (1)
@@ -23162,7 +23315,7 @@ COPY_EXISTING ~rsgamaz.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mersgama~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spdm106~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~spcl820~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~medm144~ #0 ~innate~ (1)
@@ -23229,7 +23382,7 @@ COPY_EXISTING ~rufie.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~merufie~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi212~ #1 ~wizard~ (2)
 	ADD_MEMORIZED_SPELL ~spwi910~ #8 ~wizard~ (1)
 	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=1 parameter1=3 parameter2=3 STR_VAR resource=~mems075~ END
@@ -23324,7 +23477,7 @@ COPY_EXISTING ~sarevo.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesarevo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~mesarevo~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -23369,7 +23522,7 @@ COPY_EXISTING ~sarevo2.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesarevo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~helm15~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
@@ -23385,6 +23538,8 @@ COPY_EXISTING ~sarevo2.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=slay END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=killtarget END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=imprisonment END
+
+COPY_EXISTING ~mesarevo.bcs~ ~override/sarevok.bcs~
 
 COPY_EXISTING ~sarhed.cre~ ~override~
 	WRITE_LONG killxp 8000
@@ -23428,7 +23583,7 @@ COPY_EXISTING ~sath.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~turninvi~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYQUARTERSTAFF 1
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 1
 	REPLACE_CRE_ITEM ~staf05~ #25 #0 #0 ~NONE~ ~WEAPON1~
@@ -23470,7 +23625,7 @@ COPY_EXISTING ~scar.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~mescar~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYAXE 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	REPLACE_CRE_ITEM ~ax1h02~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -23516,7 +23671,7 @@ COPY_EXISTING ~semaj.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mesemaj~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck12~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi409~ #3 ~wizard~ (6)
@@ -23576,7 +23731,7 @@ COPY_EXISTING ~seniya.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meseniya~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 1
 	SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 1
 	REMOVE_MEMORIZED_SPELLS
@@ -23678,7 +23833,7 @@ COPY_EXISTING ~shandal2.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~shoutdlg~ #8
 	WRITE_ASCII generalscript ~meshanda~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~merobe93~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~NONE~ ~INV9~
 	REMOVE_MEMORIZED_SPELLS
@@ -23802,7 +23957,7 @@ COPY_EXISTING ~silenc.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesilenc~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~mesw1h84~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 
 COPY_EXISTING ~silke.cre~ ~override~
@@ -23859,7 +24014,7 @@ COPY_EXISTING ~simage1.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesimage~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~clck12~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~NONE~ ~INV4~
 	REMOVE_MEMORIZED_SPELLS
@@ -23884,7 +24039,7 @@ COPY_EXISTING ~simdemon.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesimdem~ #8
 	WRITE_ASCII generalscript ~mesw2h02~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr510~ #4 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~spwi913~ #8 ~wizard~ (1)
@@ -23912,7 +24067,7 @@ COPY_EXISTING ~simmeon.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mesimmeo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco033~ #0 ~innate~ (2)
 	SET_BG2_PROFICIENCY PROFICIENCYTWOHANDEDSWORD 2
 	SET_BG2_PROFICIENCY PROFICIENCY2HANDED 2
@@ -24338,7 +24493,7 @@ COPY_EXISTING ~spidph.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~wtasight~ #8
+	WRITE_ASCII defaultscript ~measpdph~ #8
 	REPLACE_CRE_ITEM ~MEINRTEL~ #0 #0 #0 ~NONE~ ~RRING~
 	REPLACE_CRE_ITEM ~MESPDPH~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=applyspellonmovement target=1 timing=9 STR_VAR resource=~mepspmov~ END
@@ -24356,7 +24511,7 @@ COPY_EXISTING ~spidphas.cre~ ~override~ //Astral Phase Spider
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mespidas~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~wtasight~ #8
+	WRITE_ASCII defaultscript ~measpdph~ #8
 	REPLACE_CRE_ITEM ~MEINRTEL~ #0 #0 #0 ~NONE~ ~RRING~
 	REPLACE_CRE_ITEM ~MESPDPH~ #0 #0 #0 ~NONE~ ~WEAPON1~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=5 END
@@ -24369,7 +24524,7 @@ COPY_EXISTING ~spidphsu.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~wtasight~ #8
+	WRITE_ASCII defaultscript ~measpdph~ #8
 	LPF ADD_CRE_EFFECT INT_VAR opcode=applyspellonmovement target=1 timing=9 STR_VAR resource=~mepspmov~ END
 
 COPY_EXISTING ~spidsw.cre~ ~override~
@@ -24507,7 +24662,7 @@ COPY_EXISTING ~surgeo.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mesurgeo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~book08~ #1 #0 #0 ~UNSTEALABLE~ ~INV4~
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr505~ #4 ~priest~ (1)
@@ -24632,6 +24787,9 @@ COPY_EXISTING ~tamoko.cre~ ~override~ ~tamoko2.cre~ ~override~
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyattacksperround target=1 timing=9 parameter1=4 END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=50 END
 
+COPY_EXISTING ~tamoko2.cre~ ~override~
+	WRITE_ASCII classscript ~~ #8
+
 COPY_EXISTING ~tanar.cre~ ~override~ //Aec'Letec
 	WRITE_LONG killxp 25000
 	WRITE_SHORT currenthp 540
@@ -24651,7 +24809,7 @@ COPY_EXISTING ~tanar.cre~ ~override~ //Aec'Letec
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~metanari~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=protectionfromopcode target=1 timing=9 parameter2=imprisonment END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=9 parameter1=targetcaster parameter2=ifcasterdies STR_VAR resource=~meaecch~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=modifyallsaves target=1 timing=9 parameter1=50 END
@@ -24666,7 +24824,7 @@ COPY_EXISTING ~tarnes.cre~ ~override~
 	WRITE_ASCII classscript ~initdlg~ #8
 	WRITE_ASCII racescript ~metarnes~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi119~ #0 ~wizard~ (3)
 	ADD_MEMORIZED_SPELL ~spwi224~ #1 ~wizard~ (1)
@@ -24755,7 +24913,7 @@ COPY_EXISTING ~tazok.cre~ ~override~
 	WRITE_ASCII classscript ~tazok~ #8
 	WRITE_ASCII racescript ~metazok~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 2
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~sw1h42~ #0 #0 #0 ~UNSTEALABLE~ ~WEAPON1~
@@ -24777,7 +24935,7 @@ COPY_EXISTING ~tazok2.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~metazok2~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYBASTARDSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REPLACE_CRE_ITEM ~sw1h42~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -24987,7 +25145,7 @@ COPY_EXISTING ~teven.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~teven~ #8
 	WRITE_ASCII generalscript ~shout~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGBOW 5
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~NONE~ ~HELMET~
 	REPLACE_CRE_ITEM ~chan04~ #0 #0 #0 ~NONE~ ~ARMOR~
@@ -25037,7 +25195,7 @@ COPY_EXISTING ~thalan.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~meragefa~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~merobe91~ #0 #0 #0 ~NONE~ ~ARMOR~
 	ADD_CRE_ITEM ~book06~ #1 #0 #0 ~UNSTEALABLE~ ~INV4~
 	ADD_CRE_ITEM ~book07~ #1 #0 #0 ~UNSTEALABLE~ ~INV5~
@@ -25073,7 +25231,7 @@ COPY_EXISTING ~thaldo.cre~ ~override~
 	WRITE_ASCII classscript ~methaldo~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~leat03~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~dagg01~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~
 	ADD_CRE_ITEM ~book07~ #0 #0 #0 ~NONE~ ~INV9~
@@ -25101,7 +25259,7 @@ COPY_EXISTING_REGEXP ~thief.cre~ ~override~ ~thief[fgm].cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSHORTBOW 5
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~bow06~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -25162,7 +25320,7 @@ COPY_EXISTING ~tracea.cre~ ~override~
 	WRITE_ASCII classscript ~metracea~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi408~ #3 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~spwi505~ #4 ~wizard~ (1)
@@ -25201,7 +25359,7 @@ COPY_EXISTING ~tralit.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~initdlg~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~mearnfar~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~helm01~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
 	REPLACE_CRE_ITEM ~plat04~ #0 #0 #0 ~NONE~ ~ARMOR~
 	REPLACE_CRE_ITEM ~bow17~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -25286,7 +25444,7 @@ COPY_EXISTING ~tuth.cre~ ~override~
 	WRITE_ASCII classscript ~metuth~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSWORDANDSHIELD 2
 	ADD_MEMORIZED_SPELL ~spwi613~ #5 ~wizard~ (2)
@@ -25424,7 +25582,7 @@ COPY_EXISTING ~vai.cre~ ~override~
 COPY_EXISTING ~vai.cre~ ~override~ ~flamvai.cre~ ~override~
 	WRITE_BYTE allegiance eagoodbutblue
 
-COPY_EXISTING ~vamflm01.cre~ ~override~
+COPY_EXISTING ~vamflf01.cre~ ~override~ ~vamflm01.cre~ ~override~ ~vampir01.cre~ ~override~
 	WRITE_LONG killxp 6000
 	WRITE_SHORT currenthp 175
 	WRITE_SHORT maxhp 175
@@ -25586,7 +25744,7 @@ COPY_EXISTING ~voltin.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mevoltin~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr605~ #5 ~priest~ (3)
 	ADD_MEMORIZED_SPELL ~sppr717~ #6 ~priest~ (3)
@@ -25657,7 +25815,7 @@ COPY_EXISTING ~kaishwlf.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mekaisha~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mepull02~ #1 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~meco037~ #0 ~innate~ (3)
 	ADD_MEMORIZED_SPELL ~meco047~ #0 ~innate~ (1)
@@ -25694,7 +25852,7 @@ COPY_EXISTING ~barwlf.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mebaresh~ #8
 	WRITE_ASCII generalscript ~mewerewo~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~sppr512~ #4 ~priest~ (3)
 	ADD_MEMORIZED_SPELL ~sppr603~ #5 ~priest~ (1)
 	REPLACE_CRE_ITEM ~RINGLOUP~ #0 #0 #0 ~NONE~ ~RRING~
@@ -25738,7 +25896,7 @@ COPY_EXISTING ~loupgar.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meselaad~ #8
 	WRITE_ASCII generalscript ~mewerewo~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~spwi302~ #2 ~wizard~ (1)
 	ADD_MEMORIZED_SPELL ~meco038~ #0 ~innate~ (3)
 	ADD_CRE_ITEM ~CLCK31~ #1 #1 #0 ~NONE~ ~CLOAK~
@@ -25759,7 +25917,7 @@ COPY_EXISTING ~wheber.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mewheber~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi314~ #2 ~wizard~ (9)
 	ADD_MEMORIZED_SPELL ~spwi402~ #3 ~wizard~ (1)
@@ -25792,7 +25950,7 @@ COPY_EXISTING ~wilf.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mewilf~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr405~ #3 ~priest~ (6)
 	ADD_MEMORIZED_SPELL ~sppr505~ #4 ~priest~ (1)
@@ -25807,7 +25965,7 @@ COPY_EXISTING ~william.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mewillia~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~spwi305~ #2 ~wizard~ (9)
 	ADD_MEMORIZED_SPELL ~spwi414~ #3 ~wizard~ (1)
@@ -25913,7 +26071,7 @@ COPY_EXISTING ~wolfva.cre~ ~override~ ~p#wolf04.cre~ ~override~
 	WRITE_SHORT currenthp 92
 	WRITE_SHORT maxhp 92
 	WRITE_ASCII classscript ~mewolfva~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~MEWOLFVA~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetlasthitby parameter2=ifhit STR_VAR resource=~mems052~ END
 	IF_EXISTS
@@ -26047,7 +26205,7 @@ COPY_EXISTING ~wudei.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~mewudei~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REMOVE_MEMORIZED_SPELLS
 	ADD_MEMORIZED_SPELL ~sppr214~ #1 ~priest~ (3)
 	ADD_MEMORIZED_SPELL ~sppr510~ #4 ~priest~ (3)
@@ -26079,7 +26237,7 @@ COPY_EXISTING ~wyverba.cre~ ~override~ //Baby wyvern
 	WRITE_ASCII racescript ~mechasef~ #8
 	WRITE_ASCII generalscript ~mewyvern~ #8
 //	WRITE_ASCII defaultscript ~meaflyin~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems055~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~WYVERN1~ ~WYVERN2~
 	REPLACE_CRE_ITEM ~WYVERN2~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -26111,7 +26269,7 @@ COPY_EXISTING ~wyvern.cre~ ~override~ //Regular wyvern
 	WRITE_ASCII racescript ~mechasef~ #8
 	WRITE_ASCII generalscript ~mewyvern~ #8
 //	WRITE_ASCII defaultscript ~meaflyin~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems055~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~WYVERN1~ ~WYVERN2~
 	REPLACE_CRE_ITEM ~WYVERN2~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -26145,7 +26303,7 @@ COPY_EXISTING ~corwyvrn.cre~ ~override~ //Wyvern that Coran needs to kill
 	WRITE_ASCII classscript ~mewandef~ #8
 	WRITE_ASCII racescript ~mewyvgre~ #8
 //	WRITE_ASCII defaultscript ~meaflyin~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems055~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~WYVERN1~ ~WYVERN2~
 	REPLACE_CRE_ITEM ~MEWYVERN~ #0 #0 #0 ~NONE~ ~WEAPON1~ //More powerful wyvern weapon
@@ -26186,7 +26344,7 @@ COPY_EXISTING ~wyvernbi.cre~ ~override~ //Durlag's Tower Greater Wyvern
 	WRITE_ASCII racescript ~mewyvanc~ #8
 	WRITE_ASCII generalscript ~mewyvern~ #8
 //	WRITE_ASCII defaultscript ~meaflyin~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems055~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~WYVERN1~ ~WYVERN2~
 	REPLACE_CRE_ITEM ~MEWYVEGR~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP //Most powerful wyvern weapon
@@ -26215,7 +26373,7 @@ COPY_EXISTING ~wyvernsu.cre~ ~override~ //Summoned wyvern
 	WRITE_ASCII classscript ~mewdefau~ #8
 	WRITE_ASCII generalscript ~mewyvern~ #8
 //	WRITE_ASCII defaultscript ~meaflyin~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems055~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~WYVERN1~ ~WYVERN2~
 	REPLACE_CRE_ITEM ~WYVERN2~ #0 #0 #0 ~NONE~ ~WEAPON1~
@@ -26274,7 +26432,7 @@ COPY_EXISTING ~yago.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~meyago~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 
 COPY_EXISTING ~zal.cre~ ~override~
 	WRITE_LONG killxp 3000
@@ -26284,7 +26442,7 @@ COPY_EXISTING ~zal.cre~ ~override~
 	WRITE_BYTE constitution 15
 	WRITE_BYTE thac0 12
 	WRITE_BYTE levelfirstclass 9
-	WRITE_ASCII classscript ~mearange~ #8
+	WRITE_ASCII classscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYDART 5
 	REPLACE_CRE_ITEM ~HELM01~ #0 #0 #0 ~NONE~ ~HELMET~
 	REPLACE_CRE_ITEM ~MEINRTEL~ #0 #0 #0 ~NONE~ ~LRING~
@@ -26306,7 +26464,7 @@ COPY_EXISTING ~zargal.cre~ ~override~
 	WRITE_ASCII classscript ~shoutdlg~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mezargal~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	SET_BG2_PROFICIENCY PROFICIENCYSHORTSWORD 5
 	SET_BG2_PROFICIENCY PROFICIENCYSINGLEWEAPON 2
 	REMOVE_CRE_ITEM ~SW1H09~
@@ -26328,7 +26486,7 @@ COPY_EXISTING ~zeela.cre~ ~override~
 	WRITE_ASCII classscript ~shout~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~mezeela~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~sppr106~ #0 ~priest~ (5)
 	ADD_MEMORIZED_SPELL ~sppr208~ #1 ~priest~ (1)
 	ADD_MEMORIZED_SPELL ~sppr309~ #2 ~priest~ (1)
@@ -26390,7 +26548,7 @@ COPY_EXISTING_REGEXP ~zombie.*.cre~ ~override~ ~ntzombie.cre~ ~override~ ~x#garz
 	WRITE_BYTE magiccoldresistance 100
 	WRITE_BYTE thac0 10
 	WRITE_BYTE attacksperround 2
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetlasthitby parameter2=ifhit STR_VAR resource=~mepull04~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~mezomba~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~mezombb~ END
@@ -27232,7 +27390,7 @@ COPY_EXISTING ~olfdrake.cre~ ~override~
 	WRITE_ASCII scriptname ~CORWYVRN~ #32
 	WRITE_ASCII racescript ~mefdrake~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	REPLACE_CRE_ITEM ~~ #0 #0 #0 ~NONE~ ~WEAPON2~
 	REPLACE_CRE_ITEM ~MEFLYING~ #0 #0 #0 ~NONE~ ~LRING~
 	REPLACE_CRE_ITEM ~MERINGDR~ #0 #0 #0 ~NONE~ ~CLOAK~
@@ -27559,7 +27717,7 @@ COPY_EXISTING ~ntdeath1.cre~ ~override~
 	WRITE_ASCII classscript ~none~ #8
 	WRITE_ASCII racescript ~medeathk~ #8
 	WRITE_ASCII generalscript ~none~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~BOOK03~ #1 #0 #0 ~NONE~ ~INV3~
 	ADD_CRE_ITEM ~BOOK04~ #1 #0 #0 ~NONE~ ~INV5~
 	ADD_CRE_ITEM ~BOOK05~ #1 #0 #0 ~NONE~ ~INV7~
@@ -27687,7 +27845,7 @@ COPY_EXISTING ~ntforeog.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mentforo~ #8
 	WRITE_ASCII generalscript ~~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~SPWI319X~ #1 #0 #0 ~IDENTIFIED~ ~INV3~
 	ADD_CRE_ITEM ~SCRL2B~ #1 #0 #0 ~IDENTIFIED~ ~INV4~
 	REMOVE_MEMORIZED_SPELLS
@@ -27896,7 +28054,7 @@ COPY_EXISTING ~ntlegian.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~mearange~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~meco034~ #0 ~innate~ (1)
 	ADD_MEMORIZED_SPELL ~meco038~ #0 ~innate~ (3)
 	ADD_MEMORIZED_SPELL ~spcl423~ #0 ~innate~ (4)
@@ -27927,7 +28085,7 @@ COPY_EXISTING ~ntmariel.cre~ ~override~
 	WRITE_ASCII classscript ~~ #8
 	WRITE_ASCII racescript ~mecultas~ #8
 	WRITE_ASCII generalscript ~meinnate~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_MEMORIZED_SPELL ~mems083~ #0 ~innate~ (1)
 	REMOVE_CRE_ITEM ~sw1h10~
 	REPLACE_CRE_ITEM ~sw1h08~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
@@ -28112,7 +28270,7 @@ COPY_EXISTING ~ntwolfva.cre~ ~override~
 	WRITE_ASCII overridescript ~~ #8
 	WRITE_ASCII classscript ~mewolfva~ #8
 	WRITE_ASCII racescript ~ntwolfva~ #8
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	ADD_CRE_ITEM ~MEWOLFVA~ #0 #0 #0 ~NONE~ ~WEAPON1~ EQUIP
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetlasthitby parameter2=ifhit STR_VAR resource=~mems052~ END
 	IF_EXISTS
@@ -28155,7 +28313,7 @@ COPY_EXISTING ~ntzombju.cre~ ~override~
 	WRITE_SHORT maxhp 120
 	WRITE_BYTE thac0 5
 	WRITE_BYTE attacksperround 2
-	WRITE_ASCII defaultscript ~meamelee~ #8
+	WRITE_ASCII defaultscript ~wtasight~ #8 //Reverted to base script so SCS can see it
 	LPF ADD_CRE_EFFECT INT_VAR opcode=castspelloncondition target=1 timing=1 parameter1=targetlasthitby parameter2=ifhit STR_VAR resource=~mepull04~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~mezomba~ END
 	LPF ADD_CRE_EFFECT INT_VAR opcode=meleehiteffect target=1 timing=9 STR_VAR resource=~mezombb~ END
@@ -28357,6 +28515,12 @@ COPY_EXISTING ~k9shamb.cre~ ~override~
 	IF_EXISTS
 
 END
+
+COPY_EXISTING_REGEXP ~me.*\.cre~ ~override~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~MEAMELEE~ ~WTASIGHT~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~MEARANGE~ ~WTASIGHT~
+	REPLACE_TEXTUALLY CASE_INSENSITIVE ~MEARNFAR~ ~WTASIGHT~
+	BUT_ONLY_IF_IT_CHANGES
 
 //____________________________________________SPL
 
@@ -29883,6 +30047,10 @@ COPY_EXISTING ~spwi515.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR power=5 opcode=displayportraiticon target=1 timing=0 duration=1200 parameter2=57 resist_dispel=3 END
 	SAY UNIDENTIFIED_DESC @20515
 
+COPY_EXISTING ~mewi515d.spl~ ~override~
+	LPF ALTER_SPELL_HEADER INT_VAR projectile=meglobal END
+	IF_EXISTS
+
 COPY_EXISTING ~spwi516.spl~ ~override~
 	SAY UNIDENTIFIED_DESC @20516
 
@@ -30182,6 +30350,9 @@ COPY_EXISTING ~spwi911.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR opcode=castspell target=2 timing=4 duration=28 parameter1=1 parameter2=1 STR_VAR resource=~MEMETEOR~ END
 	LPF ADD_SPELL_CFEFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=1 timing=3 STR_VAR resource=~MEINHOST~ END
 	SAY UNIDENTIFIED_DESC @20911
+
+COPY_EXISTING ~spwi911.spl~ ~override/mewi911g.spl~
+	LPF ALTER_EFFECT STR_VAR match_resource=~MEMETEOR~ resource=~MEMETEOG~ END
 
 COPY_EXISTING ~spwi912.spl~ ~override~
 	LPF ADD_SPELL_CFEFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=1 timing=3 STR_VAR resource=~MEINHOST~ END
@@ -30897,6 +31068,17 @@ COPY_EXISTING ~meco370.spl~ ~override~
 	SAY NAME1 @19330
 	SAY UNIDENTIFIED_DESC @22370
 
+COPY_EXISTING ~meco378.spl~ ~override~
+	SAY NAME1 @19323
+	SAY UNIDENTIFIED_DESC @22378
+
+COPY_EXISTING ~meco381.spl~ ~override~
+	SAY NAME1 @19373
+	SAY UNIDENTIFIED_DESC @22381
+
+COPY_EXISTING ~meankhps.itm~ ~override~
+	SAY IDENTIFIED_DESC @22378
+
 COPY_EXISTING ~meco052.spl~ ~override/mebh001.spl~ ~meco053.spl~ ~override/mebh002.spl~ ~meco114.spl~ ~override/mebh003.spl~ ~meco030.spl~ ~override/mebh004.spl~ ~meco054.spl~ ~override/mebh005.spl~ ~meco055.spl~ ~override/mebh006.spl~ ~meco056.spl~ ~override/mebh007.spl~ ~meco057.spl~ ~override/mebh008.spl~ ~meco058.spl~ ~override/mebh009.spl~ ~meco210.spl~ ~override/mebh010.spl~ ~meco253.spl~ ~override/mebh011.spl~ ~meco377.spl~ ~override/mebh012.spl~
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=1 STR_VAR match_resource= EVAL ~%SOURCE_RES%~ resource= EVAL ~%DEST_RES%~ END
 	LPF ALTER_SPELL_HEADER INT_VAR speed=0 END
@@ -31282,6 +31464,10 @@ COPY_EXISTING ~mems097.spl~ ~override~
 	WRITE_SHORT 0x98 meconeki
 	SAY NAME1 @19204
 
+COPY_EXISTING ~mems097.spl~ ~override/mems097g.spl~
+	LPF DELETE_SPELL_EFFECT INT_VAR check_headers=1 check_globals=0 opcode_to_delete=(0 - 1) END
+
+
 COPY_EXISTING ~mems098.spl~ ~override~
 	SAY NAME1 @19205
 
@@ -31646,7 +31832,8 @@ COPY_EXISTING_REGEXP ~.*\.itm~ ~override~
 	BUT_ONLY_IF_IT_CHANGES
 
 COPY_EXISTING_REGEXP ~.*\.cre~ ~override~
-	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=castspell target=1 timing=4 duration=0 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
+//	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=407 target=1 timing=10 duration=2 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
+	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=146 target=1 timing=4 duration=0 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
 /*
 COPY_EXISTING ~baldur.gam~ ~override~
 	READ_LONG 0x30 nonpartycharactersoffset
@@ -32265,6 +32452,7 @@ COPY_EXISTING ~stoblack.sto~ ~override~ //Thieves' Guild Store
 
 COPY_EXISTING ~stocheap.sto~ ~override~ //Lucky Aello's Cursed Discount Store
 	REMOVE_STORE_ITEM ~sw2h22~ ~staf25~ ~potn23~ ~potn25~
+	ADD_STORE_ITEM ~mering71~ #0 #0 #0 ~NONE~ #1
 
 COPY_EXISTING ~stosilen.sto~ ~override~ //Silence Store
 	ADD_STORE_ITEM ~mebow93~ #0 #0 #0 ~IDENTIFIED~ #1
@@ -32934,8 +33122,8 @@ COPY_EXISTING ~ar3800.are~ ~override~ //Road just south of Beregost
 PRINT @206
 
 COPY_EXISTING ~ar3900.are~ ~override~ //Ulcaster, outside
-	LPF fj_are_structure INT_VAR fj_loc_x=1710 fj_loc_y=1080 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Black Vulture~ fj_cre_resref=~MEDEATHV~ END
-	LPF fj_are_structure INT_VAR fj_loc_x=3700 fj_loc_y=2860 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Black Vulture~ fj_cre_resref=~MEDEATHV~ END
+//	LPF fj_are_structure INT_VAR fj_loc_x=1710 fj_loc_y=1080 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Black Vulture~ fj_cre_resref=~MEDEATHV~ END
+//	LPF fj_are_structure INT_VAR fj_loc_x=3700 fj_loc_y=2860 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Black Vulture~ fj_cre_resref=~MEDEATHV~ END
 
 COPY_EXISTING ~ar3901.are~ ~override~ //Ulcaster, inside
 	LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~Difficulty Spawn~ fj_reg_script=~MEAR3901~ END
@@ -33013,6 +33201,7 @@ STR_VAR fj_structure_type=~container~ fj_name=~ME_Container_1~ END
 	LPF ADD_AREA_ITEM INT_VAR container_to_add_to=numcontainers STR_VAR item_to_add=~meboot60~ END
 
 COPY_EXISTING ~ar4300.are~ ~override~ //Area just north of Nashkel
+	LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~MEAR4300~ fj_reg_script=~MEAR4300~ END
 	LPF fj_are_structure INT_VAR fj_loc_x=1767 fj_loc_y=2145 STR_VAR fj_structure_type=~actor~ fj_name=~Black Talon Elite 1~ fj_cre_resref=~IRONELIT~ END
 	LPF fj_are_structure INT_VAR fj_loc_x=4515 fj_loc_y=1454 STR_VAR fj_structure_type=~actor~ fj_name=~Black Talon Elite 2~ fj_cre_resref=~IRONELIT~ END
 
@@ -33058,9 +33247,9 @@ COPY_EXISTING ~ar4600.are~ ~override~ //Area with Jared and the polar bear
 		END
 	END
 	LPF ALTER_AREA_ACTOR STR_VAR actor_name=~Merchant~ cre_file=~BEARPO1~ END
-	LPF fj_are_structure INT_VAR fj_loc_x=2778 fj_loc_y=1426 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATLV~ END
-	LPF fj_are_structure INT_VAR fj_loc_x=866 fj_loc_y=1291 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATHV~ END
-	LPF fj_are_structure INT_VAR fj_loc_x=4499 fj_loc_y=2805 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATLV~ END
+//	LPF fj_are_structure INT_VAR fj_loc_x=2778 fj_loc_y=1426 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATLV~ END
+//	LPF fj_are_structure INT_VAR fj_loc_x=866 fj_loc_y=1291 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATHV~ END
+//	LPF fj_are_structure INT_VAR fj_loc_x=4499 fj_loc_y=2805 fj_schedule=atnight STR_VAR fj_structure_type=~actor~ fj_name=~Lesser Black Vulture~ fj_cre_resref=~MEDEATLV~ END
 	LPF fj_are_structure INT_VAR fj_loc_x=535 fj_loc_y=1213 STR_VAR fj_structure_type=~actor~ fj_name=~Carrion Crawler~ fj_cre_resref=~CARRIO~ END
 	LPF fj_are_structure INT_VAR fj_loc_x=1139 fj_loc_y=562 STR_VAR fj_structure_type=~actor~ fj_name=~Mutated Gibberling~ fj_cre_resref=~MEGIBERM~ END
 	LPF fj_are_structure INT_VAR fj_loc_x=1541 fj_loc_y=3309 STR_VAR fj_structure_type=~actor~ fj_name=~Cave Bear~ fj_cre_resref=~BEARCA~ END
@@ -33410,6 +33599,7 @@ COPY_EXISTING ~mevublcr.cre~ ~override~
 
 COPY_EXISTING ~mebiricr.cre~ ~override~ ~mebirocr.cre~ ~override~ ~meeaggcr.cre~ ~override~ ~meeaglcr.cre~ ~override~ ~meseagcr.cre~ ~override~ ~mevublcr.cre~ ~override~ ~mevultcr.cre~ ~override~
 	REPLACE_CRE_ITEM ~mebirdun~ #0 #0 #0 ~NONE~ ~BELT~
+	LPF ADD_CRE_EFFECT INT_VAR opcode=applyrepeatingeff target=1 timing=9 duration=0x20000000 parameter1=1 parameter2=2 STR_VAR resource=~MEOFFSCR~ END
 
 COPY_EXISTING ~M__MESTR.LUA~ ~override~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_birdtodead = {\[\"\"\] = 0~ ~me_birdtodead = {[""] = 0, ["54016"] = %slotbirddeaddecimal%~
@@ -33418,6 +33608,10 @@ COPY_EXISTING ~M__MESTR.LUA~ ~override~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_birdtodead = {\[\"\"\] = 0~ ~me_birdtodead = {[""] = 0, ["53504"] = %slotseagulldeaddecimal%~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_birdtodead = {\[\"\"\] = 0~ ~me_birdtodead = {[""] = 0, ["53760"] = %slotvulturedeaddecimal%~
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~me_birdtodead = {\[\"\"\] = 0~ ~me_birdtodead = {[""] = 0, ["%sloteaglelargedecimal%"] = %sloteaglelargedeaddecimal%~
+
+
+COPY_EXISTING ~bow17.itm~ ~override~
+	WRITE_ASCII 0x4 ~V1  ~ #4
 
 BEGIN @2 DESIGNATED 128 DEPRECATED ~~
 
