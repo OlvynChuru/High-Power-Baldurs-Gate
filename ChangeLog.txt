@@ -1,3 +1,7 @@
+v2.2.1:
+- New spell: Jump (1st-level spell that allows a creature to jump over obstacles).
+- I added a few more scrolls for some of the new spells to the game.
+
 v2.2.0:
 - I fixed more of the problems that were causing the game to crash a lot.
 - The mod should now be compatible with Sword Coast Stratagems by @DavidW . First install High Power Baldur's Gate, then install SCS.

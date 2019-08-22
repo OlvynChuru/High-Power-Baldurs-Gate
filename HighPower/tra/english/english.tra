@@ -13762,6 +13762,11 @@ Like all oozes, a Dense Pudding has amazing saving throws, it is immune to backs
 @30021=~Harmful effects shortened~
 @30022=~Beneficial effects shortened~
 @30023=~Backstab Sequencer~
+@30024=~The Jump ability has been added to your Special Abilities menu.~
+@30025=~Jump~
+@30026=~Jump
+
+The creature jumps to the target point, which must be within range.~
 
 @31151=~Snake's Swiftness~
 @31251=~Beast Sense~
@@ -13913,6 +13918,7 @@ This spell drains the randomness out of the current area. For the duration, all 
 @33153=~Detect Shapeshifters~
 @33154=~Summon Lesser Kobold~
 @33155=~Dimension Door~
+@33156=~Jump~
 @33251=~Power Word, Pull~
 @33252=~Lesser Ghostwalk~
 @33253=~Power Word, Push~
@@ -14013,7 +14019,7 @@ Range: Visual range of the caster
 Duration: 8 rounds
 Casting Time: 1
 Area of Effect: Special
-Saving Throw: None 
+Saving Throw: None
 
 This spell summons a Lesser Kobold, a weak kobold with no special abilities. The kobold remains a faithful servant of the wizard for 8 rounds, at which point it is unsummoned. The kobold summoned by this spell ignores the summoning limit.~
 @34155=~Dimension Door
@@ -14027,6 +14033,17 @@ Area of Effect: The caster
 Saving Throw: None
 
 This spell transports the caster to any place within the visual range of the caster. When the spell is cast, a dimensional portal opens up in front of the caster, who immediately steps through it. Upon passing through the portal, the caster finds <PRO_HIMHER>self at <PRO_HISHER> chosen destination.~
+@34156=~Jump
+(Alteration)
+
+Level: 1
+Range: Touch
+Duration: 1 hour
+Casting Time: 5
+Area of Effect: 1 creature
+Saving Throw: None
+
+This spell allows a creature to jump higher and farther. Until the duration ends, the creature gains an ability they can use at will, which lets the creature jump up to 8 feet away. The maximum jump distance is increased by 3 feet per 5 caster levels, to a maximum of 26 feet at level 30. The creature is able to jump over normally impassable obstacles like fences or walls, as long as they are narrow enough to jump over. At higher levels, the increased jump distance will allow the creature to jump over thicker obstacles. While in the air, the creature is unaffected by certain ground-based spells like Entangle, Web, and Earthquake.~
 @34251=~Power Word, Pull
 (Conjuration/Summoning)
 

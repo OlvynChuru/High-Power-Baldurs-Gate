@@ -1,6 +1,6 @@
 BACKUP ~HighPower/backup~
 AUTHOR ~https://forums.beamdog.com/discussion/60325/mod-high-power-baldurs-gate-version-2-0~
-VERSION ~2.2.0~
+VERSION ~2.2.1~
 README ~HighPower/HighPowerReadme.txt~
 
 ALWAYS
@@ -3483,6 +3483,7 @@ COPY_EXISTING ~sppr518.spl~ ~override~
 COPY_EXISTING ~sppr519.spl~ ~override~
 	LPF ALTER_SPELL_HEADER INT_VAR projectile=idpro213 END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=protectionfromspell2 target=2 timing=0 duration=1 parameter1=0 parameter2=splprot_meflyingspeednotequalto STR_VAR resource= EVAL ~%SOURCE_RES%~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=0 parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 	SAY NAME1 @41519
 	SAY UNIDENTIFIED_DESC @42519
 
@@ -3912,6 +3913,16 @@ COPY_EXISTING ~spwi402.spl~ ~override/%mewi155%.spl~
 	LPF PATCH_REPLACE_IN_STRING INT_VAR new_string=1 strref=description_ref STR_VAR match= EVAL ~%me_casting_level%[0-9]~ replace_with= EVAL ~%me_casting_level%1~ RET description_new=description_new END
 	SAY_EVALUATED UNIDENTIFIED_DESC ~%description_new%~
 
+LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI1~ RET mewi156=filename END
+COPY_EXISTING ~mewi156.spl~ ~override/%mewi156%.spl~
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi156~ resource= EVAL ~%mewi156%~ END
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=displaystring parameter1=RESOLVE_STR_REF(@30024) END
+	SAY NAME1 @33156
+	SAY UNIDENTIFIED_DESC @34156
+
+COPY_EXISTING ~mejmps01.spl~ ~override~ ~mejmps05.spl~ ~override~ ~mejmps10.spl~ ~override~ ~mejmps15.spl~ ~override~ ~mejmps20.spl~ ~override~ ~mejmps25.spl~ ~override~ ~mejmps30.spl~ ~override~
+	SAY NAME1 @30025
+	SAY UNIDENTIFIED_DESC @30026
 
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI2~ RET mewi251=filename END
 COPY_EXISTING ~mewi251.spl~ ~override/%mewi251%.spl~
@@ -4606,6 +4617,33 @@ COPY_EXISTING ~mewi155x.itm~ ~override~
 	SAY NAME2 @33155
 	SAY IDENTIFIED_DESC @34155
 
+COPY_EXISTING ~sto0703.sto~ ~override~ //Sorcerous Sundries
+	ADD_STORE_ITEM ~mewi155x~ AFTER ~scrl77~ #1 #0 #0 ~IDENTIFIED~ #2
+	IF_EXISTS
+
+COPY_EXISTING ~friend.sto~ ~override~ //Friendly Arm Inn
+	ADD_STORE_ITEM ~mewi155x~ BEFORE ~book40~ #1 #0 #0 ~IDENTIFIED~ #1
+	IF_EXISTS
+
+COPY_EXISTING ~venkt.cre~ ~override~
+	REPLACE_CRE_ITEM ~mewi155x~ #0 #0 #0 ~NONE~ ~QITEM3~
+
+COPY_EXISTING ~kirian.cre~ ~override~
+	REPLACE_CRE_ITEM ~mewi155x~ #0 #0 #0 ~NONE~ ~INV1~
+
+COPY_EXISTING ~mewi156x.itm~ ~override~
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi156~ resource= EVAL ~%mewi156%~ END
+	SAY NAME2 @33156
+	SAY IDENTIFIED_DESC @34156
+
+COPY_EXISTING ~inn3351.sto~ ~override~ //Feldepost's Inn
+	ADD_STORE_ITEM ~mewi156x~ AFTER ~scrl5u~ #1 #0 #0 ~IDENTIFIED~ #1
+	IF_EXISTS
+
+COPY_EXISTING ~sto4906.sto~ ~override~ //Carnival Magic Trinkets Shop
+	ADD_STORE_ITEM ~mewi156x~ BEFORE ~amul01~ #1 #0 #0 ~IDENTIFIED~ #1
+	IF_EXISTS
+
 COPY_EXISTING ~mewi251x.itm~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi251~ resource= EVAL ~%mewi251%~ END
 	SAY NAME2 @33251
@@ -4670,6 +4708,9 @@ COPY_EXISTING ~mewi256x.itm~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi256~ resource= EVAL ~%mewi256%~ END
 	SAY NAME2 @33256
 	SAY IDENTIFIED_DESC @34256
+
+COPY_EXISTING ~ar4501.are~ ~override~
+	LPF ADD_AREA_ITEM INT_VAR container_to_add_to=1 STR_VAR item_to_add=~mewi256x~ END
 
 COPY_EXISTING ~mewi351x.itm~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi351~ resource= EVAL ~%mewi351%~ END
@@ -4787,17 +4828,17 @@ COPY_EXISTING ~highhedg.sto~ ~override~ //High Hedge
 	ADD_STORE_ITEM ~mewi456x~ AFTER ~scrl6g~ #1 #0 #0 ~IDENTIFIED~ #1
 	IF_EXISTS
 
+COPY_EXISTING ~sto0703.sto~ ~override~ //Sorcerous Sundries
+	ADD_STORE_ITEM ~mewi456x~ AFTER ~scrl6o~ #1 #0 #0 ~IDENTIFIED~ #1
+	IF_EXISTS
+
 COPY_EXISTING ~mewi457x.itm~ ~override~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi457~ resource= EVAL ~%mewi457%~ END
 	SAY NAME2 @33457
 	SAY IDENTIFIED_DESC @34457
 
-COPY_EXISTING ~sto0703.sto~ ~override~ //Sorcerous Sundries
-	ADD_STORE_ITEM ~mewi457x~ AFTER ~scrl6O~ #1 #0 #0 ~IDENTIFIED~ #1
-	IF_EXISTS
-
 COPY_EXISTING ~sto4906.sto~ ~override~ //Carnival Magic Trinkets Shop
-	ADD_STORE_ITEM ~mewi457x~ AFTER ~scrl15~ #1 #0 #0 ~IDENTIFIED~ #1
+	ADD_STORE_ITEM ~mewi457x~ BEFORE ~amul01~ #1 #0 #0 ~IDENTIFIED~ #1
 	IF_EXISTS
 /*
 COPY_EXISTING ~mewi458x.itm~ ~override~
@@ -28833,6 +28874,7 @@ COPY_EXISTING ~sppr105.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=protectionfromspell2 target=2 timing=0 duration=1 parameter1=0 parameter2=splprot_meflyingspeednotequalto STR_VAR resource= EVAL ~%SOURCE_RES%~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=modifymovementrate1 special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=entangleoverlay special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=0 parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 	SAY UNIDENTIFIED_DESC @21105
 
 COPY_EXISTING ~sppr106.spl~ ~override~
@@ -28977,6 +29019,7 @@ COPY_EXISTING ~sppr208.spl~ ~override~
 	LPF CLONE_EFFECT INT_VAR multi_match=1 silent=1 match_opcode=immunitytospellandmessage probability1=100 probability2=0 parameter2=6 STR_VAR insert=~first~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=immunitytospellandmessage target=2 parameter2=holdcreature1 STR_VAR resource=~MEPRTOPC~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=holdcreature1 STR_VAR resource=~MEPRTOPC~ END
+//	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=(0 - 25) parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 	LPF ALTER_SPELL_EFFECT INT_VAR duration_high=24 END
 	LPF ALTER_EFFECT INT_VAR match_target=2 savebonus=(0 - 1) END
 	SAY UNIDENTIFIED_DESC @21208
@@ -29000,6 +29043,7 @@ COPY_EXISTING ~sppr210.spl~ ~override~
 	
 COPY_EXISTING ~sppr211.spl~ ~override~ //Silence 15' Radius
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=silence STR_VAR resource=~MEPRTOPC~ END
+//	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=(0 - 100) parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 	READ_LONG spellflags ulgiash
 	ulgiash|=0x400 //Hostile
 	WRITE_LONG spellflags ulgiash
@@ -29427,6 +29471,7 @@ COPY_EXISTING ~sppr720.spl~ ~override~ //Earthquake
 
 COPY_EXISTING ~mequakea.spl~ ~override~ ~mequakeb.spl~ ~override~ ~mequakec.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=immunitytospellandmessage target=2 timing=0 duration=1 parameter1=0 parameter2=splprot_meflyingspeednotequalto STR_VAR resource= EVAL ~%SOURCE_RES%~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=0 parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 
 COPY_EXISTING ~sppr721.spl~ ~override~ //Energy Blades
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 power=7 opcode=removeeffectsbyresource target=1 timing=1 STR_VAR resource=~sppr721~ END
@@ -29451,6 +29496,7 @@ PRINT @179
 
 COPY_EXISTING ~spwi101.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=protectionfromspell2 target=2 timing=0 duration=1 parameter1=0 parameter2=splprot_meflyingspeednotequalto STR_VAR resource= EVAL ~%SOURCE_RES%~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=0 parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=modifymovementrate1 special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=grease special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
 
@@ -29639,6 +29685,7 @@ COPY_EXISTING ~spwi215.spl~ ~override~ ~spdr201.spl~ ~override~
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=web special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
 //	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter2=paralyze special=(0 - 1) STR_VAR resource=~MEPRTOPC~ END
 	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=protectionfromspell2 target=2 timing=0 duration=1 parameter1=0 parameter2=splprot_meflyingspeednotequalto STR_VAR resource= EVAL ~%SOURCE_RES%~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=eeexinvokelua target=2 parameter1=0 parameter2=0x2040010 special=(0 - 1) STR_VAR resource=~MEPRTOFF~ END
 
 COPY_EXISTING ~spwi218.spl~ ~override~
 	SAY UNIDENTIFIED_DESC @20218

@@ -1914,7 +1914,72 @@ function MEPRTOPC(effectData, creatureData)
 ["special"] = immunityString,
 ["parent_resource"] = spellRes,
 ["source_target"] = targetID,
-["source_id"] = sourceID,
+["source_id"] = sourceID
+})
+	end
+end
+
+function MEPRTOFF(effectData, creatureData)
+--	EEex_WriteDword(effectData + 0x110, 0x1)
+	local targetID = EEex_ReadDword(creatureData + 0x34)
+	local sourceID = EEex_ReadDword(effectData + 0x10C)
+	if targetID == 0x0 or sourceID == 0x0 then return end
+	local check_value = EEex_ReadDword(effectData + 0x18)
+	local offset = EEex_ReadWord(effectData + 0x1C, 0x0)
+	local readSize = EEex_ReadByte(effectData + 0x1E, 0x0)
+	local check_relation = EEex_ReadByte(effectData + 0x1F, 0x0)
+	local check_stat = 0
+	if readSize == 1 then
+		check_stat = EEex_ReadByte(creatureData + offset, 0x0)
+	elseif readSize == 2 then
+		check_stat = EEex_ReadSignedWord(creatureData + offset, 0x0)
+	else
+		check_stat = EEex_ReadDword(creatureData + offset)
+	end
+--	Infinity_DisplayString("check_value: " .. check_value .. ", offset: " .. offset .. ", readSize: " .. readSize .. ", check_relation: " .. check_relation .. ", check_stat: " .. check_stat)
+	local hasProtection = false
+	if check_relation == 0 and check_stat <= check_value then
+		hasProtection = true
+	elseif check_relation == 1 and check_stat == check_value then
+		hasProtection = true
+	elseif check_relation == 2 and check_stat < check_value then
+		hasProtection = true
+	elseif check_relation == 3 and check_stat > check_value then
+		hasProtection = true
+	elseif check_relation == 4 and check_stat >= check_value then
+		hasProtection = true
+	elseif check_relation == 5 and check_stat ~= check_value then
+		hasProtection = true
+	elseif check_relation == 6 and bit32.bor(check_stat, check_value) == check_value then
+		hasProtection = true
+	elseif check_relation == 7 and bit32.band(check_stat, check_value) >= check_value then
+		hasProtection = true
+	elseif check_relation == 8 and bit32.band(check_stat, check_value) > 0 then
+		hasProtection = true
+	elseif check_relation == 9 and bit32.band(check_stat, check_value) == 0 then
+		hasProtection = true
+	elseif check_relation == 10 and bit32.bor(check_stat, check_value) > check_value then
+		hasProtection = true
+	elseif check_relation == 11 and bit32.band(check_stat, check_value) < check_value then
+		hasProtection = true
+	end
+	if hasProtection then
+		local spellRes = EEex_ReadLString(effectData + 0x90, 8)
+		local immunityString = EEex_ReadDword(effectData + 0x44)
+		local immunityOpcode = 318
+		if immunityString ~= -1 then
+			immunityOpcode = 324
+		end
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = immunityOpcode,
+["target"] = 2,
+["timing"] = 0,
+["duration"] = 0,
+["resource"] = spellRes,
+["special"] = immunityString,
+["parent_resource"] = spellRes,
+["source_target"] = targetID,
+["source_id"] = sourceID
 })
 	end
 end
