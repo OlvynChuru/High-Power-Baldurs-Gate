@@ -1,6 +1,6 @@
 BACKUP ~HighPower/backup~
 AUTHOR ~https://forums.beamdog.com/discussion/60325/mod-high-power-baldurs-gate-version-2-0~
-VERSION ~2.2.1~
+VERSION ~2.2.2~
 README ~HighPower/HighPowerReadme.txt~
 
 ALWAYS
@@ -966,6 +966,7 @@ OUTER_PATCH alltheconstants BEGIN
 	eeexsettemporaryaiscript=400
 	eeexsetextendedstat=401
 	eeexinvokelua=402
+	eeexscreeneffects=403
 	gulp=16233
 	spellineffective=24534
 	stringpanic=25818
@@ -2223,13 +2224,13 @@ EXTEND_BOTTOM ~koboldfl.bcs~ ~.../script.baf~ EVAL
 PRINT @101
 
 COPY_EXISTING ~ui.menu~ ~override~
-	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~contingencyDescription = mageBookStrings[contingencyResRef].tip~ ~			if not pcall(me_problem) then
-				contingencyDescription = 0
-			end~
-	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~--reload language~ ~function me_problem()
+
+	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~contingencyDescription = mageBookStrings[contingencyResRef].tip~ ~if mageBookStrings[contingencyResRef] == nil then
+	contingencyDescription = 0
+else
 	contingencyDescription = mageBookStrings[contingencyResRef].tip
-end
---reload language~
+end~
+
 	// Patching to have it display resistances above 127 or below -128 in the stats screen.
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~helpTextString = characters\[currentID\]\.proficiencies\.details~ ~helpTextString = characters[currentID].proficiencies.details
 helpTextString = string.gsub(helpTextString, "Magic Fire: 127", "Magic Fire : 127")
@@ -3909,9 +3910,8 @@ COPY_EXISTING ~spwi402.spl~ ~override/%mewi155%.spl~
 	WRITE_LONG spelllevel 1
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=1 match_power=4 power=1 END
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 STR_VAR match_resource=~spwi402~ resource= EVAL ~%mewi155%~ END
-	READ_LONG UNIDENTIFIED_DESC description_ref
-	LPF PATCH_REPLACE_IN_STRING INT_VAR new_string=1 strref=description_ref STR_VAR match= EVAL ~%me_casting_level%[0-9]~ replace_with= EVAL ~%me_casting_level%1~ RET description_new=description_new END
-	SAY_EVALUATED UNIDENTIFIED_DESC ~%description_new%~
+	SAY NAME1 @33155
+	SAY UNIDENTIFIED_DESC @34155
 
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI1~ RET mewi156=filename END
 COPY_EXISTING ~mewi156.spl~ ~override/%mewi156%.spl~
@@ -31867,12 +31867,13 @@ COPY_EXISTING_REGEXP ~.*\.spl~ ~override~
 	BUT_ONLY_IF_IT_CHANGES
 
 COPY_EXISTING_REGEXP ~.*\.itm~ ~override~
+	READ_SHORT category thecategory
 	READ_SHORT 0x68 numheaders
 	FOR (i = 0; i < numheaders; ++i) BEGIN
 		me_off = 0x72 + i * 0x38
 		READ_BYTE me_off theheadertype
 		READ_BYTE (me_off + 0xC) thetarget
-		PATCH_IF theheadertype = 3 AND ((thetarget = 1) OR (thetarget = 4)) BEGIN
+		PATCH_IF theheadertype = 3 AND ((thetarget = 1) OR (thetarget = 4)) AND (i != 1 OR thecategory != 11) BEGIN
 			LPF ADD_ITEM_EFFECT INT_VAR header=(i + 1) insert_point=0 opcode=useefffile target=1 timing=9 parameter1=101 parameter2=idsrace STR_VAR resource=~MEEMERGE~ END
 		END
 	END
@@ -31880,7 +31881,10 @@ COPY_EXISTING_REGEXP ~.*\.itm~ ~override~
 
 COPY_EXISTING_REGEXP ~.*\.cre~ ~override~
 //	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=407 target=1 timing=10 duration=2 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
-	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=146 target=1 timing=4 duration=0 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
+//	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=146 target=1 timing=4 duration=0 parameter1=1 parameter2=2 STR_VAR resource=~MEPERMLS~ END
+	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=setspellstate target=1 timing=9 parameter2=241 special=1 STR_VAR effsource=~MEPERMLU~ END
+	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=eeexscreeneffects target=1 timing=9 STR_VAR resource=~MEDAMABS~ effsource=~MEPERMLU~ END
+	LPF ADD_CRE_EFFECT INT_VAR insert_point=0 opcode=eeexscreeneffects target=1 timing=9 STR_VAR resource=~MESPLMOD~ effsource=~MEPERMLU~ END
 /*
 COPY_EXISTING ~baldur.gam~ ~override~
 	READ_LONG 0x30 nonpartycharactersoffset
@@ -32494,7 +32498,7 @@ COPY_EXISTING ~sto4909.sto~ ~override~ //Nashkel Fair Ranged Weapons Merchant
 
 COPY_EXISTING ~stoblack.sto~ ~override~ //Thieves' Guild Store
 	REMOVE_STORE_ITEM ~arow07~
-	ADD_STORE_ITEM ~medagg16~ AFTER ~dagg01~ #4 #0 #0 ~IDENTIFIED~ #80
+	ADD_STORE_ITEM ~medagg16~ AFTER ~dagg01~ #5 #0 #0 ~IDENTIFIED~ #80
 	ADD_STORE_ITEM ~mearow94~ AFTER ~arow05~ #1 #0 #0 ~IDENTIFIED~ #5
 
 COPY_EXISTING ~stocheap.sto~ ~override~ //Lucky Aello's Cursed Discount Store

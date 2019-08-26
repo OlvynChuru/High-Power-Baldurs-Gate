@@ -13805,7 +13805,7 @@ Saving Throw: None
 
 The Beast Sense spell allows the druid to see through the eyes of an animal and sense what it senses. For the duration of the spell or until dispelled, the party can see any creature or object that the animal can see. Beast Sense does not by itself allow the druid to control the animal, though it could be cast on a charmed animal for use as a scout. The spell has no effect on a creature that isn't an animal.~
 @32252=~Fiery Link
-(Alteration)
+(Evocation)
 
 Level: 2
 Sphere: Elemental Fire
@@ -14602,7 +14602,7 @@ Saving Throw: None
 
 Contingency Curse forces a hostile creature to release spells against its will on the caster's terms. Upon casting Contingency Curse, the caster is prompted to store a single spell of 2nd-level or lower, choose a target for the spell, and choose conditions under which the spell will be released. The target of the spell is then cursed to cast that spell repeatedly under those conditions. For example, the caster could store a Web spell and make the creature cast Web on itself whenever it gets hit. Contingency Curse can only curse enemies.~
 @34857=~Extend Vision
-(Alteration)
+(Divination)
 
 Level: 8
 Range: Visual range of the caster
@@ -14889,7 +14889,7 @@ Casting Time: 9
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-When uttering the Curse spell, the caster lowers the morale, THAC0 and damage of enemy creatures by 1 per caster levels, up to maximum of -5 at level 15. At the instant the spell is completed, it affects all creatures in a 15-ft. radius centered on the point selected by the caster. Affected creatures leaving the area are still subject to the spell's effect; those entering the area after the casting is completed are not.~
+When uttering the Curse spell, the caster lowers the morale, THAC0 and damage of enemy creatures by 1 per 3 caster levels, up to maximum of -5 at level 15. At the instant the spell is completed, it affects all creatures in a 15-ft. radius centered on the point selected by the caster. Affected creatures leaving the area are still subject to the spell's effect; those entering the area after the casting is completed are not.~
 @42114=~Cause Light Wounds
 (Necromancy)
 
