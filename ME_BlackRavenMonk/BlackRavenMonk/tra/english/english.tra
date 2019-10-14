@@ -1,0 +1,35 @@
+@1=~Black Raven Monk Kit~
+@2=~Prevent Mirror Monk clones from using items~
+@101=~This component requires the main component to be installed.~
+@201=~black raven monk~
+@202=~Black Raven Monk~
+@203=~BLACK RAVEN MONK: The Black Raven order was founded by Valas the Black Raven, a half-drow formerly enslaved in the Underdark. Using his legendary martial arts skills, he escaped slavery and fought his way to the surface world. Monks who follow the Black Raven's example have a central goal: to fight against slavery. Their power depends on how successfully they follow this goal.
+
+Advantages:
+- The Black Raven Monk gains +2 Maximum Hit Points permanently each time <PRO_HESHE> frees a person from slavery or unjust, unlawful imprisonment. Freeing multiple people at once can give <PRO_HIMHER> up to +10 Hit Points for a group of five or more people.
+
+Disadvantages:
+- Does not gain any innate magic resistance.~
+@204=~BLACK RAVEN MONK: The Black Raven order was founded by Valas the Black Raven, a half-drow formerly enslaved in the Underdark. Using his legendary martial arts skills, he escaped slavery and fought his way to the surface world. Monks who follow the Black Raven's example have a central goal: to fight against slavery. Their power depends on how successfully they follow this goal.
+
+Advantages:
+- The Black Raven Monk gains +2 Maximum Hit Points permanently each time <PRO_HESHE> frees a person from slavery or unjust, unlawful imprisonment. Freeing multiple people at once can give <PRO_HIMHER> up to +10 Hit Points for a group of five or more people.
+
+Disadvantages:
+- Does not gain any innate magic resistance.~
+@205=~Your youth was shaped by two major influences: your foster father Gorion and a group of monks from the Black Raven order who spent several years within Candlekeep. While Gorion worked to grow your intelligence and kindness, these seemingly strange monks fostered your wisdom and discipline. In exchange for their teachings, they had you make this promise: if you were ever to leave Candlekeep, you must do everything in your power to fight slavery and free slaves whenever you find them. After they left, you adopted their ways as your own and can now rightfully call yourself a monk. While you treasure the years spent in Candlekeep, you now feel the calling to go out in the world and fight slavery.~
+@206=~Less than a fortnight after your official initiation into the Black Raven order, your mentor and friend summoned you into her chambers. In a cordial, if somewhat bittersweet, conversation, she informed you that your calming presence was required among the Ten Towns. Almost as an afterthought, she mentioned her concerns over portents and omens concerning events transpiring in the North; your mentor chose you to represent the order and to help soothe the brewing tensions in the region.
+
+Though the prospect of leaving the monastery that was your home was daunting, you found yourself eager to accept the task. It seemed to be a chance to prove yourself, to do some good, maybe even free some people from slavery. Without hesitation, you agreed to make the pilgrimage, and within a tenday, you embarked on your journey to Easthaven, equipped only with the wisdom of your training and your mentor's words.~
+@1001=~For freeing a person from slavery, you gain +2 Hit Points permanently.~
+@1002=~For freeing two people from slavery, you gain +4 Hit Points permanently.~
+@1003=~For freeing three people from slavery, you gain +6 Hit Points permanently.~
+@1004=~For freeing four people from slavery, you gain +8 Hit Points permanently.~
+@1005=~For freeing five people from slavery, you gain +10 Hit Points permanently.~
+@1006=~For freeing many people from slavery, you gain +10 Hit Points permanently.~
+@1101=~For freeing a person from unjust, unlawful imprisonment, you gain +2 Hit Points permanently.~
+@1102=~For freeing two people from unjust, unlawful imprisonment, you gain +4 Hit Points permanently.~
+@1103=~For freeing three people from unjust, unlawful imprisonment, you gain +6 Hit Points permanently.~
+@1104=~For freeing four people from unjust, unlawful imprisonment, you gain +8 Hit Points permanently.~
+@1105=~For freeing five people from unjust, unlawful imprisonment, you gain +10 Hit Points permanently.~
+@1106=~For freeing many people from unjust, unlawful imprisonment, you gain +10 Hit Points permanently.~

@@ -1,0 +1,95 @@
+IF
+	GlobalGT("ME_Monk_Slaves_Freed","GLOBAL",5)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM06",Player1)
+END
+
+IF
+	Global("ME_Monk_Slaves_Freed","GLOBAL",5)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM05",Player1)
+END
+
+IF
+	Global("ME_Monk_Slaves_Freed","GLOBAL",4)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM04",Player1)
+END
+
+IF
+	Global("ME_Monk_Slaves_Freed","GLOBAL",3)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM03",Player1)
+END
+
+IF
+	Global("ME_Monk_Slaves_Freed","GLOBAL",2)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM02",Player1)
+END
+
+IF
+	Global("ME_Monk_Slaves_Freed","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Slaves_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM01",Player1)
+END
+
+IF
+	GlobalGT("ME_Monk_Prisoners_Freed","GLOBAL",5)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM16",Player1)
+END
+
+IF
+	Global("ME_Monk_Prisoners_Freed","GLOBAL",5)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM15",Player1)
+END
+
+IF
+	Global("ME_Monk_Prisoners_Freed","GLOBAL",4)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM14",Player1)
+END
+
+IF
+	Global("ME_Monk_Prisoners_Freed","GLOBAL",3)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM13",Player1)
+END
+
+IF
+	Global("ME_Monk_Prisoners_Freed","GLOBAL",2)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM12",Player1)
+END
+
+IF
+	Global("ME_Monk_Prisoners_Freed","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Prisoners_Freed","GLOBAL",0)
+		ReallyForceSpellRES("MEBRVM11",Player1)
+END

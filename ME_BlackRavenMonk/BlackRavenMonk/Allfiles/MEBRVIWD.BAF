@@ -1,0 +1,137 @@
+IF
+	Global("Liz_King_Quest","GLOBAL",1)
+	Global("ME_Monk_Rescue_Liz_King","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Liz_King","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",11)
+END
+
+IF
+	Global("Sheemish_Escape","GLOBAL",1)
+	Global("ME_Monk_Rescue_Sheemish","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Sheemish","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",4)
+END
+
+IF
+	Global("Egenia_Talked","GLOBAL",1)
+	Global("ME_Monk_Rescue_Egenia","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Egenia","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",17)
+END
+
+IF
+	Global("YUANTI_ROOM","GLOBAL",1)
+	Global("ME_Monk_Rescue_Marchon","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Marchon","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",4)
+END
+
+IF
+	Global("Baptist_Quest","GLOBAL",1)
+	Global("ME_Monk_Rescue_Flock","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Flock","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",8)
+END
+
+IF
+	Global("Vera_Leave","GLOBAL",1)
+	Global("ME_Monk_Rescue_Vera","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Vera","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	Global("Vera_Leave","GLOBAL",1)
+	Global("ME_Monk_Rescue_Vera","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Vera","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	Global("Slaves_Free_1","GLOBAL",1)
+	Global("ME_Monk_Rescue_Salamander_Slaves","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Salamander_Slaves","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",12)
+END
+
+IF
+	Global("7004_Slave_Run","GLOBAL",1)
+	Global("ME_Monk_Rescue_Giant_Slaves","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Giant_Slaves","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",6)
+END
+
+IF
+	Global("Fengla_Reward","GLOBAL",1)
+	Global("ME_Monk_Rescue_Fengla","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Fengla","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("SPRITE_IS_DEAD8001_SALAMANDERS","GLOBAL",20)
+	Global("ME_Monk_Rescue_Svirf_8001","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Svirf_8001","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",9)
+END
+
+IF
+	GlobalGT("8008_SALAMANDERS_DEAD","GLOBAL",11)
+	!Global("SPRITE_IS_DEADSHIKATA","GLOBAL",0)
+	Global("ME_Monk_Rescue_Svirf_8008","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Svirf_8008","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",15)
+END
+
+IF
+	!Global("SPRITE_IS_DEADMALAVON","GLOBAL",0)
+	Global("ME_Monk_Rescue_Svirf_8010","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Svirf_8010","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",12)
+END
+
+IF
+	False()
+	Global("Crazy_Speech","GLOBAL",1)
+	Global("ME_Monk_Rescue_Perdiem","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Perdiem","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",5)
+END
+
+IF
+	False()
+	Global("Voice_Quest","GLOBAL",2)
+	Global("ME_Monk_Rescue_Voice","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Voice","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END

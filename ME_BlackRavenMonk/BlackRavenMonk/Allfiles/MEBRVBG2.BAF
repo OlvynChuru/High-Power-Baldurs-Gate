@@ -1,0 +1,207 @@
+IF
+	Global("JaheiraReleased","GLOBAL",1)
+	Global("ME_Monk_Rescue_Jaheira","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Jaheira","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	OR(2)
+		Global("MinscMad","AR0602",1)
+		InParty("MINSC")
+	Global("ME_Monk_Rescue_Minsc","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Minsc","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("HaerDalisFree","GLOBAL",0)
+	Global("ME_Monk_Rescue_HaerDalis","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_HaerDalis","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	OR(2)
+		Global("Mazzytold","GLOBAL",1)
+		InParty("MAZZY")
+	Global("ME_Monk_Rescue_Mazzy","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Mazzy","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("SummonDryads","AR1200",0)
+	Global("ME_Monk_Rescue_Dryads","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Dryads","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",3)
+END
+
+IF
+	GlobalGT("HendakReleased","AR0406",0)
+	Global("ME_Monk_Rescue_Hendak","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Hendak","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",30)
+END
+
+IF
+	GlobalGT("FreeSlaves","GLOBAL",0)
+	Global("ME_Monk_Rescue_Stockade","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Stockade","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	Global("FreedKamuzu","GLOBAL",1)
+	Global("ME_Monk_Rescue_Kamuzu","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Kamuzu","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("Kidnap","GLOBAL",4)
+	Global("ME_Monk_Rescue_Garren_Kid","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Garren_Kid","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("SavedClaire","GLOBAL",0)
+	Global("ME_Monk_Rescue_Claire","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Claire","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("freethem","AR1515",0)
+	Global("ME_Monk_Rescue_Asylum","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Asylum","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",6)
+END
+
+IF
+	Global("face1","AR2100",2)
+	Global("ME_Monk_Rescue_Face1","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Face1","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("face2","AR2100",2)
+	Global("ME_Monk_Rescue_Face2","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Face2","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("face5","AR2100",2)
+	Global("ME_Monk_Rescue_Face5","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Face5","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("face6","AR2100",2)
+	Global("ME_Monk_Rescue_Face6","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Face6","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("GlobeClick","AR2400",3)
+	Global("ME_Monk_Rescue_Thralls","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Thralls","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",9)
+END
+
+IF
+	GlobalGT("SlaveResult","GLOBAL",1)
+	Global("ME_Monk_Rescue_Drow_Slaves","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Drow_Slaves","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",7)
+END
+
+IF
+	GlobalGT("PartyMove","AR2806",0)
+	Global("ME_Monk_Rescue_Ellesime","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Ellesime","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	OR(2)
+		Dead("hellgen")
+		Global("Player1Greed","GLOBAL",1)
+	Global("ME_Monk_Rescue_Hell_Genie","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Hell_Genie","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	OR(2)
+		Dead("hellgen")
+		Global("Player1Greed","GLOBAL",1)
+	Global("ME_Monk_Rescue_Hell_Genie","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Hell_Genie","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	OR(2)
+		Global("ArdicSaved","GLOBAL",1)
+		Global("ByeSarMat01","GLOBAL",1)
+	Global("ME_Monk_Rescue_Ardic","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Abazigal_Dragon","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	GlobalGT("FreedBazdra03","AR6004",0)
+	Global("ME_Monk_Rescue_Abazigal_Dragon","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Abazigal_Dragon","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END

@@ -1,0 +1,39 @@
+IF
+	OR(2)
+		Global("HelpMinsc","GLOBAL",2)
+		Global("FindDynaheir","GLOBAL",2)
+	Global("edwin_killing_dynaheir","GLOBAL",0)
+	Global("ME_Monk_Rescue_Dynaheir","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Dynaheir","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",1)
+END
+
+IF
+	Global("ShoalLeaving","GLOBAL",1)
+	Global("ME_Monk_Rescue_Shoal","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Shoal","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",1)
+END
+
+IF
+	Global("FREESLAV","GLOBAL",1)
+	Global("ME_Monk_Rescue_Mine_Slaves","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Mine_Slaves","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Slaves_Freed","GLOBAL",50)
+END
+
+IF
+	GlobalGT("ohprisoner","oh3020",3)
+	Global("ME_Monk_Rescue_Dark_Moon","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ME_Monk_Rescue_Dark_Moon","GLOBAL",1)
+		IncrementGlobal("ME_Monk_Prisoners_Freed","GLOBAL",2)
+END
+
