@@ -3127,11 +3127,38 @@ function MEHGTMOD(effectData, creatureData)
 	local minHeight = EEex_GetActorStat(targetID, 647)
 	local maxHeight = EEex_GetActorStat(targetID, 648)
 	local centerHeight = EEex_GetActorStat(targetID, 649)
+
+	EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 321,
+["target"] = 2,
+["timing"] = 9,
+["resource"] = "MEGOOVER",
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+	local theareatype = 0
+	if EEex_ReadDword(EEex_GetActorShare(targetID) + 0x14) > 0 then
+		theareatype = EEex_ReadWord(EEex_ReadDword(EEex_GetActorShare(targetID) + 0x14) + 0x40, 0x0)
+	end
+	if bit32.band(theareatype, 0x1) == 1 and bit32.band(theareatype, 0x800) == 0 and height >= 100 then
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 184,
+["target"] = 2,
+["timing"] = 10,
+["duration"] = 15,
+["parameter2"] = 1,
+["parent_resource"] = "MEGOOVER",
+["source_target"] = targetID,
+["source_id"] = targetID
+})
+	end
+	
 	if (minHeight <= 0 or bit32.band(special, 0x1) == 0x1) and (height <= minHeight and speed <= 0 and accel <= 0) then 
 		EEex_WriteWord(creatureData + 0x618, 0)
 		EEex_WriteWord(creatureData + 0x61A, 0)
 		EEex_WriteWord(creatureData + 0x61C, -1)
 		if bit32.band(special, 0x2) == 0x2 then
+			EEex_WriteDword(effectData + 0x110, 0x1)
 			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 321,
 ["target"] = 2,
@@ -3227,7 +3254,7 @@ function MEHGTMOD(effectData, creatureData)
 			speed = 0
 		end
 	end
-	if ((minHeight > 0 and bit32.band(special, 0x1) == 0x0) or (height > minHeight) or (height < maxHeight - 1)) and not (EEex_IsFlying(targetID)) then
+	if ((minHeight > 0 and bit32.band(special, 0x1) == 0x0) or ((height > minHeight) and (height < maxHeight - 1))) and not (EEex_IsFlying(targetID)) then
 		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 176,
 ["target"] = 2,
@@ -3340,6 +3367,7 @@ function MEGRVGLB(effectData, creatureData)
 	local height = EEex_ReadSignedWord(creatureData + 0x618, 0x0) + EEex_GetActorStat(targetID, 641)
 --	Infinity_DisplayString(EEex_GetActorName(targetID) .. "-> globeHeight: " .. globeHeight .. "; globeBottom: " .. globeBottom .. "; fullHeight: " .. fullHeight)
 	if height <= globeHeight and height >= globeBottom then
+
 		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 321,
 ["target"] = 2,
@@ -3349,11 +3377,12 @@ function MEGRVGLB(effectData, creatureData)
 ["source_target"] = targetID,
 ["source_id"] = sourceID
 })
+
 		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 401,
 ["target"] = 2,
 ["timing"] = 10,
-["duration"] = 8,
+["duration"] = 12,
 ["parameter1"] = globeHeight,
 ["parameter2"] = 1,
 ["special"] = 649,
@@ -3365,7 +3394,7 @@ function MEGRVGLB(effectData, creatureData)
 ["opcode"] = 401,
 ["target"] = 2,
 ["timing"] = 10,
-["duration"] = 8,
+["duration"] = 12,
 ["parameter1"] = 1,
 ["parameter2"] = 1,
 ["special"] = 647,
@@ -3377,7 +3406,7 @@ function MEGRVGLB(effectData, creatureData)
 ["opcode"] = 401,
 ["target"] = 2,
 ["timing"] = 10,
-["duration"] = 8,
+["duration"] = 12,
 ["parameter1"] = 30000,
 ["parameter2"] = 1,
 ["special"] = 648,
@@ -3385,7 +3414,7 @@ function MEGRVGLB(effectData, creatureData)
 ["source_target"] = targetID,
 ["source_id"] = sourceID
 })
-
+--[[
 		if height >= 100 then
 			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 184,
@@ -3399,7 +3428,7 @@ function MEGRVGLB(effectData, creatureData)
 ["source_id"] = targetID
 })
 		end
-
+--]]
 --[[
 		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 407,
@@ -3430,7 +3459,32 @@ function MEGRVGLB(effectData, creatureData)
 ["source_id"] = targetID
 })
 --]]
-
+		if EEex_GetActorStat(targetID, 636) == 0 then
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 401,
+["target"] = 2,
+["timing"] = 1,
+["duration"] = 12,
+["parameter1"] = 1,
+["parameter2"] = 1,
+["special"] = 636,
+["parent_resource"] = "MEGRVGLC",
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 235,
+["target"] = 2,
+["timing"] = 6,
+["duration"] = EEex_GetGameTick() + 1,
+["parameter1"] = EEex_GetActorMovementRate(targetID, false),
+["parameter2"] = 1,
+["parent_resource"] = "MEGRVGLC",
+["target_x"] = EEex_ReadDword(EEex_GetActorShare(targetID) + 0x8),
+["target_y"] = EEex_ReadDword(EEex_GetActorShare(targetID) + 0xC),
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
 			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 402,
 ["target"] = 2,
@@ -3440,11 +3494,11 @@ function MEGRVGLB(effectData, creatureData)
 ["parameter2"] = 1,
 ["special"] = 2,
 ["resource"] = "MEHGTMOD",
-["parent_resource"] = "MEGRVGLB",
+["parent_resource"] = "MEGRVGLC",
 ["source_target"] = targetID,
 ["source_id"] = sourceID
 })
-
+		end
 --[[
 		EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 321,
