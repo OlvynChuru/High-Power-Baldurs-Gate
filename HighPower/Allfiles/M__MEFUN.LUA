@@ -2011,6 +2011,74 @@ function MEPRTSLV(effectData, creatureData)
 	end
 end
 
+function MEPRTAIR(effectData, creatureData)
+--	EEex_WriteDword(effectData + 0x110, 0x1)
+	local targetID = EEex_ReadDword(creatureData + 0x34)
+	local sourceID = EEex_ReadDword(effectData + 0x10C)
+	local heightThreshold = EEex_ReadDword(effectData + 0x1C)
+	if not EEex_IsSprite(targetID) then return end
+	if EEex_IsInAir(targetID, heightThreshold) then
+		local spellRes = EEex_ReadLString(effectData + 0x90, 8)
+		local immunityString = EEex_ReadDword(effectData + 0x44)
+		local immunityOpcode = 318
+		if immunityString ~= -1 then
+			immunityOpcode = 324
+		end
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = immunityOpcode,
+["target"] = 2,
+["timing"] = 0,
+["duration"] = 0,
+["resource"] = spellRes,
+["special"] = immunityString,
+["parent_resource"] = spellRes,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+	end
+end
+
+function MEPRTFLY(effectData, creatureData)
+--	EEex_WriteDword(effectData + 0x110, 0x1)
+	local targetID = EEex_ReadDword(creatureData + 0x34)
+	local sourceID = EEex_ReadDword(effectData + 0x10C)
+	if not EEex_IsSprite(targetID) then return end
+	if EEex_IsFlying(targetID) then
+		local spellRes = EEex_ReadLString(effectData + 0x90, 8)
+		local immunityString = EEex_ReadDword(effectData + 0x44)
+		local immunityOpcode = 318
+		if immunityString ~= -1 then
+			immunityOpcode = 324
+		end
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = immunityOpcode,
+["target"] = 2,
+["timing"] = 0,
+["duration"] = 0,
+["resource"] = spellRes,
+["special"] = immunityString,
+["parent_resource"] = spellRes,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+	end
+end
+
+function EEex_IsInAir(actorID, heightThreshold)
+	local animation = EEex_GetActorAnimation(actorID)
+	return (me_flying_sprite['' .. animation] ~= nil or EEex_GetActorStat(actorID, 640) > 0 or EEex_ReadDword(EEex_GetActorShare(actorID) + 0x10) < heightThreshold)
+end
+
+function EEex_IsFlying(actorID)
+	local animation = EEex_GetActorAnimation(actorID)
+	return (me_flying_sprite['' .. animation] ~= nil or EEex_GetActorStat(actorID, 640) > 0)
+end
+
+function EEex_IsEthereal(actorID)
+	local animation = EEex_GetActorAnimation(actorID)
+	return (me_ethereal_sprite['' .. animation] ~= nil or EEex_GetActorStat(actorID, 639) > 0)
+end
+
 function EEex_GetActorFullResistance(actorID, resistanceStat)
 	if not EEex_IsSprite(actorID) or me_resistance_opcode[resistanceStat] == nil then return 0 end
 	local base_resistance = 0
@@ -3019,7 +3087,12 @@ function MEHGTST(effectData, creatureData)
 		end
 	end
 end
-
+-- Bits for special:
+--[[
+0x1: Treat the minimum height as the ground (so reaching the minimum height counts as landing)
+0x2: Remove source effects on landing
+0x8: Cast spell on landing
+--]]
 function MEHGTMOD(effectData, creatureData)
 	local targetID = EEex_ReadDword(creatureData + 0x34)
 	local sourceID = EEex_ReadDword(effectData + 0x10C)
@@ -3035,62 +3108,30 @@ function MEHGTMOD(effectData, creatureData)
 	local duration = EEex_ReadDword(effectData + 0x24)
 	local time_applied = EEex_ReadDword(effectData + 0x68)
 	local firstIteration = false
+	local roofHeight = 32767
+	local targetHeight = 70
+	local areaRes = EEex_GetActorAreaRes(targetID)
+	if me_ceiling_height[areaRes] ~= nil then
+		roofHeight = me_ceiling_height[areaRes] * 2
+	end
 
 	if bit32.band(parameter4, 0x1) == 0 then
 		parameter4 = bit32.bor(parameter4, 0x1)
 		firstIteration = true
---[[
-		EEex_ApplyEffectToActor(targetID, {
-["opcode"] = 402,
-["target"] = 2,
-["timing"] = 1,
-["parameter1"] = parameter1,
-["parameter2"] = parameter2,
-["parameter3"] = parameter3,
-["parameter4"] = parameter4,
-["resource"] = "MELOOPST",
-["vvcresource"] = "MEHGTMOD",
-["special"] = special,
-["casterlvl"] = casterlvl,
-["parent_resource"] = parent_resource,
-["source_target"] = targetID,
-["source_id"] = targetID
-})
---]]
 	end
 
 	local animation = EEex_GetActorAnimation(targetID)
 	local height = EEex_ReadSignedWord(creatureData + 0x618, 0x0) + EEex_GetActorStat(targetID, 641)
 	local speed = EEex_ReadSignedWord(creatureData + 0x61A, 0x0) + EEex_GetActorStat(targetID, 642)
 	local accel = EEex_ReadSignedWord(creatureData + 0x61C, 0x0) + EEex_GetActorStat(targetID, 643)
---	local minHeight = EEex_ReadSignedWord(creatureData + 0x61E, 0x0)
---	local maxHeight = EEex_ReadSignedWord(creatureData + 0x620, 0x0)
---	local fullHeight = height + EEex_GetActorStat(targetID, 641)
---	local fullSpeed = speed + EEex_GetActorStat(targetID, 642)
---	local fullAccel = accel + EEex_GetActorStat(targetID, 643)
 	local minHeight = EEex_GetActorStat(targetID, 647)
 	local maxHeight = EEex_GetActorStat(targetID, 648)
 	local centerHeight = EEex_GetActorStat(targetID, 649)
---[[
-	EEex_IterateActorEffects(targetID, function(eData)
-		local the_opcode = EEex_ReadDword(eData + 0x10)
-		local the_parent_resource = EEex_ReadLString(eData + 0x94, 8)
-		if the_opcode == 401 and the_parent_resource == parent_resource then
-			local the_special = EEex_ReadDword(eData + 0x48)
-			if the_special == 641 or the_special == 647 then
-			end
-		end
-	end)
---]]
---	Infinity_DisplayString(EEex_GetActorStat(targetID, 641))
---	Infinity_DisplayString(EEex_GetActorStat(targetID, 642))
---	Infinity_DisplayString(EEex_GetActorStat(targetID, 643))
-	if (minHeight <= 0 or bit32.band(special, 0x1) == 0x1) and (height <= 0 and speed <= 0 and accel <= 0) then 
+	if (minHeight <= 0 or bit32.band(special, 0x1) == 0x1) and (height <= minHeight and speed <= 0 and accel <= 0) then 
 		EEex_WriteWord(creatureData + 0x618, 0)
 		EEex_WriteWord(creatureData + 0x61A, 0)
 		EEex_WriteWord(creatureData + 0x61C, -1)
 		if bit32.band(special, 0x2) == 0x2 then
---			EEex_WriteDword(creatureData + 0x10, 0)
 			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 321,
 ["target"] = 2,
@@ -3100,8 +3141,6 @@ function MEHGTMOD(effectData, creatureData)
 ["source_target"] = targetID,
 ["source_id"] = sourceID
 })
---			EEex_WriteDword(effectData + 0x110, 0x1)
---			EEex_WriteDword(creatureData + 0x10, 0)
 			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 407,
 ["target"] = 2,
@@ -3115,7 +3154,6 @@ function MEHGTMOD(effectData, creatureData)
 ["source_target"] = targetID,
 ["source_id"] = sourceID
 })
---			EEex_WriteDword(creatureData + 0x10, 0)
 		end
 		if bit32.band(special, 0x8) == 0x8 then
 			EEex_ApplyEffectToActor(targetID, {
@@ -3144,6 +3182,13 @@ function MEHGTMOD(effectData, creatureData)
 	end
 	if minHeight < 0 then
 		minHeight = 0
+	end
+	if maxHeight > (roofHeight - targetHeight) and not EEex_IsEthereal(targetID) then
+		if targetHeight >= roofHeight then
+			maxHeight = 1
+		else
+			maxHeight = (roofHeight - targetHeight)
+		end
 	end
 	if maxHeight <= 0 or maxHeight > 10000 then
 		maxHeight = 10000
@@ -3182,53 +3227,20 @@ function MEHGTMOD(effectData, creatureData)
 			speed = 0
 		end
 	end
+	if ((minHeight > 0 and bit32.band(special, 0x1) == 0x0) or (height > minHeight) or (height < maxHeight - 1)) and not (EEex_IsFlying(targetID)) then
+		EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 176,
+["target"] = 2,
+["timing"] = 3,
+["parameter2"] = 1,
+["duration"] = 0,
+["parent_resource"] = parent_resource,
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+	end
 	EEex_WriteWord(creatureData + 0x618, height)
 	EEex_WriteWord(creatureData + 0x61A, speed)
-
---	Infinity_DisplayString("height: " .. height)
---	Infinity_DisplayString("speed: " .. speed)
---	Infinity_DisplayString("accel: " .. accel)
---	Infinity_DisplayString(me_heighttoanimation[height])
---[[
-	if me_heighttoanimation[height] == nil then return end
-	EEex_ApplyEffectToActor(targetID, {
-["opcode"] = 53,
-["target"] = 2,
-["parameter1"] = me_heighttoanimation[height],
-["timing"] = 0,
-["parent_resource"] = parent_resource,
-["source_target"] = targetID,
-["source_id"] = sourceID
-})
-	EEex_Call(EEex_Label("CGameSprite::Shatter"), {0x4}, creatureData, 0x0)
-	EEex_ApplyEffectToActor(targetID, {
-["opcode"] = 53,
-["target"] = 2,
-["parameter1"] = animation,
-["timing"] = 0,
-["parent_resource"] = parent_resource,
-["source_target"] = targetID,
-["source_id"] = sourceID
-})
-	EEex_IterateActorEffects(targetID, function(eData)
-		local the_opcode = EEex_ReadDword(eData + 0x10)
-		local the_timing = EEex_ReadDword(eData + 0x24)
-		if the_opcode == 7 and the_timing == 2 then
-			EEex_ApplyEffectToActor(targetID, {
-["opcode"] = 7,
-["target"] = 2,
-["parameter1"] = EEex_ReadDword(eData + 0x1C),
-["parameter2"] = EEex_ReadDword(eData + 0x20),
-["timing"] = 0,
-["duration"] = 0,
-["parent_resource"] = "MECLRFIX",
-["sourceslot"] = EEex_ReadDword(eData + 0xA4),
-["source_target"] = targetID,
-["source_id"] = targetID
-})
-		end
-	end)
---]]
 
 	EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 325,
@@ -3239,23 +3251,12 @@ function MEHGTMOD(effectData, creatureData)
 ["source_id"] = sourceID
 })
 	local visualHeight = -math.ceil(height / 2)
---	Infinity_DisplayString("zPos: " .. visualHeight)
 	if visualHeight > 0 or visualHeight == -0 then
 		visualHeight = 0
 	end
 
 	EEex_WriteDword(creatureData + 0x10, visualHeight)
 	EEex_WriteDword(creatureData + 0x2D00, 0)
---[[
-	EEex_ApplyEffectToActor(targetID, {
-["opcode"] = 325,
-["target"] = 2,
-["timing"] = 3,
-["duration"] = 0,
-["source_target"] = targetID,
-["source_id"] = sourceID
-})
---]]
 	EEex_WriteDword(effectData + 0x110, 0x1)
 	if duration == time_applied and not firstIteration then
 		EEex_ApplyEffectToActor(targetID, {
@@ -3377,7 +3378,7 @@ function MEGRVGLB(effectData, creatureData)
 ["target"] = 2,
 ["timing"] = 10,
 ["duration"] = 8,
-["parameter1"] = me_highestheightnumber - 2,
+["parameter1"] = 30000,
 ["parameter2"] = 1,
 ["special"] = 648,
 ["parent_resource"] = "MEGRVGLB",

@@ -1818,6 +1818,18 @@ BEGIN @1 REQUIRE_COMPONENT ~EEex.tp2~ ~0~ @271 //High Power Baldur's Gate
 PRINT @100
 COPY ~HighPower/Allfiles~ ~override~
 
+ACTION_IF !(FILE_EXISTS_IN_GAME ~M_MECEIL.lua~) BEGIN
+	ACTION_IF GAME_IS ~bgee~ BEGIN
+		COPY ~HighPower/lua/M_MECBG1.lua~ ~override/M_MECEIL.lua~
+	END ELSE ACTION_IF GAME_IS ~eet~ BEGIN
+		COPY ~HighPower/lua/M_MECEET.lua~ ~override/M_MECEIL.lua~
+	END
+END
+
+ACTION_IF !(FILE_EXISTS_IN_GAME ~M_MEFLYA.lua~) BEGIN
+	COPY ~HighPower/lua/M_MEFLYA.lua~ ~override~
+END
+
 ADD_PROJECTILE ~override/mearal60.pro~ //Instant area 60 ft. radius
 ADD_PROJECTILE ~override/meconeco.pro~ //Large cone of cold
 ADD_PROJECTILE ~override/medagglg.pro~ //Throwing sword
@@ -2225,11 +2237,17 @@ PRINT @101
 
 COPY_EXISTING ~ui.menu~ ~override~
 
-	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~contingencyDescription = mageBookStrings[contingencyResRef].tip~ ~if mageBookStrings[contingencyResRef] == nil then
+	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~contingencyDescription = mageBookStrings[contingencyResRef].tip~ ~ -- Fixing contingency crash
+if mageBookStrings[contingencyResRef] == nil then
 	contingencyDescription = 0
 else
 	contingencyDescription = mageBookStrings[contingencyResRef].tip
 end~
+	REPLACE_TEXTUALLY CASE_SENSITIVE EXACT_MATCH ~return Infinity_FetchString(bookSpells[currentBookSpell].description)~ ~~~~~				if bookSpells[currentBookSpell] ~= nil then
+					return Infinity_FetchString(bookSpells[currentBookSpell].description)
+				else
+					return ''
+				end~~~~~
 
 	// Patching to have it display resistances above 127 or below -128 in the stats screen.
 	REPLACE_TEXTUALLY CASE_INSENSITIVE ~helpTextString = characters\[currentID\]\.proficiencies\.details~ ~helpTextString = characters[currentID].proficiencies.details
@@ -3774,6 +3792,8 @@ LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~18~ splprot_value=~-1~ splprot_r
 
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~0x106~ splprot_value=~16~ splprot_relation=~9~ RET splprot_areaisnotforest=splprot_slot END
 
+LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~0x106~ splprot_value=~2048~ splprot_relation=~8~ RET splprot_areaisanoteleportzone=splprot_slot END
+
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~0x111~ splprot_value=~0x00000001~ splprot_relation=~9~ RET splprot_isnotsleeping=splprot_slot END
 
 //LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~640~ splprot_value=~-1~ splprot_relation=~1~ RET splprot_meflyingspeedequalto=splprot_slot END
@@ -3783,6 +3803,8 @@ LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~0x111~ splprot_value=~0x00000001
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~56~ splprot_value=~-1~ splprot_relation=~2~ RET splprot_backstabmultiplierlessthan=splprot_slot END
 
 LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~56~ splprot_value=~-1~ splprot_relation=~4~ RET splprot_backstabmultipliergreaterthanorequalto=splprot_slot END
+
+LAF ADD_SPLPROT_CONDITION STR_VAR splprot_stat=~637~ splprot_value=~0~ splprot_relation=~3~ RET splprot_meinflight=splprot_slot END
 
 LAF ADD_ANIMATION INT_VAR minSlot=0xD000 STR_VAR ini=~meanibnu~ RET slotbirdnullcreaturedecimal=slotDecimal END
 
@@ -3994,23 +4016,25 @@ COPY_EXISTING ~mewi351b.spl~ ~override/%mewi351%b.spl~
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI3~ RET mewi352=filename END
 COPY_EXISTING ~mewi352.spl~ ~override/%mewi352%.spl~
 	LPF ALTER_EFFECT INT_VAR silent=1 check_headers=1 check_globals=0 STR_VAR match_resource=~mewi352~ resource= EVAL ~%mewi352%~ END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=immunitytospellandmessage target=2 timing=0 duration=1 parameter2=splprot_areaisanoteleportzone special=RESOLVE_STR_REF(@30030) STR_VAR resource = EVAL ~%mewi352%~ END
 	READ_SHORT 0x68 numheaders
 	FOR (i = numheaders; i < 50; ++i) BEGIN
 		LPF ADD_SPELL_HEADER INT_VAR copy_header=i insert_point=i END
 		LPF ALTER_SPELL_HEADER INT_VAR header=(i + 1) min_level=(i + 1) END
-		LPF ALTER_EFFECT INT_VAR header=i match_opcode=eeexinvokelua special=((i + 1) * 6) STR_VAR match_resource=~MESELFSP~ END
+		LPF ALTER_EFFECT INT_VAR header=i match_opcode=eeexinvokelua special=(i + 1) STR_VAR match_resource=~MESELFSP~ END
 		numheaders = numheaders + 1
 	END
 	SAY NAME1 @33352
 	SAY UNIDENTIFIED_DESC @34352
 
 COPY_EXISTING ~mewi352d.spl~ ~override~
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=protectionfromspell2 match_parameter2=2500 parameter2=splprot_meinflight END
 	READ_SHORT 0x68 numheaders
 	FOR (i = numheaders; i < 50; ++i) BEGIN
 		LPF ADD_SPELL_HEADER INT_VAR copy_header=i insert_point=i END
 		LPF ALTER_SPELL_HEADER INT_VAR header=(i + 1) min_level=(i + 1) END
 		LPF ALTER_SPELL_EFFECT INT_VAR header=(i + 1) duration_high=((i + 11) * 6) END
-		LPF ALTER_EFFECT INT_VAR header=i match_opcode=eeexsetextendedstat match_special=640 parameter1=(i + 41) END
+		LPF ALTER_EFFECT INT_VAR header=i match_opcode=eeexsetextendedstat match_special=640 parameter1=(i + 21) END
 		numheaders = numheaders + 1
 	END
 
@@ -4234,6 +4258,16 @@ COPY_EXISTING ~mewi558.spl~ ~override/%mewi558%.spl~
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPWI5~ RET mewi559=filename END
 COPY_EXISTING ~mewi559.spl~ ~override/%mewi559%.spl~
 	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 STR_VAR match_resource=~mewi559~ resource= EVAL ~%mewi559%~ END
+	LPF ALTER_EFFECT INT_VAR check_headers=1 check_globals=0 match_opcode=protectionfromspell2 match_parameter2=2500 parameter2=splprot_meinflight END
+	LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=immunitytospellandmessage target=1 timing=0 duration=1 parameter2=splprot_areaisanoteleportzone special=RESOLVE_STR_REF(@30030) STR_VAR resource = EVAL ~%mewi559%~ END
+	READ_SHORT 0x68 numheaders
+	FOR (i = numheaders; i < 50; ++i) BEGIN
+		LPF ADD_SPELL_HEADER INT_VAR copy_header=i insert_point=i END
+		LPF ALTER_SPELL_HEADER INT_VAR header=(i + 1) min_level=(i + 1) END
+		LPF ALTER_SPELL_EFFECT INT_VAR header=(i + 1) duration_high=((i + 7) * 3) END
+//		LPF ALTER_EFFECT INT_VAR header=i match_opcode=eeexsetextendedstat match_special=640 parameter1=(i + 21) END
+		numheaders = numheaders + 1
+	END
 	SAY NAME1 @33559
 	SAY UNIDENTIFIED_DESC @34559
 
@@ -15559,7 +15593,7 @@ COPY_EXISTING ~famdust.cre~ ~override~
 	WRITE_SHORT maxhp 48
 	WRITE_SHORT naturalac 5
 	WRITE_SHORT effectiveac 5
-	WRITE_SHORT strength 16
+	WRITE_BYTE strength 16
 	WRITE_BYTE savevsdeath 10
 	WRITE_BYTE savevsbreath 12
 	WRITE_BYTE savevsspell 16
@@ -15644,7 +15678,7 @@ COPY_EXISTING ~famimp.cre~ ~override~
 	WRITE_SHORT maxhp 36
 	WRITE_SHORT naturalac 8
 	WRITE_SHORT effectiveac 8
-	WRITE_SHORT strength 17
+	WRITE_BYTE strength 17
 	WRITE_BYTE savevsdeath 7
 	WRITE_BYTE savevsbreath 5
 	WRITE_BYTE savevsspell 10
@@ -15667,7 +15701,7 @@ COPY_EXISTING ~fampsd.cre~ ~override~
 	WRITE_SHORT maxhp 36
 	WRITE_SHORT naturalac 7
 	WRITE_SHORT effectiveac 7
-	WRITE_SHORT strength 17
+	WRITE_BYTE strength 17
 	WRITE_BYTE savevsdeath 0
 	WRITE_BYTE savevsbreath 0
 	WRITE_BYTE savevsspell 0
@@ -15690,7 +15724,7 @@ COPY_EXISTING ~famquas.cre~ ~override~
 	WRITE_SHORT maxhp 36
 	WRITE_SHORT naturalac 8
 	WRITE_SHORT effectiveac 8
-	WRITE_SHORT strength 18
+	WRITE_BYTE strength 18
 	WRITE_BYTE savevsdeath 6
 	WRITE_BYTE savevsbreath 10
 	WRITE_BYTE savevsspell 16
@@ -24175,6 +24209,7 @@ COPY_EXISTING ~sirine.cre~ ~override~ ~sirine02.cre~ ~override~ ~ntsirin4.cre~ ~
 
 COPY_EXISTING_REGEXP ~skel.*.cre~ ~override~
 	REMOVE_CRE_ITEM ~misc50~
+	IF ~MISC50~
 	BUT_ONLY_IF_IT_CHANGES
 
 COPY_EXISTING ~skelaci.cre~ ~override~ ~skelfire.cre~ ~override~ ~skelice.cre~ ~override~
@@ -28695,6 +28730,9 @@ COPY_EXISTING ~spcl311.spl~ ~override~ //Ranger Charm Animal
 COPY_EXISTING ~spcl321.spl~ ~override~ //Berserker Rage
 	LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=protectionfromopcode opcode=setspellstate parameter2=35 special=1 END //Suppress HP Info
 	SAY UNIDENTIFIED_DESC @19234
+
+COPY_EXISTING ~spcl342.spl~ ~override~ //Beastmaster Find Familiar
+	SAY UNIDENTIFIED_DESC @19374
 
 COPY_EXISTING ~spcl521.spl~ ~override~ //Offensive Spin
 	LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=setspellstate opcode=eeexinvokelua STR_VAR resource=~MESPIN~ END

@@ -9843,6 +9843,52 @@ This ability has no casting time, can be used immediately after another ability,
 @19371=~Vampire Breach~
 @19372=~Loses immunity to level drain for 3 rounds~
 @19373=~Whirlwind Boon~
+@19374=~Find Familiar
+(Conjuration/Summoning)
+
+Level: 1
+Range: 0
+Duration: Permanent
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: None
+
+This spell enables the Beast Master to attempt to summon a familiar to act as <PRO_HISHER> aide and companion. Familiars are typically small creatures. A creature acting as a familiar can benefit its master, conveying its sensory powers to <PRO_HIMHER>, conversing with <PRO_HIMHER>, and serving as a guard/scout/spy as well. A Beast Master can have only one familiar at a time, and <PRO_HESHE> has no control over what sort of creature answers the summoning, if any come at all.
+
+Note: This spell can only be cast by the protagonist.
+
+The creature is always more intelligent than others of its type (typically by 2 or 3 Intelligence points), and its bond with the Beast Master confers upon it an exceptionally long life. The Beast Master has an empathic link with the familiar and can issue it mental commands. The Beast Master receives half the familiar's total Hit Points (rounded down) as bonus Hit Points. However, the Beast Master must take care to treat <PRO_HISHER> familiar well, for if the familiar should die, the Beast Master loses the bonus Hit Points and the familiar's Hit Points again as damage. Also, when a familiar dies, the Beast Master loses 1 point of Constitution PERMANENTLY.
+
+Example: A Beast Master has 30 Hit Points and casts Find Familiar. The fairy dragon summoned has 24 Hit Points, so the Beast Master gets a bonus of 12 Hit Points. The Beast Master now has 42 Hit Points. If the familiar dies, the Beast Master loses those 12 Hit Points (putting <PRO_HIMHER> back at 10), loses 1 point of Constitution permanently (which may cause additional Hit Point loss), and takes 12 damage.
+
+Here is a list of the familiars that the Beast Master receives according to alignment:
+
+LAWFUL GOOD, NEUTRAL GOOD: Pseudo Dragon
+- Hit Points: 36
+- Armor Class: 3
+- Save vs. Breath: 0
+- Save vs. Death: 0
+- Save vs. Wands: 0
+- Save vs. Spell: 0
+- Save vs. Polymorph: 0
+- Magic Resistance: 20%
+- Combat: 1 attack per round at 13 THAC0 for 1d6+1 piercing damage, target must Save vs. Spell with a +4 bonus or fall unconscious for 2 rounds
+- Can cast Energy Blades (5 blades) and Cure Light Wounds once per day each
+- Regenerates 1 HP/round
+- Immune to level drain, sleep, and petrification
+
+CHAOTIC GOOD: Fairy Dragon
+- Hit Points: 24
+- Armor Class: 3
+- Save vs. Breath: 10
+- Save vs. Death: 14
+- Save vs. Wands: 8
+- Save vs. Spell: 5
+- Save vs. Polymorph: 18
+- Magic Resistance: 30%
+- Combat: 2 attacks per round at 16 THAC0 for 1d2+1 slashing damage
+- Can cast Blindness three times per day, and can cast Mirror Image, Improved Invisibility and Pixie Dust once per day each
+- Immune to level drain, sleep, and petrification~
 
 @20102=~Armor
 (Conjuration)
@@ -9992,7 +10038,7 @@ This spell enables the caster to attempt to summon a familiar to act as <PRO_HIS
 
 The creature is always more intelligent than others of its type (typically by 2 or 3 Intelligence points), and its bond with the wizard confers upon it an exceptionally long life. The wizard has an empathic link with the familiar and can issue it mental commands. The caster receives half the familiar's total Hit Points (rounded down) as bonus Hit Points. However, the caster must take care to treat <PRO_HISHER> familiar well, for if the familiar should die, the caster loses the bonus Hit Points and half the familiar's Hit Points again as damage. Also when a familiar dies, the caster loses 1 point of Constitution PERMANENTLY.
 
-Example: A Mage has 12 Hit Points and casts Find Familiar. The imp summoned has 9 Hit Points, so the caster gets a bonus of 4 Hit Points. The caster now has 16 Hit Points. If the familiar dies, the caster loses those 4 Hit Points (putting <PRO_HIMHER> back at 12), loses 1 point of Constitution permanently (which may cause additional Hit Point loss), and takes 4 damage.
+Example: A Mage has 24 Hit Points and casts Find Familiar. The imp summoned has 36 Hit Points, so the caster gets a bonus of 18 Hit Points. The caster now has 42 Hit Points. If the familiar dies, the caster loses those 18 Hit Points (putting <PRO_HIMHER> back at 24), loses 1 point of Constitution permanently (which may cause additional Hit Point loss), and takes 18 damage.
 
 Here is a list of the familiars that the player receives according to alignment:
 
@@ -14358,7 +14404,7 @@ Missile of Patience fires a slow magical projectile at the target, which will de
 
 Level: 5
 Range: 0
-Duration: 5 rounds
+Duration: 3 rounds + 1 round/2 levels
 Casting Time: 1
 Area of Effect: The caster
 Saving Throw: None
