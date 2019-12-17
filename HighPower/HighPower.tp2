@@ -4099,7 +4099,7 @@ COPY_EXISTING ~mepr754.spl~ ~override~
 	LPF ALTER_SPELL_HEADER INT_VAR projectile=meverdig END
 	SAY NAME1 @31754
 	SAY UNIDENTIFIED_DESC @32754
-
+/*
 ACTION_IF NOT FILE_EXISTS_IN_GAME ~AvengerHLAFix.txt~ BEGIN
 
 COPY ~HighPower/mrk/AvengerHLAFix.txt~ ~override~
@@ -4133,7 +4133,7 @@ COPY_EXISTING ~clastext.2da~ ~override~
 		END
 	END
 	BUT_ONLY_IF_IT_CHANGES
-
+*/
 LAF GET_UNIQUE_SPELL_NAME STR_VAR prefix=~SPPR7~ RET mepr755=filename END
 COPY_EXISTING ~mepr755.spl~ ~override~
 	SAY NAME1 @31755
