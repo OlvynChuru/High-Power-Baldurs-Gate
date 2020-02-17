@@ -1,3 +1,16 @@
+v2.3.0:
+- I fixed the gamebreaking bug that had made it impossible to rest or leave Candlekeep if Siege of Dragonspear wasn't installed.
+- I added all the newer spells from my spell mod, as well as two new spells: Levitate, and Teleport Step.
+- Some creatures have been given new powers.
+- The Demonknight's Mirror of Opposition now creates actual clones of the party.
+- Charmed party members and hostile clones of party members will now use spells and abilities on the rest of the party.
+- I fixed some bugs in the Gorion battle cutscene.
+- The Fiery Blades ability now works again.
+- Quayle no longer has Gate as an innate ability (which I gave him by accident).
+
+v2.2.2:
+- The game should no longer crash when selecting a spell for a sequencer.
+- I fixed a few errors in spell descriptions.
 v2.2.1:
 - New spell: Jump (1st-level spell that allows a creature to jump over obstacles).
 - I added a few more scrolls for some of the new spells to the game.
