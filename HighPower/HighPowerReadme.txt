@@ -53,58 +53,6 @@ This component lets non-warriors get HP bonuses at 17, 18, 19, 21, and 24 Consti
 
 Normally, the saving throw bonuses halflings, gnomes and dwarves get based on their base Constitution cap at 18 Con. However, since it's possible to get up to 25 base Constitution in this mod, having it cap at 18 is silly. This component decreases the save bonuses shorties get at 18 Constitution (from +5 to +4), but it increases the save bonuses they get at 25 Constitution (from +5 to +6).
 
-- Modify Fighting Styles
-
-This component strengthens all four fighting styles and lets characters take up to five points in a style (if the character could normally get the maximum number of points in the style).
-
-TWO-HANDED:
-
-Proficient (1 slot): The wielder gets a +2 bonus to damage rolls and a -1 bonus to Speed Factor.
-
-Specialized (2 slots): The wielder gets a +3 bonus to damage rolls, a -2 bonus to Speed Factor, and the ability to score critical hits on a roll of 19 or 20 when using a two-handed weapon.
-
-Master (3 slots): The wielder gets a +5 bonus to damage rolls, a -3 bonus to Speed Factor, and the ability to score critical hits on a roll of 19 or 20 when using a two-handed weapon.
-
-High Master (4 slots): The wielder gets a +6 bonus to damage rolls, a -4 bonus to Speed Factor, and the ability to score critical hits on a roll of 18 to 20 when using a two-handed weapon.
-
-High Master (5 slots): The wielder gets a +8 bonus to damage rolls, a -5 bonus to Speed Factor, and the ability to score critical hits on a roll of 18 to 20 when using a two-handed weapon.
-
-SWORD AND SHIELD:
-
-Proficient (1 slot): The wielder gets a +1 bonus to AC against all weapons, and an additional +2 bonus to AC against missile weapons.
-
-Specialized (2 slots): The wielder gets a +2 bonus to AC against all weapons, and an additional +4 bonus to AC against missile weapons.
-
-Master (3 slots): The wielder gets a +3 bonus to AC against all weapons, and an additional +6 bonus to AC against missile weapons.
-
-High Master (4 slots): The wielder gets a +4 bonus to AC against all weapons, and an additional +8 bonus to AC against missile weapons.
-
-Grand Master (5 slots): The wielder gets a +5 bonus to AC against all weapons, and an additional +10 bonus to AC against missile weapons.
-
-SINGLE-WEAPON:
-
-Proficient (1 slot): The wielder gets a +1 bonus to THAC0, a -1 bonus to Speed Factor, and the ability to score critical hits on a roll of 19 or 20 when using a one-handed weapon.
-
-Specialized (2 slots): The wielder gets a +2 bonus to THAC0, a -2 bonus to Speed Factor, and the ability to score critical hits on a roll of 18 to 20 when using a one-handed weapon.
-
-Master (3 slots): The wielder gets a +3 bonus to THAC0, a -3 bonus to Speed Factor, and the ability to score critical hits on a roll of 17 to 20 when using a one-handed weapon.
-
-High Master (4 slots): The wielder gets a +4 bonus to THAC0, a -4 bonus to Speed Factor, and the ability to score critical hits on a roll of 16 to 20 when using a one-handed weapon.
-
-Grand Master (5 slots): The wielder gets a +5 bonus to THAC0, a -5 bonus to Speed Factor, and the ability to score critical hits on a roll of 15 to 20 when using a one-handed weapon.
-
-TWO-WEAPON:
-
-Proficient (1 slot): The wielder's penalties are reduced to -2 with the main weapon and -6 with the off-hand weapon.
-
-Specialized (2 slots): The wielder's penalties are reduced to 0 with the main weapon and -4 with the off-hand weapon.
-
-Master (3 slots): The wielder's penalties are reduced to 0 with the main weapon and -2 with the off-hand weapon.
-
-High Master (4 slots): The wielder gets no penalties from wielding two weapons.
-
-Grand Master (5 slots): The wielder gets no penalties from wielding two weapons and gets a +1 bonus to AC while doing so.
-
 
 - Remove the limit of two proficiency points in a weapon at character creation
 
@@ -126,31 +74,9 @@ This only matters if those non-warriors can get more than one proficiency point 
 One of the main features of assassins is the fact that their backstab multiplier keeps increasing after 5x. However, since they don't get to 6x or 7x until BG2, this feature is completely meaningless in BG1. This component allows assassins to become noticably better at backstabbing than a normal thief even in BG1. It makes it so that assassins get a multiplier bonus every three levels after 1, rather than than every four levels after 1.
 
 
-- Make bard songs improve earlier
-
-In BG1, bards are stuck with the same song for the whole game. It would be nice for the song to improve faster. This makes it so that the jester, skald and unkitted bard songs improve at levels 5 and 10, rather than at levels 15 and 20.
-
-
 - Improve Wizard Slayers
 
 This component does two things: it changes the progressive Magic Resistance gain to +5% per level (so it becomes noticable even in BG1) and makes the on-hit spell failure effect offer a Save vs. Breath at -10.
-
-
-- Improve Stalkers
-
-This component allows the Stalker to use their three special abilities at level 6 instead of level 12, and it makes them innate abilities rather than spells. Without this component, a Stalker does not get those abilities at all in BG1.
-
-
-- Improve Beast Masters
-
-The main ability of a Beast Master (which they sacrifice SO MUCH for) is the ability to summon animals. However, they can't summon any animals until level 8. This component lets them summon animals right from the start of the game. The Beast Master is given innate Animal Summoning abilities as he/she gains levels, as shown:
-
-- 1st level: Can cast Animal Summoning I as an innate ability once per day.
-- 2nd level: Can cast Animal Summoning I an additional time per day.
-- 4th level: Can cast Animal Summoning II as an innate ability once per day.
-- 6nd level: Can cast Animal Summoning II an additional time per day.
-- 8th level: Can cast Animal Summoning III as an innate ability once per day.
-- 10nd level: Can cast Animal Summoning III an additional time per day.
 
 
 - Improve Dragon Disciples
@@ -161,11 +87,6 @@ This component lets a Dragon Disciple gain additional uses of the breath weapon 
 - Improve Monks
 
 Monks aren't great in BG1 normally. Sure, they make up for it by being awesome in BG2, but I don't care about BG2 in this mod. This component mainly gives monks more potential at high level. It changes the monk XP table so that a monk can reach level 9 in BG1, and it gives each monk kit a great ability at level 9. Unkitted Monks get Quivering Palm, Sun Soul Monks get Sun Soulbeam, and Dark Moon Monks get Darkness 15' Radius (it's a different file from the one in Siege of Dragonspear). Dark Moon Monks also now have a x2 backstab multiplier (which doesn't improve) and get Mirror Image at level 8 instead of level 11.
-
-
-- Make rangers and paladins get spells slightly quicker
-
-One advantage that rangers and paladins have over fighters is that they can cast a couple of divine spells. The problem is that it takes them so long to get these spells that they spend most of the game not having any spells at all. In fact, paladins don't get any spells in BG1 whatsoever! This component allows rangers and paladins to start learning spells earlier, though they still learn spells very slowly. At level 4, they get a single 1st level spell slot. At level 6, they get another. At level 8, they get a 2nd level spell slot. This component overwrites the original tables for ranger and paladin spell slots.
 
 
 - Allow Kensai to wear gloves

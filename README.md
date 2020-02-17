@@ -1,5 +1,5 @@
 # High Power Baldur's Gate
-## Version 2.2.2
+## Version 2.3.0
 
 High Power Baldur's Gate is a mod for BG:EE only. It gives new abilities to the party, as well as to most creatures in the game. It also modifies many items and spells, and adds plenty of new items and spells to the game.
 

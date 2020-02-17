@@ -456,6 +456,8 @@ Mass patches; this could take some time...~
 @628=~Luck has been raised by 1 permanently.~
 @629=~Resistance to fire and magic fire lowered by 100%~
 @630=~Resistance to cold and magic cold lowered by 100%~
+@631=~Resistance to magic damage lowered by 100%~
+@632=~Immune to damage for 4 rounds~
 
 @801=~<ME_DAMABS>~
 @802=~Absorbed the ~
@@ -1540,7 +1542,7 @@ A Kensai player character also gains the following passive effects:
 @2104=~WIZARD SLAYER: This warrior has been specially trained by <PRO_HISHER> sect to excel in hunting and combating spellcasters of all kinds.
 
 Advantages:
-- Each successful hit bestows a 25% cumulative chance of spell failure on the target unless it makes a successful Save vs. Breath with a -10 penalty.
+- Each successful hit bestows a 25% cumulative chance of spell failure on the target.
 - +5% Magic Resistance per level.
 
 Disadvantages:
@@ -2313,6 +2315,196 @@ Master (3 slots): The wielder's penalties are reduced to 0 with the main weapon 
 High Master (4 slots): The wielder gets no penalties from wielding two weapons.
 
 Grand Master (5 slots): The wielder gets no penalties from wielding two weapons and gets a +1 bonus to AC while doing so.~
+@2400=~FIGHTER: The Fighter is a champion, swords<PRO_MANWOMAN>, soldier, and brawler who lives or dies by <PRO_HISHER> knowledge of weapons and tactics. Fighters can be found at the front of any battle, contesting toe-to-toe with monsters and villains. A good Fighter needs to be strong and healthy if <PRO_HESHE> hopes to survive.
+
+CLASS FEATURES:
+
+- May wear helmets.
+- May wear any armor and use any weapon.
+- May achieve Grand Mastery (five slots) with any weapon class.
+- May achieve Grand Mastery (five slots) in any fighting style.
+- Hit Die: d10
+
+Prime Requisites For Dual-Classing: Strength~
+@2404=~BARBARIAN: A Barbarian can be an excellent warrior. While not as disciplined or as skilled as a Fighter, the Barbarian can willingly throw <PRO_HIMHER>self into a berserker rage, becoming a tougher and stronger opponent.
+
+CLASS FEATURES:
+
+- May not wear armor heavier than splint mail.
+- May not exceed Specialization (two slots) with any weapon class.
+- May achieve Grand Mastery (five slots) in any fighting style.
+- Moves 2 points faster than other characters.
+- Immune to backstab.
+- May use the Rage ability once per day. Gains one use at level 1 and an additional use every 4 levels thereafter.
+
+RAGE: The enraged status lasts for 5 rounds and provides a +4 bonus to Strength and Constitution, a -2 penalty to Armor Class and a +2 bonus to Saving Throws vs. Spell, as well as immunity to all charm, hold, fear, maze, stun, sleep, confusion, and level drain spells.
+
+- 11th level: Gains 10% resistance to crushing, slashing, piercing, and missile damage. An additional 5% is gained at levels 15 and 19.
+- Hit Die: d12~
+@2406=~RANGER: The Ranger is a warrior and a woods<PRO_MANWOMAN> who is skilled with weapons and is knowledgeable in the ways of the forest. The Ranger often protects and guides lost travelers and honest peasant-folk. A Ranger needs to be strong and wise to the ways of nature to live a full life.
+
+CLASS FEATURES:
+
+- May wear helmets.
+- May wear any armor and use any weapon.
+- May not exceed Specialization (two slots) in any weapon class.
+- May achieve Grand Mastery (five slots) in any fighting style.
+- Begins Specialized (two slots) in Two-Weapon Style and may place up to five slots into it.
+- May select a racial enemy, which grants a +4 bonus to hit and damage rolls against the selected enemy race.
+
+- May use the Charm Animal ability once per day. Gains one use at level 1 and an additional use every 2 levels thereafter.
+
+CHARM ANIMAL: This ability allows a Ranger to charm an animal and manipulate its behavior. If the animal fails a Save vs. Breath at -1, it regards the Ranger as a trusted friend and ally to be heeded and protected for 24 hours. The Ranger may give it orders, and the charmed animal will carry them out to the best of its ability. Every level, the saving throw penalty is increased by -1.
+
+- May Hide in Shadows.
+- May cast druidic spells starting at level 2.
+- Alignment restricted to good.
+- Hit Die: d10
+
+Prime Requisites For Dual-Classing: Strength, Dexterity, Wisdom~
+@2407=~ARCHER: The Archer is the epitome of skill with the bow-the ultimate marks<PRO_MANWOMAN>, able to make almost any shot, no matter how difficult. To become so skilled with the bow, the Archer has had to sacrifice some of <PRO_HISHER> proficiency with melee weapons and armor.
+
+Advantages:
+- +1 to hit and damage rolls with any missile weapon every 3 levels.
+- May achieve Grand Mastery (5 slots) in longbows, shortbows, and crossbows.
+- May use the Called Shot ability once per day. Gains one use at level 4 and an additional use every 4 levels thereafter.
+
+CALLED SHOT: All successful ranged attacks within the next 10 seconds have the following cumulative effects besides normal damage, according to the level of the Archer:
+ 4th level: -1 penalty to target's THAC0.
+ 8th level: -1 penalty to target's Saving Throws vs. Spell.
+ 12th level: -1 penalty to the target's Strength score.
+ 16th level: +2 bonus to damage roll.
+
+Disadvantages:
+- May not wear any metal armor.
+- May not cast priest spells.
+- May only become Proficient (one slot) with melee weapons.
+- May not use the Charm Animal ability.~
+@2408=~STALKER: Stalkers serve as covert intelligence-gatherers, comfortable in both wilderness and urban settings. They are spies, informants, and interrogators, and their mastery of stealth makes them deadly opponents.
+
+Advantages:
+- +20% to Move Silently and Hide In Shadows.
+- May use Backstab ability, although for a lower damage multiplier than Thieves:
+  Level 1-8: x2
+  Level 9-16: x3
+  Level 17+: x4
+- 8th level: May memorize 3 Mage spells: Haste, Protection From Normal Missiles, and Minor Spell Deflection.
+
+Disadvantages:
+- May not wear armor heavier than studded leather.~
+@2409=~BEAST MASTER: This Ranger is a wanderer and is not comfortable in civilized lands. Therefore, <PRO_HESHE> maintains a natural affinity for animals; they are <PRO_HISHER> friends and comrades-in-arms, and the Beast Master has a limited form of telepathic communication with them.
+
+Advantages:
+- May use Find Familiar ability to summon a pseudo dragon (if lawful or neutral good) or fairy dragon (if chaotic good) companion.
+- Allied animals within 30 feet of the Beastmaster gain +2 to hit and damage. These bonuses increase by 1 every 3 levels.
+- The Beastmaster's familiar gains +4 to hit and damage while within 30 feet of the Beastmaster. These bonuses increase by 2 every 3 levels.
+- 2th level: May cast Animal Summoning I as a 1st-level spell.
+- 5th level: May cast Animal Summoning II as a 2nd-level spell.
+- 8th level: May cast Animal Summoning III as a 3rd-level spell.
+
+Disadvantages:
+- May not wear any metal armor.
+- May not use any metal weapons (for example: swords, halberds, war hammers, or morning stars).~
+@2410=~PALADIN: A Paladin is a warrior bold and pure, the exemplar of everything good and true. Like the Fighter, the Paladin is a person of action and combat. However, the Paladin lives for the ideals of righteousness, justice, honesty, piety, and chivalry and strives to be a living example of these virtues so that others may learn from <PRO_HIMHER> as well as gain by <PRO_HISHER> actions.
+
+CLASS FEATURES:
+
+- May wear helmets.
+- May wear any armor and use any weapon.
+- May not exceed Specialization (two slots) in any weapon class.
+- May achieve Grandmastery (five slots) in any fighting style.
+- May use Lay On Hands ability once per day to heal a target for a number of hit points equal to the square of the paladin's level.
+- May Detect Evil. The ability is passive and may be turned on and off.
+- May cast Protection From Evil once per day per level (starts at 1st level with one use).
+- May Turn Undead as a Cleric two levels lower, starting at level 3.
+- May cast priest spells starting at level 2.
+- Receives a +2 bonus to all Saving Throws.
+- Alignment restricted to lawful good.
+- Hit Die: d10~
+@2419=~PRIEST OF TYR: Tyr is the deity of law and justice and is primarily concerned with the punishment of wrongdoers and the general furthering of law and good in the world. The belief in justice through (benevolent) force, or at least armed vigilance, is the reason for Tyr's existence. Tyr holds great prominence in the pantheon due to his position as leader of the Triad, a trio of lawful good gods that are collectively devoted to the concepts of courage, justice, perseverance, relief of suffering, duty, obedience, honor, and to some extent, righteous martyrdom.
+
+Advantages:
+– May cast Exaltation once per day every 5 levels of the caster (starts at 1st level with one use).
+
+EXALTATION: This spell enables a priest to aid and protect any one being other than themselves. By touch, the caster removes the effects of fear, sleep, feeblemind, unconsciousness, and intoxication, as well as berserk and confused states of mind. In addition, the recipient is protected against spells and other attacks that cause these effects for 1 turn.
+
+– May cast Divine Favor once per day every 10 levels of the caster (starts at 1st level with one use).
+
+DIVINE FAVOR: This spell grants the caster a +1 bonus to hit and damage rolls every level of the caster. The spell lasts for 2 rounds.
+
+Disadvantages:
+– Alignment restricted to lawful good, neutral good, or lawful neutral.~
+@2423=~SHAPESHIFTER: This Druid is not called Shapeshifter because <PRO_HESHE> has access to a great variety of forms, but rather because of <PRO_HISHER> complete dedication to a single alternate form. This Druid has willingly allowed <PRO_HIMHER>self to become infected with lycanthropy, but due to intense study and training <PRO_HESHE> has the ability to control <PRO_HISHER> affliction. The creature <PRO_HESHE> becomes is that of the werewolf, the most famous of the lycanthrope shape changers.
+
+Advantages:
+– May shapeshift into the form of a werewolf once per day. Gains one use at level 1 and an additional use every 2 levels thereafter.
+– 10th level: May shapeshift into a greater werewolf once per day.
+
+Disadvantages:
+– May not wear any armor.
+– No other shapeshifting abilities due to the effort required in maintaining balance in <PRO_HISHER> primary forms.~
+@2430=~SWASHBUCKLER: This rogue is part acrobat, part swords<PRO_MANWOMAN>, and part wit: the epitome of charm and grace.
+
+Advantages:
+- +1 bonus to Armor Class at 1st level, plus an additional +1 bonus every 5 levels.
+- +1 bonus to hit and damage rolls every 5 levels.
+- May Specialize (two slots) in any melee weapon available to Thieves.
+- May place 5 slots into Two-Weapon Style.
+
+Disadvantages:
+- May not use Backstab ability.~
+@2432=~BARD: The Bard is a rogue, but <PRO_HESHE> is very different from the Thief. The Bard's strength is <PRO_HISHER> pleasant and charming personality. With it and <PRO_HISHER> wits, <PRO_HESHE> makes <PRO_HISHER> way through the world. A Bard is a talented musician and a walking storehouse of gossip, tall tales, and lore; <PRO_HESHE> learns a little bit about everything that crosses <PRO_HISHER> path and is a jack-of-all-trades but master of none. While many Bards are scoundrels, their stories and songs are welcome almost everywhere.
+
+CLASS FEATURES:
+
+– May not wear armor heavier than chain mail. (Spells cannot be cast while wearing armor.)
+– May not equip shields larger than bucklers.
+– May only become Proficient (one slot) in any weapon class.
+– May only become Proficient (one slot) in any fighting style.
+– Thieving abilities: Pick Pockets.
+– Increased Lore score.
+– May cast arcane spells starting at 2nd level.
+– May use Bard Song ability. While active, has effects that vary with level:
+  1st level: Grants allies +1 luck, and immunity to fear.
+  5th level: Grants allies +2 luck, and immunity to fear.
+  10th level: Grants allies +3 luck, and immunity to fear.
+
+– Alignment restricted to any neutral.
+– Hit Die: d6~
+@2433=~BLADE: The Blade is an expert fighter and adventurer whose bardic acting abilities make <PRO_HIMHER> appear more intimidating and fearsome. This Bard's fighting style is flashy and entertaining, but is also lethally dangerous.
+
+Advantages:
+- May place 5 slots in Two-Weapon Style.
+- May use the Offensive Spin and Defensive Spin abilities once per day. Gains one use each at level 1 and an additional use each every 4 levels thereafter.
+
+OFFENSIVE SPIN: During the next 4 rounds, the Blade's movement rate doubles and <PRO_HESHE> gains a +2 bonus to hit and damage rolls as well as an extra attack per round. All attacks deal maximum damage for the duration.
+
+DEFENSIVE SPIN: During the next 4 rounds, the Blade is rooted to the spot and gains a +1 bonus to Armor Class per level, up to a maximum of +10.
+
+Disadvantages:
+- Only has one half the normal Lore value.
+- Only has one half the normal Pick Pockets skill.~
+@2434=~JESTER: This Bard is well versed in the arts of ridicule and hilarity, and uses <PRO_HISHER> abilities to distract and confuse <PRO_HISHER> enemies, cavorting madly during combat. Do not mistake <PRO_HIMHER> for a true fool, however, as <PRO_HESHE> can also be quite deadly.
+
+Advantages:
+– The Jester's song does not help allies. Instead, every opponent within 30 feet must save once per round to avoid falling under its effects:
+  1st level: Enemies must save vs. Spell with a +2 bonus or be confused.
+  5th level: Enemies must save vs. Spell with a +2 bonus or be confused, and must save vs. Spell or be slowed.
+  10th level: Enemies must save vs. Spell with a +2 bonus or be confused, must save vs. Spell at +2 or be knocked unconscious, and must save vs. Spell or be slowed.
+
+Disadvantages:
+– None.~
+@2435=~SKALD: This nordic Bard is also a warrior of great strength, skill, and virtue; <PRO_HISHER> songs are inspiring sagas of battle and valor, and the Skald devotes <PRO_HISHER> life to those pursuits.
+
+Advantages:
+– +1 bonus to hit and damage rolls.
+– The Skald's song is different from the typical Bard's and varies with level:
+ 1st level: Grants allies a +2 bonus to hit and damage rolls, and a +2 bonus to AC.
+ 5th level: Grants allies a +4 bonus to hit and damage rolls, a +4 bonus to AC, and immunity to fear.
+ 10th level: Grants allies a +4 bonus to hit and damage rolls, a +4 bonus to AC, and immunity to fear, stun, and confusion.
+
+Disadvantages:
+– Only has one quarter the normal Pick Pockets score.~
 @2701=~wolf~
 @2702=~bear~
 @2703=~Bear~
@@ -6172,7 +6364,21 @@ Equipped abilities:
 - If the wearer doesn't move for 1 round, they gain a single Stoneskin
 
 Weight: 30~
+@9959=~Eyes of Aec'Letec~
+@9960=~These were the eyes of Aec'Letec, a nabassu that you slew.
 
+STATISTICS:
+
+Weight: 15~
+@9961=~These were the eyes of Aec'Letec, a nabassu that you slew. Aec'Letec was more powerful than the average nabassu, capable of changing its enemies into monstrous greater ghast lords rather than regular ghasts. Once per day, you may replicate this ability by clutching the eye tightly and uttering the name "Aec'Letec."
+
+STATISTICS:
+
+Charge abilities:
+- Horrific Death Gaze once per day
+	Enemies in a 22-foot cone must Save vs. Death at -2 or be killed and turned into greater ghast lords after 2 rounds
+
+Weight: 15~
 @9962=~Golden Antlers~
 @9963=~These are the antlers of a High Moose, a sacred animal of Silvanus. The enormous antlers are actually made of gold, and could be sold for a large sum, though certainly not to one who has much respect for nature.
 
@@ -6366,6 +6572,21 @@ Combat abilities:
 
 THAC0: +15 vs. doppelgangers
 Damage: 1d6 (missile)
+Launcher: Bow
+
+Weight: 0~
+@10383=~Wave Arrow +3~
+@10384=~Used primarily by powerful sirines, this arrow turns into a large wave when fired, plowing through creatures in its path with great force.
+
+STATISTICS:
+
+Combat abilities:
+- Turns into a Smashing Wave when fired, dealing damage to creatures in a line
+- Hit target must Save vs. Breath or be stunned or knocked down for 1 round
+
+THAC0: +3
+Damage: 3d12, +5d12 against fire-using creatures
+Damage type: Crushing
 Launcher: Bow
 
 Weight: 0~
@@ -7698,6 +7919,28 @@ STATISTICS:
 
 Equipped abilities:
 - Can memorize one extra spell of 5th, 6th, and 7th level
+
+Weight: 0~
+@14747=~Ulcaster Academy Ring~
+@14748=~This Ulcaster Academy ring bears the Netherese phrase "FECR NAS E RODA-FEACC," or "SHAPING BODY AND WORLD-TRANSMUTATION." A date on the side of the ring reads "1070 DR."
+
+The Ulcaster Academy was a school of wizards who practiced, learned, and taught magic near the town of Beregost on the Sword Coast. Ulcaster's school eventually became frighteningly powerful. A group of wizards descended on the academy and reduced it to ruin. Most of the students and teachers were killed. Ulcaster's fate is unknown. Those few Ulcaster residents who escaped are known to pass on their class rings to private students, continuing their particular brand of education with pride.
+
+STATISTICS:
+
+Equipped abilities:
+- Save vs. Transmutation spells: +8
+- Creatures gain an additional -4 penalty on saves against the wearer's Transmutation spells
+
+Charge abilities:
+- Polymorph Self once per day
+
+- Polymorph Other once per day
+
+- Flesh to Stone once per day
+
+Requires:
+ 19 Intelligence
 
 Weight: 0~
 @14759=~Ring of Almost Invisibility~
@@ -9294,6 +9537,8 @@ One chapter focuses on related monsters called ettercaps.
 @18323=~Greater Arcane Ankheg~
 @18324=~Floof the Frozen Fool~
 @18325=~Aurgleb the Greater Ogre~
+@18326=~Greater Worg~
+@18327=~Gavolg~
 
 
 @19001=~Divine Favor
@@ -9306,7 +9551,7 @@ The character channels positive energy to heal the touched creature of a number 
 @19003=~Charm Animal
 This spell affects any single animal it is cast upon. The animal is allowed a Save vs. Spell to negate the effect. This save is made at a penalty of -1 per level of the ranger.
 
-If the spell's recipient fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible.
+If the animal fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible. The animal is charmed for 24 hours, and when the charm ends, the animal will not be hostile if it was not hostile before being charmed.
 
 If the caster harms-or attempts to harm-the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the spell is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Also note that you cannot have a charmed creature leave the area where it was charmed.~
 @19004=~Shapeshift: Brown Bear
@@ -9897,6 +10142,16 @@ CHAOTIC GOOD: Fairy Dragon
 @19384=~Kai
 
 All successful attacks for the duration deal maximum damage. The ability lasts a number of seconds equal to the character's Wisdom.~
+@19385=~Lower Magic Damage Resistance~
+@19386=~Chicken~
+@19387=~Mass Protection~
+@19388=~Sirine Charm~
+@19389=~Greater Meteor Swarm~
+@19390=~Greater Time Stop~
+@19391=~Perfect Clone~
+@19392=~Recall~
+@19393=~Death Armor~
+@19394=~Multiscorcher~
 
 @20102=~Armor
 (Conjuration)
@@ -10429,7 +10684,7 @@ Range: Visual range of the caster
 Duration: 1 turn
 Casting Time: 4 
 Area of Effect: Special 
-Saving Throw: None 
+Saving Throw: None
 
 With the casting of this spell, the wizard summons a single small monster, chosen at random from the following:
 
@@ -10443,7 +10698,7 @@ Small Troll (High HP, regenerates 1 HP per second but takes double damage from f
 Level: 4
 Range: Visual range of the caster
 Duration: Permanent
-Casting Time: 20
+Casting Time: 4
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
@@ -12905,7 +13160,7 @@ Casting Time: 3
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-Turn Creature allows the priest to turn a non-undead creature. Once the spell is cast, the target creatue must Save vs. Polymorph at -4. On a failure, the creature is turned as if it was an undead creature affected by the priest's Turn Undead ability. Depending on the level of the target, the level of the priest, the alignment of the priest, and random chance, the target may either be forced to run away from the priest temporarily, controlled by the priest temporarily, or killed instantly.~
+Turn Creature allows the priest to turn a non-undead creature. Once the spell is cast, the target creature must Save vs. Polymorph at -4. On a failure, the creature is turned as if it was an undead creature affected by the priest's Turn Undead ability. Depending on the level of the target, the level of the priest, the alignment of the priest, and random chance, the target may either be forced to run away from the priest temporarily, controlled by the priest temporarily, or killed instantly.~
 @22275=~Whirlwind of Blows
 
 Casting Time: Instant
@@ -13830,6 +14085,14 @@ The creature jumps to the target point, which must be within range.~
 @30033=~Kobold~
 @30034=~Rendered incapable of dealing damage~
 @30035=~Deals healing instead of damage~
+@30036=~Too high level to be cloned~
+@30037=~Spell Ineffective~
+@30038=~Protected by Damage Turning~
+@30039=~Regained Spell: ~
+@30040=~Lost Spell: ~
+@30041=~You do not own the familiar.~
+@30042=~The spell <ME_FAMSES> will be released whenever your familiar hits a creature with an attack.~
+@30043=~Add a spell for your familiar to cast~
 
 @31151=~Snake's Swiftness~
 @31152=~Hex~
@@ -13837,6 +14100,7 @@ The creature jumps to the target point, which must be within range.~
 @31251=~Beast Sense~
 @31252=~Fiery Link~
 @31253=~Null Healing~
+@31254=~Critical Gift~
 @31351=~Call Water Weirds~
 @31352=~Shortening~
 @31353=~Fire Curse~
@@ -13847,12 +14111,14 @@ The creature jumps to the target point, which must be within range.~
 @31453=~Turn Creature~
 @31454=~Wall of Fire~
 @31551=~Prolongment~
+@31552=~Wall of Force~
 @31652=~Drown~
 @31653=~Antiharm Shell~
 @31751=~Power Word, Heal~
 @31753=~Nonrandom Zone~
 @31754=~Colossal Growth~
 @31755=~Enhance Attribute~
+@31756=~Contingent Resurrection~
 
 @32151=~Snake's Swiftness
 (Alteration)
@@ -13914,6 +14180,30 @@ Area of Effect: All creatures in a narrow line between the caster and an ally
 Saving Throw: 1/2
 
 In casting Fiery Link, the caster must choose an allied creature other than <PRO_HIMHER>self. This spell creates a ray of fire linking the caster and that ally, damaging any creatures in between. If the caster and/or the ally move, the fiery link will stretch and contract to fill the distance between them. Every three seconds, any creature that crosses the fiery link (not including the caster or the ally) takes 1d8 fire damage (Save vs. Breath for half). A single caster can cast Fiery Link on multiple allies, but a single ally cannot be targeted by more than one Fiery Link at once.~
+@32253=~Null Healing
+(Necromancy)
+
+Level: 2
+Sphere: Healing
+Range: Visual range of the caster
+Duration: 1 day
+Casting Time: 2
+Area of Effect: 1 creature
+Saving Throw: Neg.
+
+This necromantic curse prevents the target from healing. Once cast, the target must Save vs. Spell at -3 or be cursed for 1 day. While cursed, the target cannot regain Hit Points via spells, abilities, items, regeneration, or resting. The curse can be removed early using a Remove Curse spell.~
+@32254=~Critical Gift
+(Alteration)
+
+Level: 2
+Sphere: Combat
+Range: Visual range of the caster
+Duration: 3 rounds or until a critical hit
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+Critical Gift empowers an ally, allowing them to get a guaranteed critical hit on their next attack. If the target attacks a creature that is immune to critical hits, the spell won't trigger, saving the effect for when the target attacks a creature that isn't immune.~
 @32351=~Call Water Weirds
 (Conjuration/Summoning)
 
@@ -14009,7 +14299,7 @@ Casting Time: 4
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-Turn Creature allows the priest to turn a non-undead creature. Once the spell is cast, the target creatue must Save vs. Polymorph at -4. On a failure, the creature is turned as if it was an undead creature affected by the priest's Turn Undead ability. Depending on the level of the target, the level of the priest, the alignment of the priest, and random chance, the target may either be forced to run away from the priest temporarily, controlled by the priest temporarily, or killed instantly.~
+Turn Creature allows the priest to turn a non-undead creature. Once the spell is cast, the target creature must Save vs. Polymorph at -4. On a failure, the creature is turned as if it was an undead creature affected by the priest's Turn Undead ability. Depending on the level of the target, the level of the priest, the alignment of the priest, and random chance, the target may either be forced to run away from the priest temporarily, controlled by the priest temporarily, or killed instantly.~
 @32454=~Wall of Fire
 (Evocation)
 
@@ -14034,6 +14324,18 @@ Area of Effect: 1 creature
 Saving Throw: Special
 
 Prolongment doubles the duration of certain effects on the target creature. If the target is an enemy, then all harmful effects on the target will have their duration doubled unless the target makes a Save vs. Spell at -4. If the target is not an enemy, then all non-harmful effects on the target will have their duration doubled. A "harmful effect" is any effect from a spell or ability that turns a non-hostile creature hostile. The duration is doubled from the total duration of the effect, not the remaining duration. An effect can only be prolonged once.~
+@32552=~Wall of Force
+(Abjuration)
+
+Level: 5
+Sphere: Guardian
+Range: Visual range of the caster
+Duration: 5 rounds
+Casting Time: 7
+Area of Effect: 8 ft. long, 2 ft. wide wall
+Saving Throw: None
+
+This spell creates a wall of magical force, which stays for 5 rounds. Creatures cannot pass through the wall, though they can still fly over it, teleport past it, or float past it while ethereal. The wall cannot be dispelled.~
 @32652=~Drown
 (Alteration)
 
@@ -14106,20 +14408,33 @@ Area of Effect: 1 creature
 Saving Throw: None
 
 An Enhance Attribute spell can vastly improve a single attribute of a creature. In casting this spell, the caster first chooses whether <PRO_HESHE> wishes to enhance a creature's Strength, Dexterity, Constitution, Intelligence, Wisdom, or Charisma. Then <PRO_HESHE> points at a creature, or chooses <PRO_HIMHER>self. The spell sets the chosen attribute of the target creature to 24 for the duration, or until dispelled. The spell has no effect if the chosen attribute of the creature is already higher than 24.~
+@32756=~Contingent Resurrection
+(Necromancy)
+
+Level: Quest
+Sphere: Necromantic
+Range: Touch
+Duration: Permanent until triggered
+Casting Time: 9
+Area of Effect: 1 creature
+Saving Throw: None 
+
+This spell stores a Resurrection spell in the target, to be released when the creature dies. The slain creature is automatically brought back to life and immediately restored to full health. Contingent Resurrection then ends, and cannot be applied to the same creature again for 7 days.~
 
 @33151=~Disruptive Surge~
 @33152=~Inertia~
 @33153=~Detect Shapeshifters~
-@33154=~Summon Lesser Kobold~
+@33154=~Summon Kobold~
 @33155=~Dimension Door~
 @33156=~Jump~
 @33157=~Hex~
 @33251=~Power Word, Pull~
-@33252=~Lesser Ghostwalk~
+@33252=~Ghostwalk~
 @33253=~Power Word, Push~
 @33254=~Intoxicate~
 @33255=~Null Healing~
 @33256=~Specific Spell Immunity~
+@33257=~Levitate~
 @33351=~Bounce Spell~
 @33352=~Fly~
 @33353=~Displacement~
@@ -14127,6 +14442,7 @@ An Enhance Attribute spell can vastly improve a single attribute of a creature. 
 @33355=~Control Slime~
 @33356=~Legend Lore~
 @33357=~Glyph of Spell Storing~
+@33358=~Familiar Spell~
 @33451=~Wall of Fire~
 @33452=~Phantasmal Killer~
 @33453=~Ghoulish Feast~
@@ -14146,12 +14462,16 @@ An Enhance Attribute spell can vastly improve a single attribute of a creature. 
 @33560=~Slime Drop~
 @33561=~Baleful Teleport~
 //@33562=~Critical Sequencer~
+@33563=~Warrior Simulacrum~
+@33564=~Wall of Force~
 @33651=~Isaac's Greater Missile Storm~
 @33652=~Freeze Inanimates~
 @33653=~Greater Nightmare~
 @33654=~Spellshaping: Fireball~
 @33655=~Slaying Sequencer~
 @33656=~Mass Charm~
+@33657=~Mind Fog~
+@33658=~Empower Familiar~
 @33751=~Mass Cast~
 @33752=~Far Sequencer~
 @33753=~Protection from Time Stop~
@@ -14168,6 +14488,8 @@ An Enhance Attribute spell can vastly improve a single attribute of a creature. 
 @33858=~Sphere of Reversed Gravity~
 @33859=~False Life~
 @33860=~Enslave~
+@33861=~Polar Ray~
+@33862=~Clone Other~
 @33951=~Perfect Invisibility~
 @33952=~Mass Domination~
 @33953=~Attain Perfection~
@@ -14176,6 +14498,9 @@ An Enhance Attribute spell can vastly improve a single attribute of a creature. 
 @33956=~Enoll Eva's Duplication~
 @33957=~Executioner's Eyes~
 @33958=~Phantasmal Dragon~
+@33959=~Damage Turning~
+@33960=~Eclectic Recall~
+@33961=~Teleport Step~
 
 @34151=~Disruptive Surge
 (Wild Magic)
@@ -14330,6 +14655,17 @@ Area of Effect: All allies
 Saving Throw: None
 
 Specific Spell Immunity lets the caster channel the power of their spells to shield the party from those same spells. The caster may choose up to three spells <PRO_HESHE> has memorized. Those spells are then consumed (expending one of each spell), giving allies immunity to each of those spells for 8 hours. The spell affects all allied creatures in the current area, including party members and summoned creatures.~
+@34257=~Levitate
+(Alteration)
+
+Level: 1
+Range: Visual range of the caster
+Duration: 3 rounds + 1 round/2 levels
+Casting Time: 2
+Area of Effect: 1 creature
+Saving Throw: Neg
+
+This spell suspends a creature in midair. For the duration, the target is stuck in midair and cannot move unless it can fly. While levitating, it is almost impossible for the target to hit or be hit by other creatures with melee weapons. The target is also unaffected by ground-based spells such as Grease, Entangle, Web and Earthquake. If the target is an ally, there is no Saving Throw necessary; otherwise, the target may make a Save vs. Polymorph at -3 to avoid the effects.~
 @34351=~Bounce Spell
 (Abjuration)
 
@@ -14409,6 +14745,17 @@ Area of Effect: 12-ft. radius
 Saving Throw: None
 
 A Glyph of Spell Storing is a ward which stores a spell and releases it upon each hostile creature that enters the warded area. When this spell is cast, the caster stores a single 1st-level spell in the glyph, which is placed on a circular, 9-ft. radius area of the caster's choice. When a hostile creature passes within 9 feet of the glyph, it explodes, releasing a copy of the stored spell on each hostile creature within 12 feet.~
+@34358=~Familiar Spell
+(Conjuration)
+
+Level: 3
+Range: Familiar must be in the same area
+Duration: 8 hours
+Casting Time: 8
+Area of Effect: The caster's familiar
+Saving Throw: None
+
+Familiar Spell imbues the caster's familiar with a spell. The caster chooses one of their 1st-level spells, consuming one use of that spell. For the next 8 hours, each time their familiar hits a creature with an attack, it instantly casts a copy of the chosen spell on the target. The spell is cast at the level of the familiar's owner, not at the level of the familiar. The familiar must be owned by the caster, and it must be in the same area as the caster when Familiar Spell is cast (and not in the caster's inventory).~
 @34451=~Wall of Fire
 (Evocation)
 
@@ -14620,6 +14967,28 @@ Saving Throw: None
 
 Critical Sequencer lets the caster repeatedly cast a spell through critical hits. The caster is prompted to store a single 1st-level spell, and the caster's weapons are temporarily imbued with that spell. For the duration, whenever the caster gets a critical hit on a creature, <PRO_HESHE> instantly casts a copy of the stored spell on that creature. This will not happen if the critical hit is averted.~
 */
+@34563=~Warrior Simulacrum
+(Illusion/Phantasm)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+This spell is similar to Simulacrum in that it creates an illusionary copy of the caster which is under the caster's control. The simulacrum cannot cast spells or use special abilities of items or innate abilities. It is 60% the level of the caster as has 60% of the caster's Hit Points. This spell is most useful for fighter/mages and other spellcasters with decent fighting skills.~
+@34564=~Wall of Force
+(Abjuration)
+
+Level: 5
+Range: Visual range of the caster
+Duration: 5 rounds
+Casting Time: 7
+Area of Effect: 8 ft. long, 2 ft. wide wall
+Saving Throw: None
+
+This spell creates a wall of magical force, which stays for 5 rounds. Creatures cannot pass through the wall, though they can still fly over it, teleport past it, or float past it while ethereal. The wall cannot be dispelled.~
 @34651=~Isaac's Greater Missile Storm
 (Evocation)
 
@@ -14686,6 +15055,28 @@ Area of Effect: 15-ft. radius
 Saving Throw: Neg.
 
 This spell charms all hostile humanoids and giant humanoids in the area of effect who fail a Save vs. Spell. The charmed creatures will serve the caster for the duration, though the effect could expire early if the creatures are attacked by an ally. Charmed creatures will be hostile after the effect expires.~
+@34657=~Mind Fog
+(Enchantment)
+
+Level: 6
+Range: Visual range of the caster
+Duration: 1 turn
+Casting Time: 6
+Area of Effect: 15-ft. radius
+Saving Throw: None
+
+This spell creates a special, pinkish fog in the area of effect. All creatures within the mind fog have their willpower and concentration weakened, gaining a -5 penalty to saving throws against enchantment and illusion spells, as well as 30% spell failure. There is no Saving Throw. Undead, constructs, oozes, and mind flayers are unaffected.~
+@34658=~Empower Familiar
+(Conjuration)
+
+Level: 6
+Range: Familiar must be in the same area
+Duration: 2 hours
+Casting Time: 6
+Area of Effect: The caster's familiar
+Saving Throw: None
+
+This spell greatly strengthens the caster's familiar. For the duration, the familiar gains +1 to hit and damage per 2 caster levels, and an additional attack per round. In addition, the familiar's physical damage resistances are set to 75% (replacing their normal values). The familiar must be owned by the caster, and it must be in the same area as the caster (and not in the caster's inventory).~
 @34751=~Mass Cast
 (Alteration)
 
@@ -14783,12 +15174,12 @@ This spell creates a large, immobile sphere of illusionary magic. Any creature t
 
 Level: 8
 Range: Visual range of the caster
-Duration: 8 hours
+Duration: 1 turn
 Casting Time: 4
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-Otto's Irresistible Spin forces multiple creatures to spin in place against their will for a full 8 hours. Affected creatures will do nothing other than repeatedly spin in place, even if they see enemies. The spell is irresistible - there is no Saving Throw, and Magic Resistance will not block the spell. If an affected creature takes damage, the effects of the spell immediately end for that creature.~
+Otto's Irresistible Spin forces multiple creatures to spin in place against their will for 1 turn. Affected creatures will do nothing other than repeatedly spin in place, even if they see enemies. The spell is irresistible - there is no Saving Throw, and Magic Resistance will not block the spell. If an affected creature takes damage, the effects of the spell immediately end for that creature.~
 @34854=~Recurring Contingency
 (All)
 
@@ -14843,7 +15234,7 @@ Casting Time: 8
 Area of Effect: 18-ft. radius
 Saving Throw: None
 
-This spell creates a large spherical area that reverses the gravity of creatures inside it. Any creature that enters the area of effect will start falling up. While in the air, the creature cannot move unless it can fly or levitate, and it is unaffected by ground-based spells such as Grease, Entangle, Web and Earthquake.~
+This spell creates a large spherical area that reverses the gravity of creatures inside it. Any creature that enters the area of effect will start falling up. While in the air, the creature cannot move unless it can fly, and it is unaffected by ground-based spells such as Grease, Entangle, Web and Earthquake.~
 @34859=~False Life
 (Necromancy)
 
@@ -14866,6 +15257,28 @@ Area of Effect: 1 creature
 Saving Throw: Neg.
 
 An especially potent mind-control spell, Enslave will make the target a permanent thrall of the caster. If the target fails its Save vs. Spell at -4, it is dominated by the caster until the effect is dispelled. The enslaved creature will not take any actions unless ordered by the caster, and it will not turn hostile if hurt by a party member. Undead and constructs are unaffected by Enslave.~
+@34861=~Polar Ray
+(Evocation)
+
+Level: 8
+Range: 30 ft.
+Duration: 1 round
+Casting Time: 5
+Area of Effect: 2-ft. by 30-ft. jet
+Saving Throw: None
+
+Upon casting Polar Ray, the caster emits a powerful beam of frost at the target. The target and all creatures between the caster and the target take 12d6 cold damage. The polar ray deals the same damage again half a round later to the target and anyone who is still in the ray's path.~
+@34862=~Clone Other
+(Illusion/Phantasm)
+
+Level: 8
+Range: Visual range of the caster
+Duration: 16 rounds
+Casting Time: 9
+Area of Effect: 1 creature
+Saving Throw: None
+
+An offensive version of Simulacrum, Clone Other creates a simulacrum of another creature. The simulacrum is under the caster's control. The caster cannot clone <PRO_HIMHER>self, and the target's level must be less than or equal to the caster's. The simulacrum is at 60% of the target's level and has 60% of their Hit Points.~
 @34951=~Perfect Invisibility
 (Illusion/Phantasm)
 
@@ -14903,13 +15316,13 @@ This spell temporarily makes the caster perfect in every way. For 1 turn, the ca
 (Necromancy)
 
 Level: 9
-Range: 0
+Range: Visual range of the caster
 Duration: 6 hours
 Casting Time: 4
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-Perhaps the most powerful life-draining spell, Vampiric Feast allows the caster to absorb Hit Points from many victims at once. Every creature in a 15-foot radius takes 30 damage with no Saving Throw. For every creature dealt damage this way, the caster gains 30 temporary hit points. Hit points gained this way are cumulative; the caster can gain a massive amount of health by draining many creatures with Vampiric Feast. The bonus hit points last for six hours.~
+Perhaps the most powerful life-draining spell, Vampiric Feast allows the caster to absorb Hit Points from many victims at once. Every creature in the area of effect takes 30 damage with no Saving Throw. For every creature dealt damage this way, the caster gains 30 temporary hit points. Hit points gained this way are cumulative; the caster can gain a massive amount of health by draining many creatures with Vampiric Feast. The bonus hit points last for six hours.~
 @34955=~Mass Sequencer
 (Invocation)
 
@@ -14965,6 +15378,41 @@ Area of Effect: Special
 Saving Throw: None
 
 This spell creates an illusory adult red dragon, which will serve the caster for the duration. The illusory dragon has only 20% the hit points of a real dragon of the same age, and its attacks deal nonlethal damage, but its stats are otherwise the same as those of a real dragon, and it has the same abilities, including an fire breath and an aura of fear.~
+@34959=~Damage Turning
+(Abjuration) 
+
+Level: 9
+Range: 0
+Duration: 3 rounds
+Casting Time: 1
+Area of Effect: The caster
+Saving Throw: None 
+
+Damage Turning reflects damage from the caster back to the attacker. While Damage Turning is active, any damage that would be dealt to the caster from an attack, spell or ability is prevented. The source is dealt the full damage they would have dealt the caster. Other effects of attacks, spells, and abilities are not reflected; just the damage.~
+@34960=~Eclectic Recall
+(All)
+
+Level: 9
+Range: 0
+Duration: Instant
+Casting Time: 9
+Area of Effect: The caster
+Saving Throw: None
+
+Eclectic Recall restores spells the caster has cast previously, so that the spells may be cast again. Up to eight spells are restored, no more than one per school of magic. Eclectic Recall prioritizes restoring higher-level spells over lower-level spells.
+
+All the spells restored must be 6th-level or lower. Eclectic Recall can restore 7th-level spells once the caster reaches level 24, and 8th-level spells once the caster reaches level 30.~
+@34961=~Teleport Step
+(Alteration)
+
+Level: 9
+Range: Touch
+Duration: 4 hours
+Casting Time: 3
+Area of Effect: 1 creature
+Saving Throw: None
+
+Among the greatest teleportation spells, Teleport Step lets the recipient teleport anywhere in the area any number of times. The recipient must simply start moving toward a destination, and they will instantly find themself at that destination.~
 
 @35327=~I am the channel through which your wish shall be fulfilled. You may ask for a wish I can repeat, or you may ask for a wish that will happen once only. Decide.~
 @35328=~Choose wisely then, as I can perform each of these tasks once and once only.~
