@@ -35256,11 +35256,18 @@ COPY_EXISTING ~ar6100.are~ ~override~ //Road ambush map
 
 PRINT @212
 
+COPY_EXISTING ~oh2000.are~ ~override~
+	LPF ALTER_AREA_ACTOR INT_VAR expiry=0 STR_VAR actor_name=~Bird~ END
+	LPF ALTER_AREA_ACTOR INT_VAR expiry=0 STR_VAR actor_name=~Eagle~ END
+	IF_EXISTS
+
 COPY_EXISTING ~oh3000.are~ ~override~
 	LPF fj_are_structure INT_VAR fj_loc_x=3918 fj_loc_y=1471 STR_VAR fj_structure_type=~actor~ fj_name=~Priest of Shar~ fj_cre_resref=~RSDCL01~ END
+	IF_EXISTS
 
 COPY_EXISTING ~oh3100.are~ ~override~
 	LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~Difficulty Spawn~ fj_reg_script=~MEOH3100~ END
+	IF_EXISTS
 
 SILENT
 /*
@@ -35326,7 +35333,7 @@ EXTEND_TOP ~mebirdpu.bcs~ ~.../script.baf~ EVAL
 */
 END
 
-COPY_EXISTING_REGEXP ~ar[0-9].*\.are~ ~override~ ~bd.*\.are~ ~override~ ~oh.*\.are~ ~override~
+COPY_EXISTING_REGEXP ~ar[0-9].*\.are~ ~override~ ~bd.*\.are~ ~override~
 	me_bird_count=0
 	READ_SHORT 0x58 numactors
 	me_off=0x11c

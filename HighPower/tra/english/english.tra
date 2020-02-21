@@ -14191,7 +14191,7 @@ Casting Time: 2
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-This necromantic curse prevents the target from healing. Once cast, the target must Save vs. Spell at -3 or be cursed for 1 day. While cursed, the target cannot regain Hit Points via spells, abilities, items, regeneration, or resting. The curse can be removed early using a Remove Curse spell.~
+This necromantic curse prevents the target from healing. Once cast, the target must save vs. Spell at -8 or be cursed for 1 day. While cursed, the target cannot regain Hit Points via spells, abilities, items, regeneration, or resting. The curse can be removed early using a Remove Curse spell.~
 @32254=~Critical Gift
 (Alteration)
 
@@ -14225,9 +14225,9 @@ Range: Visual range of the caster
 Duration: Instant
 Casting Time: 3
 Area of Effect: 1 creature
-Saving Throw: Special
+Saving Throw: None
 
-Shortening halves the duration of certain effects on the target creature. If the target is an enemy, then all non-harmful effects on the target will have their duration halved unless the target makes a Save vs. Spell at -4. If the target is not an enemy, then all harmful effects on the target will have their duration halved. A "harmful effect" is any effect from a spell or ability that turns a non-hostile creature hostile. The duration is halved from the total duration of the effect, not the remaining duration. An effect can only be shortened once.~
+Shortening halves the duration of certain effects on the target creature. If the target is an enemy, then all non-harmful effects on the target will have their duration halved. If the target is not an enemy, then all harmful effects on the target will have their duration halved. A "harmful effect" is any effect from a spell or ability that turns a non-hostile creature hostile. The duration is halved from the total duration of the effect, not the remaining duration. An effect can only be shortened once.~
 @32353=~Fire Curse
 (Alteration)
 
@@ -14321,9 +14321,9 @@ Range: Visual range of the caster
 Duration: Instant
 Casting Time: 3
 Area of Effect: 1 creature
-Saving Throw: Special
+Saving Throw: None
 
-Prolongment doubles the duration of certain effects on the target creature. If the target is an enemy, then all harmful effects on the target will have their duration doubled unless the target makes a Save vs. Spell at -4. If the target is not an enemy, then all non-harmful effects on the target will have their duration doubled. A "harmful effect" is any effect from a spell or ability that turns a non-hostile creature hostile. The duration is doubled from the total duration of the effect, not the remaining duration. An effect can only be prolonged once.~
+Prolongment doubles the duration of certain effects on the target creature. If the target is an enemy, then all harmful effects on the target will have their duration doubled. If the target is not an enemy, then all non-harmful effects on the target will have their duration doubled. A "harmful effect" is any effect from a spell or ability that turns a non-hostile creature hostile. The duration is doubled from the total duration of the effect, not the remaining duration. An effect can only be prolonged once.~
 @32552=~Wall of Force
 (Abjuration)
 
@@ -14512,7 +14512,7 @@ Casting Time: 1
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-In using this spell, the Wild Mage deliberately employs wild magic to disrupt another creature's spell. The Wild Mage chooses a creature, which should be a spellcaster (arcane or divine). That creature must make a Save vs. Polymorph at -5. If it fails the save, the next spell it casts within 5 rounds will trigger a wild surge. This surge will often cause the spell to fail, though it could have other, unpredictable effects.~
+In using this spell, the Wild Mage deliberately employs wild magic to disrupt another creature's spell. The Wild Mage chooses a creature, which should be a spellcaster (arcane or divine). That creature must make a Save vs. Polymorph at -8. If it fails the save, the next spell it casts within 5 rounds will trigger a wild surge. This surge will often cause the spell to fail, though it could have other, unpredictable effects.~
 @34152=~Inertia
 (Alteration)
 
@@ -14523,7 +14523,7 @@ Casting Time: 1
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-This spell drastically increases the inertia of the target, locking its movement in the direction it is currently moving. The effect of this spell depends on whether or not the target was moving when it was hit by the spell. If it was moving, it will continue hurtling nonstop in that direction against its will for 4 rounds. If it was standing in place, it will be immobilized for 4 rounds. A successful Saving Throw vs. Polymorph at -2 negates the effects of this spell.~
+This spell drastically increases the inertia of the target, locking its movement in the direction it is currently moving. The effect of this spell depends on whether or not the target was moving when it was hit by the spell. If it was moving, it will continue hurtling nonstop in that direction against its will for 4 rounds. If it was standing in place, it will be immobilized for 4 rounds. A successful Saving Throw vs. Polymorph at -6 negates the effects of this spell.~
 @34153=~Detect Shapeshifters
 (Divination)
 
@@ -14622,7 +14622,7 @@ Casting Time: 2
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-The target of this spell will instantly become dangerously drunk, far more than is pleasurable. The target gains four intoxication points for every Constitution point they have less than 25. For example, if the target has 10 Constitution, they will gain 60 intoxication points. Like normal drunkenness, this magical intoxication will wear off over time. A successful Save vs. Spell at -2 negates the effect. Intoxicate has no effect on undead or constructs. Multiple uses of this spell are cumulative.
+The target of this spell will instantly become dangerously drunk, far more than is pleasurable. The target gains four intoxication points for every Constitution point they have less than 25. For example, if the target has 10 Constitution, they will gain 60 intoxication points. Like normal drunkenness, this magical intoxication will wear off over time. A successful Save vs. Spell at -5 negates the effect. Intoxicate has no effect on undead or constructs. Multiple uses of this spell are cumulative.
 
 Note: High levels of intoxication give luck penalties. The size of the penalty depends on the number of intoxication points:
 
@@ -14643,7 +14643,7 @@ Casting Time: 2
 Area of Effect: 1 creature
 Saving Throw: Neg.
 
-This necromantic curse prevents the target from healing. Once cast, the target must Save vs. Spell at -3 or be cursed for 1 day. While cursed, the target cannot regain Hit Points via spells, abilities, items, regeneration, or resting. The curse can be removed early using a Remove Curse spell.~
+This necromantic curse prevents the target from healing. Once cast, the target must save vs. Spell at -8 or be cursed for 1 day. While cursed, the target cannot regain Hit Points via spells, abilities, items, regeneration, or resting. The curse can be removed early using a Remove Curse spell.~
 @34256=~Specific Spell Immunity
 (Abjuration)
 
@@ -14663,7 +14663,7 @@ Range: Visual range of the caster
 Duration: 3 rounds + 1 round/2 levels
 Casting Time: 2
 Area of Effect: 1 creature
-Saving Throw: Neg
+Saving Throw: Neg.
 
 This spell suspends a creature in midair. For the duration, the target is stuck in midair and cannot move unless it can fly. While levitating, it is almost impossible for the target to hit or be hit by other creatures with melee weapons. The target is also unaffected by ground-based spells such as Grease, Entangle, Web and Earthquake. If the target is an ally, there is no Saving Throw necessary; otherwise, the target may make a Save vs. Polymorph at -3 to avoid the effects.~
 @34351=~Bounce Spell

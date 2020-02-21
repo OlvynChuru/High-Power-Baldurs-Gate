@@ -2358,6 +2358,14 @@ function MECURSCN(effectData, creatureData)
 			local the_parameter2 = EEex_ReadDword(eData + 0x20)
 			local the_resource = EEex_ReadLString(eData + 0x30, 8)
 			EEex_ApplyEffectToActor(targetID, {
+["opcode"] = 321,
+["target"] = 2,
+["timing"] = 1,
+["resource"] = "MECURSCN",
+["source_target"] = targetID,
+["source_id"] = sourceID
+})
+			EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 232,
 ["target"] = 2,
 ["parameter1"] = the_parameter1,
@@ -2365,9 +2373,11 @@ function MECURSCN(effectData, creatureData)
 ["timing"] = 0,
 ["duration"] = duration,
 ["resource"] = the_resource,
+["parent_resource"] = "MECURSCN",
 ["source_target"] = targetID,
-["source_id"] = targetID
+["source_id"] = sourceID
 })
+
 		end
 	end)
 	EEex_ApplyEffectToActor(sourceID, {
