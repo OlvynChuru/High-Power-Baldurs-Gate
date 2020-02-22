@@ -7231,8 +7231,10 @@ COPY_EXISTING ~clastext.2da~ ~override~
 
 	LPF GET_2DA_ROW INT_VAR numcolumns=9 STR_VAR match=~OHTEMPUS~ RET therow=matched END
 	SPRINT me_class_abilities @2150
-	READ_2DA_ENTRY therow 4 9 me_class_strref
-	LPF PATCH_APPEND_TO_STRING INT_VAR strref=me_class_strref STR_VAR newtext= EVAL ~%me_class_abilities%~ END
+	PATCH_IF therow > 0 BEGIN
+		READ_2DA_ENTRY therow 4 9 me_class_strref
+		LPF PATCH_APPEND_TO_STRING INT_VAR strref=me_class_strref STR_VAR newtext= EVAL ~%me_class_abilities%~ END
+	END
 
 	LPF GET_2DA_ROW INT_VAR numcolumns=9 STR_VAR match=~DRUID~ RET therow=matched END
 	SPRINT me_class_abilities @2021
