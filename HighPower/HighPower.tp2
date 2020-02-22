@@ -4275,7 +4275,7 @@ COPY_EXISTING ~mepr351.spl~ ~override/%mepr351%.spl~
 		LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~ME_Water_Weird_Spawn~ fj_reg_script=~MEWATWSP~ END
 
 	LAF ADD_AREA_ACTORS_2DA STR_VAR variablename=~ME_Add_Water_Weirds~ the2da=~mewatee1~ END
-	COPY_EXISTING ~oh2000.are~ ~override~ ~oh2010.are~ ~override~
+	COPY_EXISTING ~oh2010.are~ ~override~
 		LPF fj_are_structure STR_VAR fj_structure_type=~region~ fj_name=~ME_Water_Weird_Spawn~ fj_reg_script=~MEWATWSP~ END
 
 	ACTION_IF GAME_INCLUDES ~sod~ BEGIN
@@ -6337,7 +6337,7 @@ COPY_EXISTING_REGEXP ~.*\.bcs~ ~override~
 
 COPY_EXISTING_REGEXP ~.*\.are~ ~override~
 	READ_SHORT 0x48 theareatype
-	PATCH_IF ((theareatype BAND 0b00000001) = 0b00000001) BEGIN
+	PATCH_IF ((theareatype BAND 0b00000001) = 0b00000001) AND !(~%SOURCE_RES%~ STRING_EQUAL_CASE ~OH2000~) BEGIN
 		LPF fj_are_structure INT_VAR fj_loc_x=0 fj_loc_y=0 STR_VAR fj_structure_type=~actor~ fj_name=~ME_Fix_Wing_Buffet~ fj_cre_resref=~MEFIXWBU~ END
 	END
 	BUT_ONLY_IF_IT_CHANGES
@@ -35255,12 +35255,12 @@ COPY_EXISTING ~ar6100.are~ ~override~ //Road ambush map
 	WRITE_ASCII areascript ~MEAR6100~ #8
 
 PRINT @212
-
+/*
 COPY_EXISTING ~oh2000.are~ ~override~
 	LPF ALTER_AREA_ACTOR INT_VAR expiry=0 STR_VAR actor_name=~Bird~ END
 	LPF ALTER_AREA_ACTOR INT_VAR expiry=0 STR_VAR actor_name=~Eagle~ END
 	IF_EXISTS
-
+*/
 COPY_EXISTING ~oh3000.are~ ~override~
 	LPF fj_are_structure INT_VAR fj_loc_x=3918 fj_loc_y=1471 STR_VAR fj_structure_type=~actor~ fj_name=~Priest of Shar~ fj_cre_resref=~RSDCL01~ END
 	IF_EXISTS
