@@ -22,11 +22,11 @@ CR
 CR
 CO
 TR
-16399 1 0 0 0 "GLOBALMinotaur_Fight" "" OB
+16399 1 0 0 0 "AR5201ME_Minotaur_Fight" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "AR5201Minotaur_Spawn" "" OB
+16399 0 0 0 0 "AR5201ME_Minotaur_Spawn" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -43,7 +43,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"AR5201Minotaur_Spawn" "" AC
+1 0 0 0 0"AR5201ME_Minotaur_Spawn" "" AC
 AC
 7OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
@@ -114,11 +114,11 @@ CR
 CR
 CO
 TR
-16399 1 0 0 0 "GLOBALMinotaur_Fight" "" OB
+16399 1 0 0 0 "AR5201ME_Minotaur_Fight" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "AR5201Minotaur_Spawn" "" OB
+16399 0 0 0 0 "AR5201ME_Minotaur_Spawn" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -135,7 +135,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"AR5201Minotaur_Spawn" "" AC
+1 0 0 0 0"AR5201ME_Minotaur_Spawn" "" AC
 AC
 7OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB

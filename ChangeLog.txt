@@ -1,3 +1,46 @@
+v2.4.0:
+- New component: Change the summoning limit.
+- All spellcasters gain access to spells much more quickly.
+- The mod includes the latest spells from OlvynSpells.
+- Various enemy spellcasters have new sets of spells.
+- The starting powers of various kits have been revised.
+- Racial Enemy descriptions have been updated to give some info on the powers of the creatures.
+- The doppelganger encounters in the dungeon beneath Candlekeep have been heavily revised.
+- Many new kits by @semiticgod , including druid multiclasses, now gain their own starting powers.
+- The mod now gives new powers to Recorder, a custom NPC by @Skitia, like it does to other custom NPCs.
+- The Charm Animal ability of rangers now turns animals into permanent allies which can follow the party across areas.
+- Single-classed thieves can now get up to two proficiency points in a weapon and will get bonus attacks per round from proficiency and at levels 7 and 13.
+- Rangers, Paladins, Fighter/Thieves, Fighter/Mages, Fighter/Clerics and Fighter/Druids can now get up to three proficiency points in a weapon. Fighter/Mage/Thieves, Fighter/Mage/Clerics, and Cleric/Rangers can still only get up to two.
+- Single-classed Rangers and Paladins no longer get enormous caster level penalties like they do in the base game.
+- Portrait icons for TOB effects like Improved Alacrity now have names.
+- Picking locks, disarming traps, and learning spells now give more experience, though not as much as in BG2.
+- Bless, Aid, and Chant have been weakened (I made them too strong before).
+- Familiars can now deliver the PC's touch spells. Have the PC cast a spell on a creature while their familiar is right next to that creature.
+- Monster Summoning and Animal Summoning spells have been revised again to be more useful.
+- Chain Lightning, Meteor Swarm and Energy Drain have been improved.
+- Free Action effects no longer prevent haste or increased movement speed.
+- Mage robes have been improved.
+- The PC once again starts the game with the Training Staff +1.
+- The Duchal Palace now takes into account the possibility of you sneaking in there before Chapter 7. Characters with Chapter 7-related dialogue won't appear until Chapter 7.
+- Flesh golems have new abilities.
+- Winter wolves and Kaldran have been revised to be far less annoying.
+- Fixed a bug where tasloi and basilisk gaze prevented saving and tended to crash the game.
+- Fixed a bug where charm effects lasted permanently when used on the party.
+- Fixed a bug where revenants were affected by their own Hopelessness ability.
+- The "amazon" assassins no longer push you all the way across the map whenever you hit them.
+- Sirines won't use their innate Blade Barrier while non-hostile.
+- Tasloi berserk gaze lasts 3 rounds rather than 5 rounds.
+- The berserk gaze of Obe's illusion tasloi no longer causes allies to attack each other.
+- Magical Stone now does actually prevent Obe's illusion skeletons from turning into skulls.
+- Kobold Fire Detonaters should appear less often in wilderness areas.
+- Wyverns can no longer be knocked back through walls while indoors.
+- Worgs now use camouflage as they were supposed to.
+- Birds should be less glitchy when the game is reloaded.
+- What was previously the Cloak of Cave Bear Control is now the Cloak of Bear Control, capable of charming any bear.
+- Goodberries now restore 5 HP each.
+- Detect Shapeshifters no longer identifies party members as werewolves.
+
+
 v2.3.0:
 - I fixed the gamebreaking bug that had made it impossible to rest or leave Candlekeep if Siege of Dragonspear wasn't installed.
 - I added all the newer spells from my spell mod, as well as two new spells: Levitate, and Teleport Step.

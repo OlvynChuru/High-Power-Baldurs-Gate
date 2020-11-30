@@ -54,360 +54,32 @@ CR
 CR
 CO
 TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 12 0 0 0 ""OB
+16436 0 0 0 0 "LOCALSPrepare" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
+16448 0 0 0 0 "ME_Rest" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
 RS
 RE
 100AC
-115OB
+30OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
+0 0 0 0 0"LOCALSPrepare" "" AC
 AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 29 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
+96OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 30 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 31 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 32 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 33 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 34 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 35 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 36 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
-RE
-RS
-CR
-CR
-CO
-TR
-16412 0 0 0 0 "" "" OB
-0 0 0 0 0 0 0 1 37 0 0 0 ""OB
-TR
-TR
-16454 99 0 16 0 "" "" OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-TR
-TR
-16449 0 1 0 0 "ME_Moosebolt" "LOCALS" OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-TR
-CO
-RS
-RE
-100AC
-115OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-20 0 0 0 0"LOCALSME_Moosebolt" "" AC
-AC
-113OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 1 18 0 0 0 ""OB
-OB
-0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-0 0 0 0 0"MEMS126" "" AC
+0 0 0 0 0"" "" AC
 RE
 RS
 CR
@@ -418,20 +90,28 @@ TR
 0 0 0 0 0 0 0 1 12 0 0 0 ""OB
 TR
 TR
-16449 0 1 0 0 "ME_Woodland" "LOCALS" OB
+16399 0 0 0 0 "LOCALSPrepare" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
 RS
 RE
 100AC
+30OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1 0 0 0 0"LOCALSPrepare" "" AC
+AC
 115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-12 0 0 0 0"LOCALSME_Woodland" "" AC
+2400 0 0 0 0"LOCALSME_Rest" "" AC
 AC
 181OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
@@ -439,7 +119,135 @@ OB
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1410 0 0 0 0"" "" AC
+0 0 0 0 0"MEWI566" "" AC
+AC
+181OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+1613 0 0 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16395 255 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16412 0 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 12 0 0 0 ""OB
+TR
+TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "ME_Cast" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16452 0 1 76 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "ME_Expose" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16656 0 0 256 2 "ME_Match({['pconly'] = true, ['stat'] = {{16,50,4},{18,76,2},{177,1,2}}, })" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+6 0 0 0 0"LOCALSME_Cast" "" AC
+AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+30 0 0 0 0"LOCALSME_Expose" "" AC
+AC
+113OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 116 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"MECO125" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16395 255 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16412 0 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 12 0 0 0 ""OB
+TR
+TR
+16521 2 0 0 0 "" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "ME_Cast" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16452 0 1 76 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16449 0 1 0 0 "ME_Greater_Living_Lightning" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16656 0 0 256 2 "ME_Match({['pconly'] = true, ['stat'] = {{16,76,2},{18,76,2}}, })" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+6 0 0 0 0"LOCALSME_Cast" "" AC
+AC
+115OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+2400 0 0 0 0"LOCALSME_Greater_Living_Lightning" "" AC
+AC
+113OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 0 0 0 0"MEPR763" "" AC
 RE
 RS
 CR

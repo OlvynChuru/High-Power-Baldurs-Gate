@@ -79,11 +79,6 @@ One of the main features of assassins is the fact that their backstab multiplier
 This component does two things: it changes the progressive Magic Resistance gain to +5% per level (so it becomes noticable even in BG1) and makes the on-hit spell failure effect offer a Save vs. Breath at -10.
 
 
-- Improve Dragon Disciples
-
-This component lets a Dragon Disciple gain additional uses of the breath weapon at levels 6 and 9. I don't like how they normally only get one use of it.
-
-
 - Improve Monks
 
 Monks aren't great in BG1 normally. Sure, they make up for it by being awesome in BG2, but I don't care about BG2 in this mod. This component mainly gives monks more potential at high level. It changes the monk XP table so that a monk can reach level 9 in BG1, and it gives each monk kit a great ability at level 9. Unkitted Monks get Quivering Palm, Sun Soul Monks get Sun Soulbeam, and Dark Moon Monks get Darkness 15' Radius (it's a different file from the one in Siege of Dragonspear). Dark Moon Monks also now have a x2 backstab multiplier (which doesn't improve) and get Mirror Image at level 8 instead of level 11.
@@ -97,6 +92,11 @@ The main advantage of a Kensai is their bonus to hit and damage. However, the fa
 - Put a Bag of Holding in the game
 
 This component makes a Bag of Holding obtainable in non-SOD Baldur's Gate 1. The component lets you choose whether to make it easily accessible right at the beginning of the game or to delay it until you can get to Baldur's Gate. It also lets you choose whether the bag can hold a medium number of items or a virtually unlimited number.
+
+
+- Change the summoning limit
+
+This component lets you change the number of creatures the party can summon at once. You may either make it unlimited or set it to a value of your choice.
 
 
 - Raise the experience cap (only recommended for solo players)
@@ -129,11 +129,6 @@ This component moves Tiax to the area north of Nashkel, along the road.
 - Allow bard songs to stack
 
 Before the Enhanced Editions prevented bards songs from stacking, I had done multi-bard playthroughs. From my experience, stacking bard songs was powerful but not broken. This component allows songs from multiple bards of the same kit to stack.
-
-
-- Revise Wisdom bonus spell table
-
-Normally, as your Wisdom goes up you eventually stop receiving bonus spells for lower spell levels. This isn't a problem in the base game since your Wisdom score can only be so high. However, in this mod you can potentially increase your Wisdom up to 25 using tomes, so I wanted to give you a reward for doing so. This component makes it so that you will keep getting bonus divine spells as your Wisdom score reaches epic heights. It overwrites the normal Wisdom bonus spell table.
 
 
 - Allow Arkanis, Deder, Osprey, Mordaine, and Canderous to be taken outside of Candlekeep

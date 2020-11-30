@@ -6,7 +6,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -34,20 +34,108 @@ TR
 0 0 0 0 0 0 0 1 12 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16510 0 0 0 0 "AR1804" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 0 0 0 "ME_Enemy_Linked_Portals_01" "AR1804" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 0 0 0 "MYAREAME_PC_Trigger_01" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16611 929 0 1133 15 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16395 255 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16412 0 1 0 0 "" "" OB
+0 0 0 0 0 0 0 1 12 0 0 0 ""OB
+TR
+TR
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+23OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 929 1133 0 0"" "" AC
+RE
+RS
+CR
+CR
+CO
+TR
+16510 0 0 0 0 "AR1804" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16449 0 0 0 0 "ME_Enemy_Linked_Portals_02" "AR1804" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16399 1 0 0 0 "MYAREAME_PC_Trigger_02" "" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+TR
+16611 929 0 1133 12 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16395 255 0 0 0 "" "" OB
+0 0 0 0 0 0 0 1 0 0 0 0 ""OB
+TR
+TR
+16412 0 1 0 0 "" "" OB
+0 0 0 0 0 0 0 1 12 0 0 0 ""OB
+TR
+TR
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+TR
+CO
+RS
+RE
+100AC
+23OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+OB
+0 0 0 0 0 0 0 0 0 0 0 0 ""OB
+0 929 1133 0 0"" "" AC
 RE
 RS
 CR
@@ -62,7 +150,7 @@ TR
 0 0 0 0 0 0 0 1 12 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -90,7 +178,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -101,13 +189,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -118,7 +206,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -147,7 +235,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSIron_Halfling_Fight" "" AC
+1 0 0 0 0"GLOBALIron_Halfling_Fight" "" AC
 RE
 RS
 CR
@@ -158,7 +246,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -181,13 +269,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -198,7 +286,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -215,7 +303,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSHareishan_Fight" "" AC
+1 0 0 0 0"GLOBALHareishan_Fight" "" AC
 RE
 RS
 CR
@@ -226,7 +314,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -237,13 +325,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -254,7 +342,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -287,7 +375,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSDrasus_Fight" "" AC
+1 0 0 0 0"GLOBALDrasus_Fight" "" AC
 RE
 RS
 CR
@@ -298,7 +386,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -325,13 +413,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -342,7 +430,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -359,7 +447,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSLogarin_Fight" "" AC
+1 0 0 0 0"GLOBALLogarin_Fight" "" AC
 RE
 RS
 CR
@@ -370,7 +458,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -381,13 +469,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -398,7 +486,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -415,7 +503,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSTerulli_Fight" "" AC
+1 0 0 0 0"GLOBALTerulli_Fight" "" AC
 RE
 RS
 CR
@@ -426,7 +514,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -437,13 +525,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
@@ -454,7 +542,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 1 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 0 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -471,7 +559,7 @@ OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSNolahar_Fight" "" AC
+1 0 0 0 0"GLOBALNolahar_Fight" "" AC
 RE
 RS
 CR
@@ -482,7 +570,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16399 0 0 0 0 "LOCALSGuardfollow" "" OB
+16449 0 1 0 0 "ME_Attacker_Pursuit" "LOCALS" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
@@ -493,13 +581,13 @@ CO
 RS
 RE
 100AC
-30OB
+115OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
-1 0 0 0 0"LOCALSGuardfollow" "" AC
+2400 0 0 0 0"LOCALSME_Attacker_Pursuit" "" AC
 RE
 RS
 CR
