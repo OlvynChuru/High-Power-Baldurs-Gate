@@ -102,7 +102,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16654 0 0 0 0 "ME_Match_AOE_Self(3,512,{['pconly'] = true, ['opcode'] = 12})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE_Self(3,512,{['pconly'] = true, ['opcode'] = 12})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO

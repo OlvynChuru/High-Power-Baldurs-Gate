@@ -454,7 +454,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,256,{['pconly'] = true, ['general'] = {{4,false}}, ['stat'] = {{18,76,2}}, ['spell'] = 'SPWI412'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['general'] = {{4,false}}, ['stat'] = {{18,76,2}}, ['spell'] = 'SPWI412'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -722,7 +722,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 128, ['spell'] = 'SPWI508'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 128, ['spell'] = 'SPWI508'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -786,7 +786,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 128, ['spell'] = 'SPWI508'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 128, ['spell'] = 'SPWI508'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1478,7 +1478,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1550,7 +1550,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1622,7 +1622,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1694,7 +1694,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1766,7 +1766,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1838,7 +1838,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(2,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1910,7 +1910,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['state'] = {0x8010202D,false}, ['opcode'] = 39, ['spell'] = 'SPWI213'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -1982,7 +1982,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{17,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI614'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -2054,7 +2054,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 2048 18 "ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(1,256,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPWI810'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO

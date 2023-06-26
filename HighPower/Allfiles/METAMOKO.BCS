@@ -322,7 +322,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,512,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR722'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,512,{['pconly'] = true, ['stat'] = {{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR722'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -386,7 +386,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match({['pconly'] = true, ['stat'] = {{14,76,2},{22,76,2}}, ['state'] = {0x28,false}, ['opcode'] = 12, ['spell'] = 'SPPR728'})" "" OB
+16654 0 0 0 0 "return ME_Match({['pconly'] = true, ['stat'] = {{14,76,2},{22,76,2}}, ['state'] = {0x28,false}, ['opcode'] = 12, ['spell'] = 'SPPR728'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -450,7 +450,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,128,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR503'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,128,{['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR503'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -582,7 +582,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match({['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR503'})" "" OB
+16654 0 0 0 0 "return ME_Match({['pconly'] = true, ['stat'] = {{14,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR503'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -646,7 +646,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{16,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR304'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['pconly'] = true, ['stat'] = {{16,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR304'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -702,7 +702,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(3,256,{['stat'] = {{16,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR304'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(3,256,{['stat'] = {{16,76,2},{18,76,2}}, ['opcode'] = 12, ['spell'] = 'SPPR304'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO

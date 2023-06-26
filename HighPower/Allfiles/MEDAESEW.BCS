@@ -118,7 +118,7 @@ TR
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(4,256,{['ea'] = {200,true}, ['state'] = {0x8000, false}, ['spell'] = 'SPWI305'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(4,256,{['ea'] = {200,true}, ['state'] = {0x8000, false}, ['spell'] = 'SPWI305'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO
@@ -946,7 +946,7 @@ TR
 0 0 0 0 0 0 0 1 0 0 0 0 ""OB
 TR
 TR
-16656 0 0 256 2 "ME_Match_AOE(4,256,{['ea'] = {200,true}, ['spell'] = 'MEWI957'})" "" OB
+16654 0 0 0 0 "return ME_Match_AOE(4,256,{['ea'] = {200,true}, ['spell'] = 'MEWI957'})" "" OB
 0 0 0 0 0 0 0 0 0 0 0 0 ""OB
 TR
 CO

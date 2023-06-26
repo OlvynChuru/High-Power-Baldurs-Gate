@@ -1,3 +1,7 @@
+v2.5.0:
+- Now compatible with v2.6.0 of BG:EE.
+- New spells: Chaos Teleport, Hide Campsite, and Flaming Sphere.
+- A few other changes that won't be spoiled.
 v2.4.0:
 - New component: Change the summoning limit.
 - All spellcasters gain access to spells much more quickly.
