@@ -411,6 +411,7 @@ Mass patches; this could take some time...~
 @271=~This component requires EEex to be installed. Download EEex here: github.com/Bubb13/EEex/archive/master.zip~
 @272=~You already have a similar component installed from Tweaks Anthology.~
 @273=~This is now part of the main component.~
+@274=~This component requires the EEex Effect Menu module to be installed~
 
 
 // Strings used in scripts
@@ -478,11 +479,8 @@ Mass patches; this could take some time...~
 
 
 @801=~<ME_DAMABS>~
-@802=~Absorbed the ~
-@803=~ damage~
-@804=~ from ~
-@805=~, healing ~
-@806=~ Hit Points~
+@802=~Absorbed the <ME_DAMABS1> damage, healing <ME_DAMABS3> Hit Points~
+@803=~Absorbed the <ME_DAMABS1> damage from <ME_DAMABS2>, healing <ME_DAMABS3> Hit Points~
 @807=~Deflected a missile~
 @808=~Deflected a slashing attack~
 @809=~Blocked an attack~
@@ -667,7 +665,7 @@ Demons and kobolds have been killing the miners.~
 @1617=~We don't have the manpower to patrol the mines, what with the problem of bandits up north. Our shoddy armor hardly matters when a bandit could put an arrow through the best plate mail. We can only hope they don't aim at us...~
 @1618=~Travel lightly, wanderer. The woods harbor strange things. I've heard many stories... worm-like creatures harnessing divine magic that can reflect our arrows back at us, monsters that can stop time, and even such a thing as a Greater Ogre. I hope none of these things come to Nashkel, for if they do I will hardly be a match for them.~
 @1619=~Move along, citizen. You could be a doppelganger, the way you're coming so close to me. Watch out for doppelgangers in Nashkel right now. We had an encounter with one of them a few days ago, and I suspect there is at least one more of them hiding somewhere in this town.~
-@1620=~You heard the rumors flying about town? Supposedly there's a cave to the northeast where there is a giant troll. The adventurer who saw the troll fled as fast as her legs could take her. I hope that troll stays in the cave...~
+@1620=~You heard the rumors flying about town? Supposedly there's a cave to the northeast where there is an ogre mage. The adventurer who saw the ogre fled as fast as her legs could take her. I hope that ogre stays in the cave...~
 @1621=~I've lost ten head of cattle in the last month alone! Gall-derned raiders must be gettin' into rustling I figure. My cows crushed some of 'em, but not all.~
 @1622=~I swear I saw something moving out back o' my place, so I keep my jumpin' cattle on the watch at night. They be poor guards but I cannot afford any other protection.~
 @1623=~How dare you come into my home uninvited! Back in my adventuring days, such an affront would get you a Blade of Disaster in the backside! If 'twere not for social convention I'd give you a right proper disintegration!~
@@ -736,6 +734,19 @@ A Dwarven Defender player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 2 proficiency points in axes, warhammers, and every fighting style.~
 @2007=~
 
+Ranger Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6
+Level
+1			1	0	0	0	0	0
+2			2	1	0	0	0	0
+3			2	1	0	0	0	0
+4			3	1	1	0	0	0
+5			3	2	1	0	0	0
+6			4	2	1	1	0	0
+7			4	3	1	1	0	0
+8			4	3	2	1	1	0
+
 A Ranger player character with no kit can use the following innate abilities:
 - Beast Sense at will
 - Stunning Attack 2x per day
@@ -800,6 +811,19 @@ A Beast Master player character also gains the following passive effects:
 - Hide in Shadows: +100%
 - Move Silently: +100%~
 @2011=~
+
+Paladin Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6
+Level
+1			1	0	0	0	0	0
+2			2	1	0	0	0	0
+3			2	1	0	0	0	0
+4			3	1	1	0	0	0
+5			3	2	1	0	0	0
+6			4	2	1	1	0	0
+7			4	3	1	1	0	0
+8			4	3	2	1	1	0
 
 A Paladin player character with no kit can use the following innate abilities:
 - Temporal Duel 3x per day
@@ -874,6 +898,20 @@ A Blackguard player character also gains the following passive effects:
 - For every point of reputation the party has below 11, <PRO_HESHE> gets a +1 bonus to all Saving Throws.
 - As long as the party has 1 reputation, any living creature hit by an attack by the blackguard has a 10% chance of needing to make a Save vs. Death at +4 or die instantly.~
 @2016=~
+
+Cleric Spell Slot Progression (excluding bonus spells from Wisdom):
+
+Spell Level	1   2   3   4   5   6   7
+Level
+1       	2   1   1   0   0   0   0
+2       	3   1   1   0   0   0   0
+3       	3   2   1   1   0   0   0
+4       	4   3   1   1   0   0   0
+5       	4   4   2   1   1   0   0
+6       	4   4   3   1   1   0   0
+7       	4   4   3   2   1   1   0
+8       	4   4   4   3   1   1   0
+9       	5   5   4   3   2   1   1
 
 A Cleric player character with no kit can use the following innate abilities:
 - Turn Creature 3x per day
@@ -1011,6 +1049,21 @@ A Cleric player character with a kit also gains the following passive effects:
 - Priest spells have triple the normal duration~
 @2021=~
 
+Druid Spell Slot Progression (excluding bonus spells from Wisdom):
+
+Spell Level	1   2   3   4   5   6   7
+Level
+1       	2   1   1   0   0   0   0
+2       	3   1   1   0   0   0   0
+3       	3   2   1   1   0   0   0
+4       	4   3   1   1   0   0   0
+5       	4   4   2   1   1   0   0
+6       	4   4   3   1   1   0   0
+7       	4   4   3   2   1   1   0
+8       	4   4   4   3   1   1   0
+9       	5   5   4   3   2   1   1
+10      	5   5   4   4   3   1   1
+
 A Druid player character with no kit can use the following innate abilities:
 - Cure Minor Wounds at will
 - Protection from the Elements 3x per day
@@ -1134,6 +1187,21 @@ A Shadowdancer player character with no kit also gains the following passive eff
 - Thieving Skills: +25%~
 @2030=~
 
+Bard Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6
+Level
+1       	1   0   0   0   0   0
+2       	2   1   0   0   0   0
+3       	3   1   0   0   0   0
+4       	3   2   1   0   0   0
+5       	4   2   1   0   0   0
+6       	4   3   1   1   0   0
+7       	4   3   2   1   0   0
+8       	4   4   2   1   1   0
+9       	4   4   3   1   1   0
+10      	4   4   3   2   1   1
+
 A Bard player character with no kit can use the following innate abilities:
 - Identify Creature at will
 - Mass Cast 2x per day
@@ -1188,22 +1256,38 @@ A Skald player character also gains the following passive effects:
 - Can cast spells while wearing any armor or while under effects that normally disable spellcasting.~
 @2034=~
 
+Mage Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6	7	8	9
+Level
+1       	2   0   0   0   0   0   0   0   0
+2       	3   1*  0   0   0   0   0   0   0
+3       	3   2   1*  0   0   0   0   0   0
+4       	4   3   1*  1*  0   0   0   0   0
+5       	5   3   2   1*  1*  0   0   0   0
+6       	5   3   3   1*  1*  1*  0   0   0
+7       	5   4   3   2   1*  1*  1*  0   0
+8       	5   4   4   3   1*  1*  1*  1*  0
+9       	5   4   4   3   2   1*  1*  1*  1*
+
+*Specialist mages do not get an extra spell slot at these spell levels.
+
 A Mage player character with no kit can use the following innate abilities:
 - Contingency at will
 - Arcane Recall at will
 - Improved Alacrity 2x per day
 
 A Mage player character with no kit also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2035=~
 
 A Wild Mage player character can use the following innate abilities:
 - Contingency at will
-- Improved Chaos Shield at will
+- Chaos Cast at will
 - Improved Alacrity 2x per day
 
 A Wild Mage player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2036=~
 
 An Abjurer player character can use the following innate abilities:
@@ -1214,7 +1298,7 @@ An Abjurer player character can use the following innate abilities:
 - Protection from Magical Weapons 2x per day
 
 An Abjurer player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2037=~
 
 A Conjurer player character can use the following innate abilities:
@@ -1225,7 +1309,7 @@ A Conjurer player character can use the following innate abilities:
 - Glimpse of the Glabrezu 3x per day
 
 A Conjurer player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2038=~
 
 A Diviner player character can use the following innate abilities:
@@ -1236,7 +1320,7 @@ A Diviner player character can use the following innate abilities:
 - Extend Vision 3x per day
 
 A Diviner player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2039=~
 
 An Enchanter player character can use the following innate abilities:
@@ -1247,7 +1331,7 @@ An Enchanter player character can use the following innate abilities:
 - Greater Nightmare 1x per day
 
 An Enchanter player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2040=~
 
 An Illusionist player character can use the following innate abilities:
@@ -1258,18 +1342,18 @@ An Illusionist player character can use the following innate abilities:
 - Globe of Invisibility 1x per day
 
 An Illusionist player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2041=~
 
 An Invoker player character can use the following innate abilities:
 - Contingency at will
 - Ray of Frost at will
 - Improved Alacrity 1x per day
-- Meteor Swarm 1x per day
+- Delayed Blast Fireball 2x per day
 - Mass Sequencer 1x per day
 
 An Invoker player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2042=~
 
 A Necromancer player character can use the following innate abilities:
@@ -1280,7 +1364,7 @@ A Necromancer player character can use the following innate abilities:
 - Death Trigger 1x per day
 
 A Necromancer player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2043=~
 
 A Transmuter player character can use the following innate abilities:
@@ -1291,8 +1375,36 @@ A Transmuter player character can use the following innate abilities:
 - Freeze Inanimates 3x per day
 
 A Transmuter player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2044=~
+
+Sorcerer Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6   7   8   9
+Level
+1           5   2   2   0   0   0   0   0   0
+2           6   2   2   0   0   0   0   0   0
+3           7   2   2   2   0   0   0   0   0
+4           8   5   2   2   0   0   0   0   0
+5           8   6   2   2   2   0   0   0   0
+6           8   7   5   2   2   0   0   0   0
+7           8   8   6   2   2   2   0   0   0
+8           8   8   7   5   2   2   0   0   0
+9           8   8   8   6   2   2   2   0   0
+
+Sorcerer Spells Learned Progression:
+
+Spell Level	1   2   3   4   5   6   7   8   9
+Level
+1           3   1   1   0   0   0   0   0   0
+2           3   1   1   0   0   0   0   0   0
+3           4   1   1   1   0   0   0   0   0
+4           4   2   1   1   0   0   0   0   0
+5           5   3   1   1   1   0   0   0   0
+6           5   3   2   1   1   0   0   0   0
+7           6   4   3   1   1   1   0   0   0
+8           6   4   3   2   1   1   0   0   0
+9           6   5   4   3   1   1   1   0   0
 
 A Sorcerer player character with no kit can use the following innate abilities:
 - Sequencer Touch at will
@@ -1347,6 +1459,34 @@ A Sun Soul Monk player character also gains the following passive effects:
 - Hasted (bypassing immunity to haste)
 - Movement Rate: Set to maximum~
 @2049=~
+
+Shaman Spell Slot Progression:
+
+Spell Level	1   2   3   4   5   6   7
+Level
+1           5   2   2   0   0   0   0
+2           6   2   2   0   0   0   0
+3           7   2   2   2   0   0   0
+4           8   5   2   2   0   0   0
+5           8   6   2   2   2   0   0
+6           8   7   5   2   2   0   0
+7           8   8   6   2   2   2   0
+8           8   8   7   5   2   2   0
+9           8   8   8   6   2   2   2
+
+Shaman Spells Learned Progression:
+
+Spell Level	1   2   3   4   5   6   7
+Level
+1           3   1   1   0   0   0   0
+2           3   1   1   0   0   0   0
+3           4   1   1   1   0   0   0
+4           4   2   1   1   0   0   0
+5           5   3   1   1   1   0   0
+6           5   3   2   1   1   0   0
+7           6   4   3   1   1   1   0
+8           6   4   3   2   1   1   0
+9           6   5   4   3   1   1   1
 
 A Shaman player character with no kit can use the following innate abilities:
 - Ether Gate at will
@@ -1412,7 +1552,7 @@ A Fighter/Mage player character can use the following innate abilities:
 
 A Fighter/Mage player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon and fighting style.
-- Can memorize an additional wizard spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7 (though higher-level spells need to be learned from scrolls first).~
 @2053=~
 
 A Cleric/Mage player character can use the following innate abilities:
@@ -1438,7 +1578,7 @@ Evil:
 
 A Cleric/Mage player character also gains the following passive effects:
 - Priest spells have double the normal duration.
-- Can memorize an additional wizard spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow~
+- Can memorize an additional wizard spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7 (though higher-level spells need to be learned from scrolls first).~
 @2054=~
 
 A Cleric/Thief player character can use the following innate abilities:
@@ -1531,7 +1671,7 @@ Evil:
 
 A Fighter/Mage/Cleric player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon.
-- Can memorize an additional wizard spell of each level from 1 to 5, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional wizard spell of each level from 1 to 5. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 5 (though higher-level spells need to be learned from scrolls first).
 - Priest spells have 1.5 times the normal duration.~
 @2058=~
 
@@ -1544,7 +1684,7 @@ A Fighter/Mage/Thief player character can use the following innate abilities:
 
 A Fighter/Mage/Thief player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon.
-- Can memorize an additional wizard spell of each level from 1 to 5, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional wizard spell of each level from 1 to 5. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 5 (though higher-level spells need to be learned from scrolls first).
 - Luck: +2
 - Armor Class: +2
 - Saving Throws: +2
@@ -1558,7 +1698,7 @@ A Mage/Thief player character can use the following innate abilities:
 - Passwall at will
 
 A Mage/Thief player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional wizard spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7 (though higher-level spells need to be learned from scrolls first).
 - Luck: +3
 - Armor Class: +3
 - Saving Throws: +3
@@ -2018,7 +2158,7 @@ A Shadow Adept player character can use the following innate abilities:
 - Relentless Assault 2x per day
 
 A Shadow Adept player character also gains the following passive effects:
-- Can memorize an additional Shadow Weave spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional Shadow Weave spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level.~
 @2207=~
 
 A Shadow Disciple player character can use the following innate abilities:
@@ -2050,7 +2190,7 @@ A Nightblade player character can use the following innate abilities:
 - Passwall at will
 
 A Nightblade player character also gains the following passive effects:
-- Can memorize an additional Shadow Weave spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional Shadow Weave spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7.
 - Luck: +3
 - Armor Class: +3
 - Saving Throws: +3
@@ -2066,7 +2206,7 @@ A Nightbringer player character can use the following innate abilities:
 
 A Nightbringer player character also gains the following passive effects:
 - Priest spells have double the normal duration.
-- Can memorize an additional Shadow Weave spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional Shadow Weave spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7.~
 @2211=~
 
 A Shade Warrior player character can use the following innate abilities:
@@ -2077,7 +2217,7 @@ A Shade Warrior player character can use the following innate abilities:
 
 A Shade Warrior player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon and fighting style.
-- Can memorize an additional Shadow Weave spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional Shadow Weave spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7.~
 @2212=~
 
 A Shadow Enforcer player character can use the following innate abilities:
@@ -2089,7 +2229,7 @@ A Shadow Enforcer player character can use the following innate abilities:
 
 A Shadow Enforcer player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon.
-- Can memorize an additional Shadow Weave spell of each level from 1 to 5, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional Shadow Weave spell of each level from 1 to 5. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 5.
 - Luck: +2
 - Armor Class: +2
 - Saving Throws: +2
@@ -2105,7 +2245,7 @@ A Dark Justiciar player character can use the following innate abilities:
 
 A Dark Justiciar player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon.
-- Can memorize an additional Shadow Weave spell of each level from 1 to 5, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional Shadow Weave spell of each level from 1 to 5. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 5.
 - Priest spells have 1.5 times the normal duration.~
 @2214=~
 
@@ -2238,7 +2378,7 @@ A multiclassed Arcane Archer player character can use the following innate abili
 
 A multiclassed Arcane Archer player character also gains the following passive effects:
 - After character creation, <PRO_HESHE> gains 2 proficiency points in shortbows and longbows.
-- Can memorize an additional wizard spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7 (though higher-level spells need to be learned from scrolls first).~
 @2225=~
 
 A Shapeshifter Fighter player character can use the following innate abilities:
@@ -2268,7 +2408,7 @@ A Red Soul Mage player character can use the following innate abilities:
 - Improved Alacrity 2x per day
 
 A Red Soul Mage player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2228=~
 
 A Green Soul Mage player character can use the following innate abilities:
@@ -2277,7 +2417,7 @@ A Green Soul Mage player character can use the following innate abilities:
 - Improved Alacrity 2x per day
 
 A Green Soul Mage player character also gains the following passive effects:
-- Can memorize an additional wizard spell of each level from 1 to 9, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 9. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level (though higher-level spells need to be learned from scrolls first).~
 @2229=~
 
 A Red Soul Sorcerer player character can use the following innate abilities:
@@ -2363,7 +2503,7 @@ Evil:
 A Cleric/Druid/Mage player character also gains the following passive effects:
 - Priest spells have 1.5 times the normal duration.
 - Every 9 seconds, each allied, living creature within 15 feet of the druid regains 1 Hit Point.
-- Can memorize an additional wizard spell of each level from 1 to 5, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 5. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 5 (though higher-level spells need to be learned from scrolls first).~
 @2236=~
 
 A Druid/Mage player character can use the following innate abilities:
@@ -2374,7 +2514,7 @@ A Druid/Mage player character can use the following innate abilities:
 
 A Druid/Mage player character also gains the following passive effects:
 - Every 6 seconds, each allied, living creature within 15 feet of the druid regains 1 Hit Point.
-- Can memorize an additional wizard spell of each level from 1 to 7, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.~
+- Can memorize an additional wizard spell of each level from 1 to 7. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 7 (though higher-level spells need to be learned from scrolls first).~
 @2237=~
 
 A Cleric/Druid player character can use the following innate abilities:
@@ -2414,7 +2554,7 @@ A Fighter/Cleric/Druid/Mage/Thief player character also gains the following pass
 - After character creation, <PRO_HESHE> gains 1 proficiency point in every weapon.
 - Priest spells have 1.25 times the normal duration.
 - Every 15 seconds, each allied, living creature within 15 feet of the druid regains 1 Hit Point.
-- Can memorize an additional spell of each level from 1 to 3, allowing <PRO_HIMHER> to cast higher-level spells than <PRO_HISHER> caster level would allow.
+- Can memorize an additional wizard spell of each level from 1 to 3. These extra spell slots apply even to spell levels that would otherwise have 0 spell slots, allowing <PRO_HIMHER> to memorize at least 1 spell of each level from 1 to 3 (though higher-level spells need to be learned from scrolls first).
 - Luck: +1
 - Armor Class: +1
 - Saving Throws: +1
@@ -3255,7 +3395,7 @@ Weight: 0~
 STATISTICS:
 
 Equipped abilities:
-– Immune to blindness and deafness
+- Immune to blindness and deafness
 - Visual range increased by 5
 
 Weight: 3~
@@ -4109,7 +4249,7 @@ The Hands of Takkok are exactly that: his very hands. He lost them when he attac
 STATISTICS:
 
 Equipped abilities:
-– Strength: 20
+- Strength: 20
 
 Weight: 2~
 @4614=~Gauntlets of Dexterity: The Brawling Hands
@@ -5341,7 +5481,7 @@ STATISTICS:
 
 Damage: 6d6 (Save vs. Wands for half)
 Any creature that gets hit by the explosion and fails the saving throw will get stunned for 3 seconds and will be knocked away from the center of the explosion.
-Area of Effect: 30-ft. radius
+Area of Effect: 15-ft. radius
 
 Weight: 1~
 @6854=~The potion of firebreath magically transforms the throat so that it is capable of a giant breath of fire spewing forth in a line. This potion is dangerous even if used correctly, since the fiery contents must sit in the throat for a few moments before being spat out. The effect does 12d12 damage to the target with a Save vs. Breath Weapon for half.
@@ -6866,13 +7006,20 @@ Weight: 30~
 STATISTICS:
 
 Charge abilities:
-– Identify Creature once per day
+- Identify Creature once per day
 
 Weight: 0~
 @9955=~Doomsayer's Essence~
 @9956=~You retrieved the contents of this bottle from the body of the Doomsayer, an elemental that you slew.~
 @9957=~Wings of Flying~
-@9958=~~
+@9958=~These soft and feathered wings seem to be fashioned in a celestial design. Upon being fastened to a creature's back, the wings give the creature the power to fly.
+
+STATISTICS:
+
+Equipped abilities:
+- Wearer gains the ability to fly while outdoors
+
+Weight: 2~
 @9959=~Eyes of Aec'Letec~
 @9960=~These were the eyes of Aec'Letec, a nabassu that you slew.
 
@@ -7053,8 +7200,8 @@ Weight: 3~
 STATISTICS:
 
 Equipped abilities:
-- Any instance of acid damage dealt by the wearer is increased by 3 points of damage
-- Any instance of acid damage dealt to the wearer is reduced by 3 points of damage
+- Any instance of acid damage dealt by the wearer is increased by 6 points of damage
+- Any instance of acid damage dealt to the wearer is reduced by 6 points of damage
 
 Weight: 3~
 @10197=~Amulet of Deadliness~
@@ -8270,11 +8417,11 @@ Weight: 10~
 @13805=~Doomsayer's Essence~
 @13806=~You retrieved the contents of this bottle from the body of a Doomsayer. The Doomsayers were fiendish air elementals from the dark Quasi-Elemental Plane of Air. They served the storm god Kozah during the time of Netheril. After Kozah's demise, most of the Doomsayers switched their allegiance to Talos, but a couple of them foolishly stayed with the dead god. The one you slew was one of these.
 
-A Doomsayer's essence grants some of the monster's power to a creature that consumes it, but it is also permanently charged with electricity. One had better be immune to electricity before drinking this.
+A Doomsayer's essence grants some of the monster's power to a creature that consumes it, but it is also permanently charged with electricity. One had better be immune to electricity multiple times over before drinking this.
 
 STATISTICS:
 
-When consumed, a Doomsayer's Essence deals 150 electricity damage to the character. There is no Saving Throw, Magic Resistance cannot prevent it, and Mirror Image cannot block it. If the character survives the damage, he or she permanently gains 50% innate Electricity Resistance. In addition, if the character is a cleric, druid or shaman, they learn the spell Storm of Vengeance.
+When consumed, a Doomsayer's Essence temporarily lowers the character's Electricity Resistance by 150%, then deals 150 electricity damage to them. There is no Saving Throw, Magic Resistance cannot prevent it, and Mirror Image cannot block it. If the character survives the damage, he or she permanently gains 50% innate Electricity Resistance. In addition, if the character is a cleric, druid or shaman, they learn the spell Storm of Vengeance.
 
 Weight: 1~
 @14119=~Immobile Armor +10~
@@ -8384,6 +8531,16 @@ Weight: 1~
 STATISTICS:
 
 Special: Restores 10 Hit Points for every 10 points of Lore the drinker has (minimum 10, maximum 200)
+
+Weight: 1~
+@14363=~Improved Potion of Explosions~
+@14364=~An ESPECIALLY dangerous vial of pain, this potion will produce an enormous explosion when thrown at an enemy. The explosion radius is larger than the maximum range at which the potion can be thrown, making it extremely risky to use. Surely only a madman would concoct a potion like this.
+
+STATISTICS:
+
+Damage: 20d6 (Save vs. Wands at -4 for half)
+Any creature that gets hit by the explosion and fails the saving throw will get stunned for 3 seconds and will be knocked away from the center of the explosion.
+Area of Effect: 60-ft. radius
 
 Weight: 1~
 @14379=~Giant's Tonic~
@@ -9670,6 +9827,10 @@ Requires:
  18 Wisdom
 
 Weight: 2~
+@17198=~My servant Mulahey,
+According to you, one of your kobolds has magically imprisoned an elf wizard in the room adjacent to your chambers. An impressive feat, to be sure - that kobold probably has more potential than you. In any case, at some point we should probably interrogate that elf. If we can find out who sent him, perhaps we  could ransom him back. With this message I sent a scroll that can be used summon the elf back.
+
+Tazok~
 @17201=~Elminster's Ecologies I~
 @17202=~Elminster's Ecologies-Humanoids and Giant-kin
 
@@ -9863,7 +10024,7 @@ One chapter describes slimes that can be found on the Sword Coast:
 
 "Fission Slimes-These slimes will split in two if they are killed without having been hit by a fire attack. They can only be hurt by fire and physical attacks. Their own attacks are acidic, and they also make creatures more vulnerable to acid."
 
-"Dense Puddings-These slimes split whenever they are hit by fire or electricity. They can only be safely hurt by physical attacks. A Dense Pudding's attacks inflict a disease that saps victims' constitution and slows them."
+"Dense Puddings-These slimes split whenever they are hit by fire or electricity. They can only be safely hurt by cold, acid, and physical attacks. A Dense Pudding's attacks inflict a disease that saps victims' constitution and slows them."
 
 "Gelatinous Spheres-Quite different from most other slimes, Gelatinous Spheres are transparent and very difficult to see unless one has walked inside one. They corrode anything they touch and any creature inside them. In addition, creatures inside them will become more vulnerable to acid."~
 @9601=~Elminster's Ecologies I~
@@ -9937,6 +10098,35 @@ One chapter focuses on related monsters called ettercaps.
 "Ettercap Tremor Callers-These rare ettercaps have the power to trigger earthquakes. They move in to eat once their victims are knocked down."
 
 "Ettercap Hasteners-These rare ettercaps possess a twisted form of the spell Improved Haste, which will speed up time for a creature to such an extent that the creature quickly decays during the effect."~
+@9801=~Elminster's Ecologies-Undead
+
+Written by the sage Elminster, this tome is part of a much larger body of work containing studies of strange creatures from around Toril, and some creatures from other planes. This particular book is about the undead. Churches of Lathander and Kelemvor often buy copies of this book and give them to 				adventurers for a pittance in order to spread knowledge on how to combat undead.
+
+"Skeletons-Animated skeletons differ greatly in their powers, but most of them have a power in common: when struck, the skeleton will fall apart but its skull will remain animate. The skulls also have varying powers."
+
+"Zombies-These walking corpses devour the brains of their victims. Most normal zombies have a common power: any creature that hits the zombie with an attack or spell gets pulled to the zombie. There are also more powerful zombies, which have much more diverse abilities."
+
+"Ghouls-Ghouls can turn invisible, and their touch causes paralysis. Ghouls almost never miss."
+
+"Greater Ghouls-These powerful ghouls attack and move faster, and they usually have Stoneskins. They tend to attack in groups."
+
+"Ghasts-Stronger than ghouls but weaker than greater ghouls, Ghasts tend to wander around an area while invisible until they come close to prey or they are hurt. Some ghasts can also summon other ghasts, though this summoning is silent and there may be a delay until the second ghast appears. I warn you: if you fight a ghast, expect to fight another ghast within minutes, if not within seconds!"
+
+"Greater Ghast Lords-The most powerful undead carrion eaters, Greater Ghast Lords have a stench comparable to a Stinking Cloud, which can knock living creatures unconscious."
+
+"Revenants-After a creature is killed in a terrible way, its soul can inhabit a body and become a revenant, determined to kill its killer. Revenants have a power that inflicts utter hopelessness on their enemies. They tend to prioritize attacking the creature against whom they have sworn vengeance."
+
+"Vengeful Spirits-Similar to revenants but without a corporeal form, Vengeful Spirits tend to arise immediately after certain creatures die, seeking revenge on the one who just killed them. They are relatively weak, but as they are spirits, only magic or magical weapons can hurt them, and they can move through walls. Vengeful Spirits can usually cast either Spiritual Lock, which temporarily prevents a creature's mind from working (as if the creature was feebleminded), or Ethereal Retribution, which calls a flock of other life-draining spirits."
+
+"Shadows-Spectral undead resembling humanoid shadows (except they can have height as well), shadows drain victims' strength away with their attacks. In addition, shadows can enfeeble creatures, possibly preventing those creatures from moving and making it easier to drain the last of their strength. They cannot be hit by non-magical weapons, and they can move through walls."
+
+"Greater Shadows-More powerful than typical shadows, Greater Shadows have a particularly dangerous enfeebling ability, which weakens multiple creatures."
+
+"Wraiths-Undead made of negative energy, Wraiths can drain the life out of multiple creatures at once by casting Soul Eater. Living creatures are harmed merely by standing near a wraith."
+
+"Death Shades-Weak but dangerous lesser undead creatures, Death Shades seek to give living things an early death. Any creature touched by a Death Shade will die instantly unless it is protected by a Death Ward. However, Death Shades will be destroyed upon suffering even the slightest harm, and they are reckless and easy to hit. Much more corporeal than other spectral undead, Death Shades can be hurt by normal weapons, and they cannot move through walls."
+
+"Greater Death Shades-Far more dangerous than normal death shades, these creatures can cast Wave of Destruction, a negative energy wave which can slay creatures up to 120 feet away who are not protected by a Death Ward. They are usually protected by Mirror Images and a Greater Globe of Invulerability, but they still are destroyed upon suffering any harm. They can cast Dispel Magic to dispel a Death Ward, but if you stay near them you can trick them into dispelling their own protections as well."~
 @18001=~Greater Ankheg~
 @18002=~Greatest Basilisk~
 @18003=~Mulahey's Kobold~
@@ -11267,12 +11457,12 @@ When the caster completes this spell, a red glow encompasses <PRO_HISHER> hand. 
 
 Level: 2
 Range: Visual range of the caster
-Duration: 5 rounds
+Duration: 2 rounds
 Casting Time: 1
 Area of Effect: 1 creature
 Saving Throw: None
 
-When a wizard calls upon a Power Word, Sleep spell, <PRO_HESHE> causes a comatose slumber to come upon 1 creature (other than undead and certain other creatures specifically excluded from the spell's effects). The creature gets no Saving Throw. Magically sleeping opponents can be attacked with substantial bonuses but will wake up when damaged. The Sleep effect will last for 5 rounds.~
+When a wizard calls upon a Power Word, Sleep spell, <PRO_HESHE> causes a comatose slumber to come upon 1 creature (other than undead and certain other creatures specifically excluded from the spell's effects). The creature gets no Saving Throw. Magically sleeping opponents can be attacked with substantial bonuses but will wake up when damaged. The Sleep effect will last for 2 rounds.~
 @20221=~Ray of Enfeeblement
 (Necromancy)
 
@@ -12398,7 +12588,7 @@ Casting Time: 8
 Area of Effect: 235-ft. radius
 Saving Throw: None
 
-Certain invisible creatures within the area of effect have their invisibility dispelled. This includes creatures under the effects of Sanctuary, Improved Invisibility, Shadow Door, Invisibility, Mislead, and so on. The kinds of creatures that have their invisibility dispelled depend on the allegiance of the caster. If the caster is a party member or an ally, all enemies and neutral creatures (creatures with a whitish blue circle) will be revealed. If the caster is an enemy, party members, allies and neutral creatures will be revealed. If the caster is a neutral creature, everyone except for the caster will be revealed. Invisibility Purge also prevents the revealed creatures from going invisible for 3 rounds.~
+Certain invisible creatures within the area of effect have their invisibility dispelled. This includes creatures under the effects of Sanctuary, Improved Invisibility, Shadow Door, Invisibility, Mislead, and so on. The kinds of creatures that have their invisibility dispelled depend on the allegiance of the caster. If the caster is a party member or an ally, all enemies and neutral creatures (creatures with a light blue circle) will be revealed. If the caster is an enemy, party members, allies and neutral creatures will be revealed. If the caster is a neutral creature, everyone except for the caster will be revealed. Invisibility Purge also prevents the revealed creatures from going invisible for 3 rounds.~
 @21310=~Miscast Magic
 (Enchantment/Charm)
 
@@ -12723,14 +12913,14 @@ To cast this spell on a creature, the priest must undergo a long incantation whi
 (Enchantment/Charm)
 
 Level: 5
-Sphere: Charm 
+Sphere: Charm
 Range: Visual range of the caster
-Duration: 3 rounds
+Duration: 1 round
 Casting Time: 1
 Area of Effect: 15-ft. radius
 Saving Throw: Neg.
 
-As with the 1st-level spell Command, this spell enables the priest to command other creatures, except that the effects are harder to resist (Save vs. Spell at -4 negates), affect multiple creatures, and last three times as long, allowing for multiple commands. Even undead and constructs can be commanded with this spell.~
+As with the 1st-level spell Command, this spell enables the priest to command other creatures, except that the effects are harder to resist (Save vs. Spell at -4 negates) and affects multiple creatures. Even undead and constructs can be commanded with this spell.~
 @21515=~Circle of Repulsion
 (Abjuration)
 
@@ -12786,7 +12976,7 @@ Level: 6
 Sphere: Guardian, Creation
 Range: 0
 Duration: 1 turn
-Casting Time: 9
+Casting Time: 3
 Area of Effect: 4-ft. radius
 Saving Throw: None
 
@@ -13248,7 +13438,9 @@ Dorn's patron gave him this ability, which is similar to a nabassu's death gaze.
 During the next 4 rounds, Eldoth's movement rate triples and he gains a +5 bonus to hit and damage rolls as well as two extra attacks per round. All attacks deal maximum damage for the duration.
 
 Eldoth's version of the ability can also be used alongside Haste and Improved Haste effects.~
-@22098=~During the next 4 rounds, Garrick is rooted to the spot and becomes nigh-invulnerable. He gains +20 AC, +20 to all saving throws, and +99% resistance to all damage types except poison.~
+@22098=~Garrick's Defensive Spin
+
+During the next 4 rounds, Garrick is rooted to the spot and becomes nigh-invulnerable. He gains +20 AC, +20 to all saving throws, and +99% resistance to all damage types except poison.~
 @22101=~Quayle's Invisibility Gestures
 
 Casting Time: 14
@@ -13297,7 +13489,7 @@ This ability has no casting time, can be used immediately after another ability,
 
 Casting Time: Instant
 
-Montaron teleports to a random enemy he can see. If there are no enemies in sight, this ability does nothing. Montaron can use this ability while invisible without revealing his presence. He can use the ability at will. 
+Montaron teleports behind a nonallied creature the party can see. Montaron can use this ability while invisible without revealing his presence. He can use the ability at will.
 
 This ability has no casting time, can be used immediately after another ability, and can be used while the game is paused.~
 @22112=~Charm Person
@@ -14473,7 +14665,7 @@ This ability allows the character to bestow the effects of Greater Whirlwind Att
 @24025=~Shar-teel is a grandmaster of many weapons. She gets +5 to hit and damage with melee weapons. However, her armor class can't be modified except by Dexterity and weapon styles.~
 @24026=~Skie's backstab multiplier is reduced by 1, but she backstabs with every hit.~
 @24027=~Tiax has Aura Cleansing. He is almost completely immune to electricity and he has +100% to Detect Illusions and can see invisible creatures. He can push and pull creatures at long range at will, and he can temporarily dominate the world once per day.~
-@24028=~Viconia can cast her spells of 3rd-level or lower at will, with the exception of Cure Wounds spells. She has a backstab multiplier of x2.~
+@24028=~Viconia can cast her spells of 3rd-level or lower at will, with the exception of Repulse, Sanctuary, Animate Dead, Glyph of Warding, and Cure Wounds spells. She has a backstab multiplier of x2.~
 @24029=~Xan is excellent at wielding his moonblade, and every attack he makes with a melee weapon is a critical hit. With ranged weapons, he gets a critical hit on a roll between 15 and 20.~
 @24030=~Xzar is a member of the Zhentarim. Like all Zhentarim necromancers, Xzar has Aura Cleansing. Xzar in particular is also almost completely immune to cold. He can use life drain and level drain abilities at will.~
 @24031=~Yeslick's casting time is decreased by 10 for all of his spells and abilities, allowing most of them to be cast instantly. Every spell he casts targets all creatures within 15 feet. He is specialized in all weapons a cleric can use. He never gets tired, even after casting Greater Restoration.~
@@ -14525,7 +14717,7 @@ This ability allows the character to bestow the effects of Greater Whirlwind Att
 @24077=~This is not Farluck; this is a doppelganger!~
 @24078=~This is not Nelik; this is a doppelganger!~
 @24079=~This is not Turpin; this is a doppelganger!~
-@24080=~This bartender is a doppelganger! If you buy a room from it, remember to check your room from traps and rig an alarm system to make sure that no one will assassinate you in your sleep!~
+@24080=~This bartender is a doppelganger! If you buy a room from it, remember to check your room from traps and rig an alarm system to make sure that no one will assassinate you in your sleep.~
 @24081=~This waiter is a doppelganger!~
 @24082=~This guard is a doppelganger!~
 @24083=~This prostitute is actually a doppelganger!~
@@ -14603,6 +14795,7 @@ Like all oozes, a Dense Pudding has amazing saving throws, it is immune to backs
 @24138=~Raleo Windspear has the ability to cast Creeping Doom at will. He used this ability to great effect in his short adventuring career. Raleo also has many hit points, amazing saving throws and high resistances.~
 @24139=~Furret is looking to sell a Gem of Seeing. The gem is real and may be worth the money.~
 @24140=~Silke is a high-level bard. She has a special bard song that deals damage to all enemies within 15 feet equal to 25% of their maximum Hit Points (rounded down). It has no effect on creatures immune to magic damage. In combat, she will sing her bard song in between casting spells while walking toward her enemies. When she is below 50% of her maximum HP, she will cast Mislead, and the clone will sing Silke's bard song as well.~
+@24141=~Horses have the ability to switch places with any other creature on the map at will. If the horse has a rider, they are teleported along with the horse.~
 
 
 
@@ -15887,6 +16080,7 @@ Contagious Fear causes panic among creatures in a 15-foot radius, and the panic 
 @33457=~Linked Portals~
 @33458=~Vampiric Link~
 @33459=~Recall Party~
+@33460=~Chaos Cast~
 @33551=~Life Transfer~
 @33552=~Steal Spells~
 @33554=~Ball Lightning~
@@ -16463,6 +16657,21 @@ Area of Effect: All party members
 Saving Throw: None
 
 Recall Party teleports all party members to the caster's side. The range is unlimited, and party members can be drawn from a different area, so long as they are on the same plane as the caster.~
+@34460=~Chaos Cast
+(Wild Magic)
+
+Level: 4
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: None
+
+This spell casts a random mage spell on the target creature, which could be a spell of any level between 5 and 8. The nature of the spell depends on the target. If the target is an enemy, they will receive a harmful spell, but if the target is an ally, they will receive a beneficial spell. Targeting restrictions are obeyed (a spell that only affects the caster will not be rolled unless the target is the caster).
+
+The main advantage of Chaos Cast is that the random spell is higher than level 4. The disadvantage is that the spell might not be useful in the current situation.
+
+Chaos Cast is not restricted to Wild Mages.~
 @34551=~Life Transfer
 (Necromancy)
 
@@ -16574,7 +16783,7 @@ Casting Time: 1
 Area of Effect: 1 creature
 Saving Throw: None
 
-This spell teleports a creature to another area against its will. When cast, the target is pulled through a portal and whisked to a random area. There is no Saving Throw against this spell, though it does not count as defeating the creature and will not give experience to the party. The creature is thereafter immune to Baleful Teleport for 1 year. Baleful Teleport has no effect on party members.~
+This spell teleports a creature to another area against its will. When cast, the target is pulled through a portal and whisked to a random area. There is no Saving Throw against this spell, though it does not count as defeating the creature and will not give experience to the party. The creature is thereafter immune to Baleful Teleport for 1 year. Baleful Teleport has no effect on party members or on creatures of HD 16 or higher.~
 @34562=~Critical Spell
 (Enchantment)
 
@@ -16934,7 +17143,7 @@ Casting Time: 9
 Area of Effect: The caster
 Saving Throw: None
 
-Recurring Contingency is like other Contingency spells, except that the stored spell is cast repeatedly. Upon casting Recurring Contingency, the caster is prompted to store a single spell of 2nd-level or lower, choose a target for the spell, and choose conditions under which the spell will be released. During the next hour, the spell will be cast on the target each round that the condition is met (or each time the caster is hit, if the caster chose it to trigger upon getting hit).~
+Recurring Contingency is like other Contingency spells, except that the stored spell is cast repeatedly. Upon casting Recurring Contingency, the caster is prompted to store a single 1st-level spell, choose a target for the spell, and choose conditions under which the spell will be released. During the next hour, the spell will be cast on the target each round that the condition is met (or each time the caster is hit, if the caster chose it to trigger upon getting hit).~
 @34855=~Omnipresence
 (Alteration)
 
@@ -16956,7 +17165,7 @@ Casting Time: 9
 Area of Effect: 1 creature
 Saving Throw: None
 
-Contingency Curse forces a hostile creature to release spells against its will on the caster's terms. Upon casting Contingency Curse, the caster is prompted to store a single spell of 2nd-level or lower, choose a target for the spell, and choose conditions under which the spell will be released. The target of the spell is then cursed to cast that spell repeatedly under those conditions. For example, the caster could store a Web spell and make the creature cast Web on itself whenever it gets hit. Contingency Curse can only curse enemies.~
+Contingency Curse forces a hostile creature to release spells against its will on the caster's terms. Upon casting Contingency Curse, the caster is prompted to store a single 1st-level spell, choose a target for the spell, and choose conditions under which the spell will be released. The target of the spell is then cursed to cast that spell repeatedly under those conditions. For example, the caster could store a Grease spell and make the creature cast Grease on itself whenever it gets hit. Contingency Curse can only curse enemies.~
 @34857=~Extend Vision
 (Divination)
 
@@ -17101,12 +17310,14 @@ Casting Time: 9
 Area of Effect: Special
 Saving Throw: None
 
-Mass Sequencer allows the caster to cast one of <PRO_HISHER> spells on many creatures simultaneously. When Mass Sequencer is cast, the caster is prompted to store a single spell of 3rd-level or lower. Once activated, the sequencer will cast copies of the stored spell on every creature in a 15-foot radius around the target. For example, if the caster stores a Fireball spell and then activates the sequencer on a 15' radius area containing four creatures, then four fireballs will be launched, each targeting a different creature.
+Mass Sequencer allows the caster to cast one of <PRO_HISHER> spells on many creatures simultaneously. When Mass Sequencer is cast, the caster is prompted to store a single spell. Once activated, the sequencer will cast copies of the stored spell on every creature in a 15-foot radius around the target. For example, if the caster stores a Fireball spell and then activates the sequencer on a 15' radius area containing four creatures, then four fireballs will be launched, each targeting a different creature.
 
 At higher levels, the maximum spell level that can be stored in a Mass Sequencer increases:
 
 Caster Level                   Maximum Spell Level
-18 and below                   3
+6 and below                    1
+7-12                           2
+13-18                          3
 19-24                          4
 25-30                          5
 31-36                          6
@@ -17147,7 +17358,7 @@ Saving Throw: None
 
 This spell creates an illusory adult red dragon, which will serve the caster for the duration. The illusory dragon has only 20% the hit points of a real dragon of the same age, and its attacks deal nonlethal damage, but its stats are otherwise the same as those of a real dragon, and it has the same abilities, including an fire breath and an aura of fear.~
 @34959=~Damage Turning
-(Abjuration) 
+(Abjuration)
 
 Level: 9
 Range: 0
@@ -17191,7 +17402,7 @@ Casting Time: 9
 Area of Effect: The caster
 Saving Throw: None
 
-Necropotence allows the wizard to draw the power for their spells through their own life force. For the duration, whenever the character would cast a spell, they immediately regain the cast spell but also take 3 damage per level of the spell. This damage cannot be prevented by any resistances, but it will not interrupt the spell.~
+Necropotence allows the wizard to draw the power for their spells through their own life force. For the duration, whenever the character would cast a spell, they immediately regain the cast spell but also take 3 damage per level of the spell. This damage cannot be prevented by any resistances, but it will not interrupt the spell. While Necropotence is in effect, the caster cannot regain any Hit Points through healing, resting or regeneration.~
 @34963=~Mental Agility
 (Enchantment)
 

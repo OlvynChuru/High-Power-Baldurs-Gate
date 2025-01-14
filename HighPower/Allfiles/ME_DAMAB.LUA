@@ -107,13 +107,15 @@ function EEex_DamageAbsorption(effectObject, creatureObject)
 --		Infinity_DisplayString("Total Damage: " .. damage)
 		if (normal_resistance >= 100 and normal_resistance <= 127) then
 			local healing = math.floor(damage * (base_resistance + extra_resistance - 100) / 100)
-			local source_name = ""
-			if EEex_IsSprite(sourceID) and targetID ~= sourceID then
-				source_name = ex_damage_absorption_feedback_string_3 .. EEex_GetActorName(sourceID)
-			end
 	--		Infinity_DisplayString("Healing: " .. healing)
 			if healing > 0 then
-				Infinity_SetToken("EX_DAMABS", ex_damage_absorption_feedback_string_1 .. Infinity_FetchString(ex_damage_resistance[damage_type][3]) .. ex_damage_absorption_feedback_string_2 .. source_name .. ex_damage_absorption_feedback_string_4 .. healing .. ex_damage_absorption_feedback_string_5)
+				local feedbackString = ex_damage_absorption_feedback_string_1
+				if EEex_IsSprite(sourceID) and targetID ~= sourceID then
+					feedbackString = string.gsub(ex_damage_absorption_feedback_string_2, "<ME_DAMABS2>", EEex_GetActorName(sourceID))
+				end
+				feedbackString = string.gsub(feedbackString, "<ME_DAMABS1>", Infinity_FetchString(ex_damage_resistance[damage_type][3]))
+				feedbackString = string.gsub(feedbackString, "<ME_DAMABS3>", healing)
+				Infinity_SetToken("EX_DAMABS", feedbackString)
 				EEex_ApplyEffectToActor(targetID, {
 ["opcode"] = 17,
 ["target"] = 2,
